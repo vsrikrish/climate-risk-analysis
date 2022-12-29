@@ -1,6 +1,3 @@
-import Pkg
-Pkg.activate()
-
 using Literate
 import Base.(/)
 (/)(ps...) = joinpath(ps...)
