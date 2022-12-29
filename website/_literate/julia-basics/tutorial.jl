@@ -10,12 +10,11 @@ This tutorial will give some examples of basic Julia commands and syntax.
 """
 
 
-#nb # ## Packages
+# ## Packages
 #nb #
 #nb # This tutorial does not require any additional packages, but you can [download or view the `Manifest.toml` here](https://raw.githubusercontent.com/vsrikrish/climate-risk-analysis/gh-pages/tutorials/notebooks/julia-basics/Manifest.toml).
 
-
-#md using Pkg 
+#md using Pkg  #hide
 #md macro OUTPUT() #hide
 #md     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/" #hide
 #md end; #hide
