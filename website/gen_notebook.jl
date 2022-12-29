@@ -18,6 +18,12 @@ function gen_notebooks(genpath, sourcepath)
       Literate.notebook(script, path, name=dir, credit=false, execute=false, mdstrings=true)
       isfile(project) && cp(project,  path/"Project.toml", force=true)
       isfile(manifest) && cp(manifest, path/"Manifest.toml", force=true)
+
+      bk = pwd()
+      cd(genpath)
+      success(pipeline(`tar czf $dir.tar.gz $dir`))
+      success(pipeline(`zip -r $dir.zip $dir`))
+      cd(bk)
    end
 end
 

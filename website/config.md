@@ -51,8 +51,10 @@ Add here global latex commands to use throughout your pages.
 }
 
 \newcommand{\nblink}[1]{https://raw.githubusercontent.com/vsrikrish/climate-risk-analysis/gh-pages/tutorials/notebooks/!#1/!#1.ipynb}
+\newcommand{\tgz}[1]{https://raw.githubusercontent.com/vsrikrish/climate-risk-analysis/gh-pages/tutorials/notebooks/!#1.tar.gz}}
+\newcommand{\zip}[1]{https://raw.githubusercontent.com/vsrikrish/climate-risk-analysis/gh-pages/tutorials/notebooks/!#1.zip}}
 
 \newcommand{\tutorial}[1]{ 
-This tutorial can be downloaded as a [Jupyter notebook](\nblink{#1}); follow instructions in the notebook to download or view any relevant `Project.toml` or `Manifest.toml` files.
+This tutorial can be downloaded as a [Jupyter notebook](\nblink{#1}); follow instructions in the notebook to download or view any relevant `Project.toml` or `Manifest.toml` files. You can also download the entire folder as a [tar.gz](\tgz{#1}) or a [zip](\zip{#1}) file.
 
 \toc\literate{/_literate/!#1/tutorial.jl} }
