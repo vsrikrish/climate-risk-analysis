@@ -14,7 +14,7 @@
 
 ## Syllabus
 
-You can (and should) download a PDF of the full syllabus [here](../assets/bee4750-syllabus.pdf) (or view on Canvas). This page summarizes and goes into more depth on course policies. This page will be kept more up to date than the syllabus as some of these policies evolve over the semester; all changes will be announced on Ed Discussion.
+You can (and should) download a PDF of the full syllabus [here](../assets/BEE6940-Syllabus.pdf) (or view on Canvas). This page summarizes and goes into more depth on course policies. This page will be kept more up to date than the syllabus as some of these policies evolve over the semester; all changes will be announced on Ed Discussion.
 
 ## Communications
 
