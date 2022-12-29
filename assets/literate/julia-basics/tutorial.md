@@ -8,8 +8,10 @@ This tutorial will give some examples of basic Julia commands and syntax.
 * [Stack Overflow](https://stackoverflow.com) is a commonly-used resource for programming assistance.
 * At a code prompt or in the REPL, you can always type `?functionname` to get help.
 
+## Packages
+
 ````julia:ex1
-using Pkg
+using Pkg  # hide
 macro OUTPUT() # hide
     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/" # hide
 end; # hide
