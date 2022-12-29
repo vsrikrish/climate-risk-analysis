@@ -1,30 +1,39 @@
-@def title = "Environmental Systems Analysis, Fall 2022"
+@def title = "Climate Risk Analysis, Spring 2023"
 
 @@banner
-# BEE 4750/5750: Environmental Systems Analysis
+# BEE 6940: Climate Risk Analysis
 @@
 
 # Course Description
 
-Environmental processes can have complicated dynamics and conflicting objectives. These dynamics can complicate analyses and decision-making which focus on a single component of the system, such as an individual pollution source. In this course, we will adopt a systems approach to environmental quality modeling and management, including applications in air and water pollution control and solid waste management. In particular, we will:
-* learn how to define systems and their boundaries;
-* simulate system dynamics using computer models;
-* formulate and solve linear and nonlinear optimization problems;
-* analyze and assess risk after introducing uncertainty;
-* make decisions under uncertainty with stochastic and dynamic programming; and
-* explore trade-offs across competing objectives.
+The impacts of climate variability and change are subject to a number of deep and dynamic uncertainties which complicate systems design and management. Using coastal flood risk management as motivation, this course will introduce concepts and methods for uncertainty characterization and quantification for systems experiencing dynamic environmental risk and will explore implications of uncertainty for decision-making. Students will develop and apply these uncertainty and decision analyses in the context of several example systems. 
 
 \note{This course will use the [Julia](https://julialang.org) programming language. No prior knowledge of Julia is required.
 }
+# Learning Outcomes
+Upon completing this class, students should be able to:
 
+1. Identify pathways through which climate variability and change poses risks;
+2. Assess system and model responses to varying factors with sensitivity analysis and exploratory modeling;
+3. Quantify uncertainties when appropriate using methods from frequentist and Bayesian statistics;
+4. Analyze the influence of uncertainty on risk management and decision-making.
+
+# Prerequisites
+
+Students should be familiar with:
+* Systems thinking and analysis;
+* Introductory probability and statistics;
+* Calculus;
+* Basic programming concepts.
+
+In Cornell terms: roughly BEE 4750, CEE 3040 or ENGRD 2700, MATH 1920, or with permission of instructor. 
+ 
 # Course Logistics
 
 ## Class Meetings
 
-MW, 11:25am-12:40pm, 105 Riley-Robb Hall
+MW, 1:00-2:15pm, 225 Riley-Robb Hall
 
 ## Office Hours
 
-* T, 4-5pm, [by Zoom](https://edstem.org/us/courses/23643/discussion/1705086)
-* W, 3-4pm, 318 Riley-Robb
-* R, 12-1pm, 318 Riley-Robb
+By appointment, and/or ask after class.

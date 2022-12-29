@@ -1,10 +1,3 @@
-using Pkg #hideall
-Pkg.activate("_literate/julia-plots/Project.toml")
-Pkg.instantiate()
-macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end;
-
 md"""
 ## Overview
 
@@ -19,6 +12,19 @@ This tutorial will give some examples of plotting and plotting features in Julia
 * [Color names](http://juliagraphics.github.io/Colors.jl/stable/namedcolors/)
 """
 
+#nb # ## Packages
+#nb #
+#nb # To run this notebook, you can download or view the [`Project.toml`](https://raw.githubusercontent.com/vsrikrish/climate-risk-analysis/gh-pages/tutorials/notebooks/julia-plots/Project.toml) and [`Manifest.toml`](https://raw.githubusercontent.com/vsrikrish/climate-risk-analysis/gh-pages/tutorials/notebooks/julia-plots/Manifest.toml). You can also just add packages as needed to the environment, which is by default set to exist in the path of the notebook file.
+
+
+using Pkg
+#md Pkg.activate("_literate/julia-plots")
+#nb Pkg.activate(@__DIR__)
+Pkg.instantiate()
+#md macro OUTPUT() #hide
+#md     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/" #hide
+#md end; #hide
+
 # ## Demos
 
 using Plots
@@ -30,9 +36,9 @@ Random.seed!(1) # hide
 
 y = rand(5)
 plot(y, label="original data", legend=:topright)
-savefig(joinpath(@OUTPUT, "line-plot.png")) # hide
+#md savefig(joinpath(@OUTPUT, "line-plot.png")) #hide
 
-# \fig{line-plot.png}
+#md # \fig{line-plot.png}
 
 # There's a lot of customization here that can occur, a lot of which is discussed in the docs or can be found with some Googling.
 
@@ -44,9 +50,9 @@ y2 = rand(5)
 y3 = rand(5)
 plot!(y2, label="new data")
 scatter!(y3, label="even more data")
-savefig(joinpath(@OUTPUT, "line-plot-added.png")) # hide
+#md savefig(joinpath(@OUTPUT, "line-plot-added.png")) #hide
 
-# \fig{line-plot-added.png}
+#md # \fig{line-plot-added.png}
 
 # Remember that an exclamation mark (!) at the end of a function name means that function modifies an object in-place, so `plot!` and `scatter!` modify the current plotting object, they don't create a new plot.
 
@@ -55,9 +61,9 @@ savefig(joinpath(@OUTPUT, "line-plot-added.png")) # hide
 # Sometimes we want to remove legends, axes, grid lines, and ticks.
 
 plot!(legend=false, axis=false, grid=false, ticks=false)
-savefig(joinpath(@OUTPUT, "line-plot-removed.png")) #hide
+#md savefig(joinpath(@OUTPUT, "line-plot-removed.png")) #hide
 
-# \fig{line-plot-removed.png}
+#md # \fig{line-plot-removed.png}
 
 # #### Aspect Ratio
 # 
@@ -66,9 +72,9 @@ savefig(joinpath(@OUTPUT, "line-plot-removed.png")) #hide
 v = rand(5)
 plot(v, ratio=1, legend=false)
 scatter!(v)
-savefig(joinpath(@OUTPUT, "square-aspect.png")) #hide
+#md savefig(joinpath(@OUTPUT, "square-aspect.png")) #hide
 
-# \fig{square-aspect.png}
+#md # \fig{square-aspect.png}
 
 # ### Heatmaps
  
@@ -76,16 +82,16 @@ savefig(joinpath(@OUTPUT, "square-aspect.png")) #hide
 
 A = rand(10, 10)
 heatmap(A, clim=(0, 1), ratio=1, legend=false, axis=false, ticks=false)
-savefig(joinpath(@OUTPUT, "heatmap-basic.png")) #hide
+#md savefig(joinpath(@OUTPUT, "heatmap-basic.png")) #hide
 
-# \fig{heatmap-basic.png}
+#md # \fig{heatmap-basic.png}
 
 M = [ 0 1 0; 0 0 0; 1 0 0]
 whiteblack = [RGBA(1,1,1,0), RGB(0,0,0)]
 heatmap(c=whiteblack, M, aspect_ratio = 1, ticks=.5:3.5, lims=(.5,3.5), gridalpha=1, legend=false, axis=false, ylabel="i", xlabel="j")
-savefig(joinpath(@OUTPUT, "heatmap-bw.png")) #hide
+#md savefig(joinpath(@OUTPUT, "heatmap-bw.png")) #hide
 
-# \fig{heatmap-bw.png}
+#md # \fig{heatmap-bw.png}
 
 # #### Custom Colors
 
@@ -94,37 +100,37 @@ using Colors
 mycolors = [colorant"lightslateblue",colorant"limegreen",colorant"red"]
 A = [i for i=50:300, j=1:100]
 heatmap(A, c=mycolors, clim=(1,300))
-savefig(joinpath(@OUTPUT, "heatmap-colors.png")) #hide
+#md savefig(joinpath(@OUTPUT, "heatmap-colors.png")) #hide
 
-# \fig{heatmap-colors.png}
+#md # \fig{heatmap-colors.png}
 
 # ### Plotting Areas Under Curves
 
 y = rand(10)
 plot(y, fillrange= y.*0 .+ .5, label= "above/below 1/2", legend =:top)
-savefig(joinpath(@OUTPUT, "above-below.png")) #hide
+#md savefig(joinpath(@OUTPUT, "above-below.png")) #hide
 
-# \fig{above-below.png}
+#md # \fig{above-below.png}
 
 x = LinRange(0,2,100)
 y1 = exp.(x)
 y2 = exp.(1.3 .* x)
 plot(x, y1, fillrange = y2, fillalpha = 0.35, c = 1, label = "Confidence band", legend = :topleft)
-savefig(joinpath(@OUTPUT, "confidence.png")) #hide
+#md savefig(joinpath(@OUTPUT, "confidence.png")) #hide
 
-# \fig{confidence.png}
+#md # \fig{confidence.png}
 
 x = -3:.01:3
 areaplot(x, exp.(-x.^2/2)/√(2π),alpha=.25,legend=false)
-savefig(joinpath(@OUTPUT, "normal-area.png")) #hide
+#md savefig(joinpath(@OUTPUT, "normal-area.png")) #hide
 
-# \fig{normal-area.png}
+#md # \fig{normal-area.png}
 
 M = [1 2 3; 7 8 9; 4 5 6; 0 .5 1.5]
 areaplot(1:3, M, seriescolor = [:red :green :blue ], fillalpha = [0.2 0.3 0.4])
-savefig(joinpath(@OUTPUT, "area-colored.png")) #hide
+#md savefig(joinpath(@OUTPUT, "area-colored.png")) #hide
 
-# \fig{area-colored.png}
+#md # \fig{area-colored.png}
 
 using SpecialFunctions
 f = x->exp(-x^2/2)/√(2π)
@@ -133,9 +139,9 @@ plot()
 x = √2 .* erfinv.(2 .*(δ/2 : δ : 1) .- 1)
 areaplot(x, f.(x), seriescolor=[ :red,:blue], legend=false)
 plot!(x, f.(x),c=:black)
-savefig(joinpath(@OUTPUT, "normal-quantiles.png")) #hide
+#md savefig(joinpath(@OUTPUT, "normal-quantiles.png")) #hide
 
-# \fig{normal-quantiles.png}
+#md # \fig{normal-quantiles.png}
 
 # ### Plotting Shapes
 
@@ -143,9 +149,9 @@ rectangle(w, h, x, y) = Shape(x .+ [0,w,w,0], y .+ [0,0,h,h])
 circle(r,x,y) = (θ = LinRange(0,2π,500); (x.+r.*cos.(θ), y.+r.*sin.(θ)))
 plot(circle(5,0,0), ratio=1, c=:red, fill=true)
 plot!(rectangle(5*√2,5*√2,-2.5*√2,-2.5*√2),c=:white,fill=true,legend=false)
-savefig(joinpath(@OUTPUT, "circle-rect.png")) #hide
+#md savefig(joinpath(@OUTPUT, "circle-rect.png")) #hide
 
-# \fig{circle-rect.png}
+#md # \fig{circle-rect.png}
 
 # ### Plotting Distributions
 
@@ -153,30 +159,30 @@ savefig(joinpath(@OUTPUT, "circle-rect.png")) #hide
 
 using Distributions, StatsPlots
 plot(Normal(2, 5))
-savefig(joinpath(@OUTPUT, "normal-pdf.png")) # hide
+#md savefig(joinpath(@OUTPUT, "normal-pdf.png")) # hide
 
-# \fig{normal-pdf.png}
+#md # \fig{normal-pdf.png}
 
 scatter(LogNormal(0.8, 1.5))
-savefig(joinpath(@OUTPUT, "lognormal-scatter.png")) # hide
+#md savefig(joinpath(@OUTPUT, "lognormal-scatter.png")) # hide
 
-# \fig{lognormal-scatter.png}
+#md # \fig{lognormal-scatter.png}
 
 # We can also use this functionality to plot distributions of data in tabular data structures like `DataFrames`.
 
 using DataFrames
 dat = DataFrame(a = 1:10, b = 10 .+ rand(10), c = 10 .* rand(10))
 @df dat density([:b :c], color=[:black :red])
-savefig(joinpath(@OUTPUT, "dataframe-dist.png")) #hide
+#md savefig(joinpath(@OUTPUT, "dataframe-dist.png")) #hide
 
-# \fig{dataframe-dist.png}
+#md # \fig{dataframe-dist.png}
 
 # ### Editing Plots Manually
 
 pl = plot(1:4,[1, 4, 9, 16])
-savefig(joinpath(@OUTPUT, "basic-plot.png")) #hide
+#md savefig(joinpath(@OUTPUT, "basic-plot.png")) #hide
 
-# \fig{basic-plot.png}
+#md # \fig{basic-plot.png}
 
 pl.attr
 #-
@@ -185,19 +191,19 @@ pl.series_list[1]
 pl[:size]=(300,200)
 #-
 pl
-savefig(joinpath(@OUTPUT, "basic-size.png")) #hide
+#md savefig(joinpath(@OUTPUT, "basic-size.png")) #hide
 
-# \fig{basic-size.png}
+#md # \fig{basic-size.png}
 
 # ### Log-Scaled Axes
 
 xx = .1:.1:10
 plot(xx.^2, xaxis=:log, yaxis=:log)
-savefig(joinpath(@OUTPUT, "log-axes.png")) #hide
+#md savefig(joinpath(@OUTPUT, "log-axes.png")) #hide
 
-# \fig{log-axes.png}
+#md # \fig{log-axes.png}
 
 plot(exp.(x), yaxis=:log)
-savefig(joinpath(@OUTPUT, "log-exp.png")) #hide
+#md savefig(joinpath(@OUTPUT, "log-exp.png")) #hide
 
-# \fig{log-exp.png}
+#md # \fig{log-exp.png}

@@ -3,16 +3,12 @@ on:
   push:
     branches:
       - main
-      - Fall22
+      - Spring23
     paths-ignore:
       - 'lecture-notes/**'
       - 'syllabus/**'
       - '.github/workflows/**'
   workflow_dispatch:
-  workflow_run:
-    workflows: [Render Syllabus]
-    types:
-      - completed
   repository_dispatch:
 
 jobs:
@@ -38,7 +34,7 @@ jobs:
     - name: Install Julia
       uses: julia-actions/setup-julia@v1
       with:
-        version: 1.7
+        version: 1.8
     # NOTE
     #   The steps below ensure that NodeJS and Franklin are loaded then it
     #   installs highlight.js which is needed for the prerendering step
@@ -53,7 +49,8 @@ jobs:
             cd("website");
             using NodeJS; run(`$(npm_cmd()) install highlight.js`);
             using Franklin;
-            optimize()'
+            include("gen_notebook.jl");
+            optimize(minify=false);'
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:

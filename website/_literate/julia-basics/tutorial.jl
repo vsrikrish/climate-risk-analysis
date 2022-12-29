@@ -1,8 +1,3 @@
-using Pkg #hideall
-macro OUTPUT()
-    return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/"
-end;
-
 md"""
 ## Overview
 
@@ -13,6 +8,17 @@ This tutorial will give some examples of basic Julia commands and syntax.
 * [Stack Overflow](https://stackoverflow.com) is a commonly-used resource for programming assistance.
 * At a code prompt or in the REPL, you can always type `?functionname` to get help.
 """
+
+
+#nb # ## Packages
+#nb #
+#nb # This tutorial does not require any additional packages, but you can [download or view the `Manifest.toml` here](https://raw.githubusercontent.com/vsrikrish/climate-risk-analysis/gh-pages/tutorials/notebooks/julia-basics/Manifest.toml).
+
+
+#md using Pkg 
+#md macro OUTPUT() #hide
+#md     return isdefined(Main, :Franklin) ? Franklin.OUT_PATH[] : "/tmp/" #hide
+#md end; #hide
 
 # ## Comments
 # Comments hide statements from the interpreter or compiler. It's a good idea to liberally comment your code so readers  (including yourself!) know why your code is structured and written the way it is.

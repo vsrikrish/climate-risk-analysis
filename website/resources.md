@@ -7,7 +7,6 @@
 ## Assignment Workflow and Configurations
 
 * [Setting up VS Code and Julia (Youtube)](https://www.youtube.com/watch?v=KesuPOlBB_o)
-* [Using `Weave.jl` (Youtube)](https://www.youtube.com/watch?v=moHTgjdbfiQ)
 
 ## Julia Programming
 

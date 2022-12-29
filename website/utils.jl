@@ -1,5 +1,6 @@
 using YAML
 using Dates
+using Weave
 
 function hfun_bar(vname)
   val = Meta.parse(vname[1])
@@ -146,6 +147,36 @@ function hfun_lecture_badges(params::Vector{String})
   return String(take!(io))
 end
 
+function lab_badge(num)  
+  path_names = filter(isdir, readdir("_assets/lecture-notes"; join=true))
+  lecture_path = filter(x -> contains(x, num), path_names)
+  name = split(lecture_path[1], "-")[3]
+  link = string("/", strip(lecture_path[1], '_'), "/index.html")
+  alt_text = string(titlecase(name), " Notes")
+  badge_right = "web"
+  badge_left = "Notes"
+  badge_url = string("https://img.shields.io/static/v1?label=", badge_left, "&message=", badge_right, "&color=b31b1b&labelColor=222222&style=flat")
+  badge_string = string(
+    "[!", "[", alt_text, "]", 
+    "(", badge_url, ")", "]",
+    "(", link, ")"
+  )
+  return badge_string
+end
+
+
+function hfun_lab_badges(params::Vector{String}) 
+  name = params[1]
+  io = IOBuffer()
+  write(io, Franklin.fd2html("""
+    @@badges
+    $(lecture_badge(name))
+    @@
+    """, internal=true)
+  )
+  return String(take!(io))
+end
+
 function project_badge(nm, ftype)  
   if ftype == "html"
     link = string("/assignments/", nm, "/$nm/")
@@ -213,4 +244,21 @@ function hfun_day_schedule(params::Vector{String})
     out = "\n"
   end
   return out
+end
+
+function hfun_insert_weave(params)
+  rpath = params[1]
+  fullpath = joinpath(Franklin.path(:folder), rpath)
+  (isfile(fullpath) && splitext(fullpath)[2] == ".jmd") || return ""
+  print("Weaving... ")
+  t = tempname()
+  weave(fullpath, out_path=t)
+  println("✓ [done].")
+  fn = splitext(splitpath(fullpath)[end])[1]
+  html = read(joinpath(t, fn * ".html"), String)
+  start = findfirst("<BODY>", html)
+  finish = findfirst("</BODY>", html)
+  range = nextind(html, last(start)):prevind(html, first(finish))
+  html = html[range]
+  return html
 end

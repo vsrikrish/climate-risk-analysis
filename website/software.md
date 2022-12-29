@@ -103,10 +103,6 @@ though you may want to minimize this, as it can get unreadable quickly.
 
 Good form is to load all relevant packages at the beginning of the file, but you can load packages as needed later if you only use those commands in a particular section of your code.
 
-### Using `Weave.jl`
-
-Homework reports will be written using the [`Weave.jl` package](https://weavejl.mpastell.com/stable/), which allows the intermixing of Julia code and written text (using Markdown). LaTeX commands can also be used to format mathematics. For more information on how to use `Weave.jl` for this class, see the documentation and [our instructions on assignment report writing](/assignments//workflow#assignment_report_writing)
-
 ## GitHub
 
 ### What are Git and GitHub?

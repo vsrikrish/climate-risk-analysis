@@ -8,6 +8,7 @@ hasmath = false
 generate_rss = false
 
 ignore = ["node_modules/", "lecture-notes/"]
+weave = false
 +++
 
 <!--
@@ -49,5 +50,9 @@ Add here global latex commands to use throughout your pages.
 ~~~
 }
 
+\newcommand{\nblink}[1]{https://raw.githubusercontent.com/vsrikrish/climate-risk-analysis/gh-pages/tutorials/notebooks/!#1/!#1.ipynb}
+
 \newcommand{\tutorial}[1]{ 
+This tutorial can be downloaded as a [Jupyter notebook](\nblink{#1}); follow instructions in the notebook to download or view any relevant `Project.toml` or `Manifest.toml` files.
+
 \toc\literate{/_literate/!#1/tutorial.jl} }
