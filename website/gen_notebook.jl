@@ -16,8 +16,8 @@ function gen_notebooks(genpath, sourcepath)
       isdir(path) || mkpath(path)
 
       Literate.notebook(script, path, name=dir, credit=false, execute=false, mdstrings=true)
-      isfile(project) && cp(project,  path/"Project.toml")
-      isfile(manifest) && cp(manifest, path/"Manifest.toml")
+      isfile(project) && cp(project,  path/"Project.toml", force=true)
+      isfile(manifest) && cp(manifest, path/"Manifest.toml", force=true)
    end
 end
 
