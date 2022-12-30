@@ -50,11 +50,18 @@ Add here global latex commands to use throughout your pages.
 ~~~
 }
 
-\newcommand{\nblink}[1]{https://raw.githubusercontent.com/vsrikrish/climate-risk-analysis/gh-pages/tutorials/notebooks/!#1/!#1.ipynb}
-\newcommand{\tgz}[1]{https://raw.githubusercontent.com/vsrikrish/climate-risk-analysis/gh-pages/tutorials/notebooks/!#1.tar.gz}}
-\newcommand{\zip}[1]{https://raw.githubusercontent.com/vsrikrish/climate-risk-analysis/gh-pages/tutorials/notebooks/!#1.zip}}
+\newcommand{\tutnblink}[1]{https://raw.githubusercontent.com/vsrikrish/climate-risk-analysis/gh-pages/tutorials/notebooks/!#1/!#1.ipynb}
+\newcommand{\tuttgz}[1]{https://raw.githubusercontent.com/vsrikrish/climate-risk-analysis/gh-pages/tutorials/notebooks/!#1.tar.gz}}
+\newcommand{\tutzip}[1]{https://raw.githubusercontent.com/vsrikrish/climate-risk-analysis/gh-pages/tutorials/notebooks/!#1.zip}}
 
 \newcommand{\tutorial}[1]{ 
-This tutorial can be downloaded as a [Jupyter notebook](\nblink{#1}); follow instructions in the notebook to download or view any relevant `Project.toml` or `Manifest.toml` files. You can also download the entire folder as a [tar.gz](\tgz{#1}) or a [zip](\zip{#1}) file.
+This tutorial can be downloaded as a [Jupyter notebook](\tutnblink{#1}); follow instructions in the notebook to download or view any relevant `Project.toml` or `Manifest.toml` files. You can also download the entire folder as a [tar.gz](\tuttgz{#1}) or a [zip](\tutzip{#1}) file.
 
 \toc\literate{/_literate/!#1/tutorial.jl} }
+
+\newcommand{\hwrepo}[1]{https://raw.githubusercontent.com/vsrikrish/climate-risk-analysis/gh-pages/assignments/notebooks/!#1/!#1.ipynb}
+
+\newcommand{\hw}[1]{ 
+Here is [the repository for this problem set](\hwrepo{#1}). <strong>If you are enrolled in the class, make sure you use the GitHub Classroom link from the Ed Discussion Board rather than downloading directly</strong>.
+
+\toc\literate{/_hw/!#1/!#1.jl}}
