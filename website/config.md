@@ -59,9 +59,11 @@ This tutorial can be downloaded as a [Jupyter notebook](\tutnblink{#1}); follow 
 
 \toc\literate{/_literate/!#1/tutorial.jl} }
 
-\newcommand{\hwrepo}[1]{https://raw.githubusercontent.com/vsrikrish/climate-risk-analysis/gh-pages/assignments/notebooks/!#1/!#1.ipynb}
+\newcommand{\hwrepo}[1]{https://github.com/ClimateRiskAnalysis/!#1/}
 
 \newcommand{\hw}[1]{ 
-Here is [the repository for this problem set](\hwrepo{#1}). <strong>If you are enrolled in the class, make sure you use the GitHub Classroom link from the Ed Discussion Board rather than downloading directly</strong>.
+Here is [the repository for this problem set](\hwrepo{#1}). 
+
+**If you are enrolled in the class, make sure you use the GitHub Classroom link from the Ed Discussion Board rather than downloading directly**.
 
 \toc\literate{/_hw/!#1/!#1.jl}}
