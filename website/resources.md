@@ -11,6 +11,7 @@
 ## Julia Programming
 
 * [Julia Documentation](https://docs.julialang.org/en/v1/)
+* [Learning Julia](https://julialang.org/learning/): A collection of official Julia resources.
 * [JuliaAcademy](https://juliaacademy.com/courses): Check out the "Introduction to Julia (for programmers)" or "Julia Programming for Nervous Beginners" courses
 * [QuantEcon MATLAB-Python-Julia cheatsheet](https://cheatsheets.quantecon.org/)
 * [FastTrack to Julia cheatsheet](https://juliadocs.github.io/Julia-Cheat-Sheet/)
