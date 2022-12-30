@@ -4,9 +4,9 @@
 @def maxtoclevel = 3
 @def showall = true
 
-@def title = "Homework 0"
-@def topic = "Julia Code"
-@def due_date = Dates.format(DateTime(2023, 9, 7, 21), "E, m/dd, I:MM p")
+@def title = "Homework 1"
+@def topic = "Julia Coding"
+@def due_date = Dates.format(DateTime(2023, 2, 2, 21), "E, m/dd, I:MM p")
 
 @@banner
 # {{title}}: {{topic}}
