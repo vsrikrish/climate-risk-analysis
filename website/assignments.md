@@ -20,9 +20,8 @@
 |------------|----------|:------------:|:------:|
 | Homework 1 | Feb 02, 2023 | {{hw_badges 1}} | |
 
-## Projects
+## Final Project
 
-### Schedule
+### Instructions
 
-| Project | Instructions and Due Dates | Resources |
-|------------|:----------:|:---------:|
+### Resources
