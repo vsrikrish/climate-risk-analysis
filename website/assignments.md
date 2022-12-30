@@ -18,7 +18,7 @@
 
 | Assignment | Due Date | Instructions | Rubric | 
 |------------|----------|:------------:|:------:|
-| Homework 0 | Sep 01, 2022 | {{hw_badges 0}} | |
+| Homework 1 | Feb 02, 2023 | {{hw_badges 1}} | |
 
 ## Projects
 

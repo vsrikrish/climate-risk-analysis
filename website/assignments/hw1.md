@@ -12,7 +12,5 @@
 # {{title}}: {{topic}}
 @@
 
-@@duedate Due: {{due_date}} @@
-
 \hw{hw1}
 
