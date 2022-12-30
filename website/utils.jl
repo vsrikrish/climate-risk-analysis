@@ -22,7 +22,7 @@ end
 
 function hw_badge(num, ftype)  
   if ftype == "html"
-    link = string("/assignments/hw", num, "/hw", num, "/")
+    link = string("/assignments/hw", num, "/")
     alt_text = string("HW", num, " Web Instructions")
     badge_right = "web"
   elseif ftype == "pdf"
@@ -86,7 +86,6 @@ function hfun_hw_badges(params)
   write(io, Franklin.fd2html("""
     @@badges
     $(hw_badge(num, "html"))
-    $(hw_badge(num, "pdf"))
     @@
     """, internal=true)
   )
