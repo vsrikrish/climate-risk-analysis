@@ -1,22 +1,24 @@
-# # Homework 1, BEE 6940 (Due By 2/2/23, 9:00PM)
+#nb # # Homework 1, BEE 6940 (Due By 2/2/23, 9:00PM)
 
 #nb # **Name**:
 #nb #
 #nb # **ID**:
 
-# ### Instructions
+# ## Overview
 
+# ### Instructions
+#
 # This homework consists of two parts:
 # - Problems 1 and 2 involve writing Julia functions to ensure that you have a good grip on basic Julia syntax. 
 # - Problems 3-6 consist of a series of code snippets for you to interpret and debug. For Problems 3-5, you will be asked to identify relevant error(s) and fix the code. For Problem 6, the code works as intended; your goal is to identify the code's purpose by following its logic.
 
-# ### Load Environment
-#
-# The following code loads the environment and makes sure all needed packages are installed. This should be at the start of most Julia scripts.
+#nb # ### Load Environment
+#nb #
+#nb # The following code loads the environment and makes sure all needed packages are installed. This should be at the start of most Julia scripts.
 
-import Pkg
-Pkg.activate(@__DIR__)
-Pkg.instantiate()
+#nb import Pkg
+#nb Pkg.activate(@__DIR__)
+#nb Pkg.instantiate(io=devnull)
 
 # ## Problems (Total: 100 Points)
 
@@ -68,8 +70,7 @@ function minimum(array)
 end
 
 array_values = [89, 90, 95, 100, 100, 78, 99, 98, 100, 95]
-@show minimum(array_values)
-
+@show minimum(array_values);
 
 # #### Problem 3.1 (5 points)
 #
@@ -88,13 +89,14 @@ array_values = [89, 90, 95, 100, 100, 78, 99, 98, 100, 95]
 # Your team is trying to compute the average grade for your class, but the following code produces an error.
 
 student_grades = [89, 90, 95, 100, 100, 78, 99, 98, 100, 95]
-
 function class_average(grades)
   average_grade = mean(student_grades)
   return average_grade
 end
 
-@show average_grade
+#nb try #hide
+@show average_grade;
+#nb catch err; showerror(stderr, err); end  #hide
 
 # #### Problem 4.1 (5 points)
 #
@@ -126,7 +128,7 @@ for i in 1:length(car_miles)
     gallon = car_miles[1][2]
     mpg[i] = calculate_MPG((miles, gallon))
 end  
-@show mpg
+@show mpg;
 
 # ##### Problem 5.1 (5 points)
 #
@@ -155,7 +157,7 @@ function mystery_function(values)
 end
 
 list_of_values = [1, 2, 3, 4, 3, 4, 2, 1]
-@show mystery_function(list_of_values)
+@show mystery_function(list_of_values);
 
 # #### Problem 6.1 (5 points)
 #
