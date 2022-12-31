@@ -1,6 +1,3 @@
-[submodule "website/_assets/lecture-notes"]
-	path = website/_assets/lecture-notes
-	url = https://github.com/vsrikrish/systems-lecture-notes.git
 [submodule "website/_hw/hw1"]
 	path = website/_hw/hw1
 	url = https://github.com/ClimateRiskAnalysis/hw1
