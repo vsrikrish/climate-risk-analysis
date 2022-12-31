@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
+   
+    <link rel="stylesheet" href="/climate-risk-analysis/libs/highlight/github.min.css">
+   
+    <script src="/climate-risk-analysis/libs/clipboard.min.js"></script>
   
   <link rel="stylesheet" href="/climate-risk-analysis/css/franklin.css">
 <link rel="stylesheet" href="/climate-risk-analysis/css/poole_hyde.css">
@@ -47,7 +51,7 @@
 
 <!-- Content appended here -->
 <div class="franklin-content"><div class="banner"><h1 id="assignment_logistics"><a href="#assignment_logistics" class="header-anchor">Assignment Logistics</a></h1></div>
-<div class="franklin-toc"><ol><li><a href="#getting_assignments">Getting Assignments</a><ol><li><a href="#why_are_we_using_github_classroom">Why Are We Using GitHub Classroom?</a></li><li><a href="#accepting_an_assignment">Accepting An Assignment</a></li><li><a href="#typesetting_math">Typesetting Math</a></li></ol></li></ol></div>
+<div class="franklin-toc"><ol><li><a href="#getting_assignments">Getting Assignments</a><ol><li><a href="#why_are_we_using_github_classroom">Why Are We Using GitHub Classroom?</a></li><li><a href="#accepting_an_assignment">Accepting An Assignment</a></li></ol></li><li><a href="#working_with_jupyter_notebooks">Working with Jupyter Notebooks</a><ol><li><a href="#editing_with_vs_code">Editing With VS Code</a></li><li><a href="#editing_with_ijulia">Editing With IJulia</a></li><li><a href="#typesetting_math">Typesetting Math</a></li></ol></li><li><a href="#submitting_assignments">Submitting Assignments</a><ol><li><a href="#format_of_gradescope_submissions">Format of Gradescope Submissions</a></li><li><a href="#converting_notebooks_to_pdf">Converting Notebooks to PDF</a></li></ol></li></ol></div>
 <h2 id="getting_assignments"><a href="#getting_assignments" class="header-anchor">Getting Assignments</a></h2>
 <p>We will use GitHub Classroom to manage assignments and projects this semester. GitHub Classroom will send out invites when assignments are ready, and will create an individual or group repository for you to work in. You will need <a href="/climate-risk-analysis/software#setup_an_account">a GitHub account</a>.</p>
 <h3 id="why_are_we_using_github_classroom"><a href="#why_are_we_using_github_classroom" class="header-anchor">Why Are We Using GitHub Classroom?</a></h3>
@@ -75,8 +79,31 @@
 </li>
 </ol>
 <p>Your new repository will be called &quot;hwx-&lt;your-GitHub-username&gt; and will be linked to your account &#40;and listed under the list of your account&#39;s repositories&#41;.</p>
+<h2 id="working_with_jupyter_notebooks"><a href="#working_with_jupyter_notebooks" class="header-anchor">Working with Jupyter Notebooks</a></h2>
+<p>The main file in your repository that you will be editing will be named <code>hwx.ipynb</code>, which is a <a href="https://jupyter.org/">Jupyter notebook</a>. These notebooks allow the integration of text and code, and can be run with a variety of programming languages, including Julia &#40;via the <code>IJulia.jl</code> package&#41;. However, running them with Julia kernels &#40;the backend allowing Julia code to be evaluated&#41; requires some setup. There are several cloud-based solutions that you could use, but these can often take time &#40;to allow server space to free up&#41; or cost money, so we&#39;ll focus on local options.</p>
+<h3 id="editing_with_vs_code"><a href="#editing_with_vs_code" class="header-anchor">Editing With VS Code</a></h3>
+<p><a href="https://code.visualstudio.com/">VS Code</a> is the integrated development environment &#40;IDE&#41; that we recommend, though other setups are possible for other IDEs. VS Code has a full-featured &#91;Julia extension&#93; which includes support for Jupyter notebooks. After <a href="/climate-risk-analysis/software/#install-julia">installing Julia</a>, the Julia VS Code extension should automatically detect your Julia version &#40;let me know if this does not work&#41;, allowing it to be used for Jupyter notebooks, as well as for running Julia scripts and opening a REPL for code evaluation. </p>
+<p>Once the extension is installed, you should be able to open the <code>.ipynb</code> file and edit it. Attempting to run cells will prompt you to select a kernel if you haven&#39;t already done so. </p>
+<h3 id="editing_with_ijulia"><a href="#editing_with_ijulia" class="header-anchor">Editing With IJulia</a></h3>
+<p>Another option is to install the <a href="https://github.com/JuliaLang/IJulia.jl"><code>IJulia.jl</code></a> package. You can open a browser-based notebook interface with the following REPL commands:</p>
+<pre><code class="julia-repl hljs">using IJulia
+notebook()</code></pre>
+<p>and can navigate to your local repository folder and open the notebook.</p>
 <h3 id="typesetting_math"><a href="#typesetting_math" class="header-anchor">Typesetting Math</a></h3>
 <p>You can typeset math using LaTeX syntax. If LaTeX is output from a Julia block, this will also be rendered appropriately.</p>
+<h2 id="submitting_assignments"><a href="#submitting_assignments" class="header-anchor">Submitting Assignments</a></h2>
+<h3 id="format_of_gradescope_submissions"><a href="#format_of_gradescope_submissions" class="header-anchor">Format of Gradescope Submissions</a></h3>
+<p>You should submit your assignments as PDFs, not as notebooks &#40;e.g. don&#39;t submit <code>.ipynb</code> files&#41;. Before converting to a PDF, make sure that you have evaluated all of the cells in whatever </p>
+<h3 id="converting_notebooks_to_pdf"><a href="#converting_notebooks_to_pdf" class="header-anchor">Converting Notebooks to PDF</a></h3>
+<p>There are several different methods to produce a PDF from your notebook <em>after running all cells</em> &#40;so the output is displayed&#41; and saving. We will describe one of them which does not involve installing anything else. If you have a Python installation and have installed the <code>jupyter</code> Python package, you can use the <a href="https://nbconvert.readthedocs.io/en/latest/usage.html"><code>nbconvert</code> tool</a>, or you can convert using VS Code or IJulia&#39;s export functionality if you have a Python installation &#40;export to HTML and save as PDF&#41; or Python and LaTeX installed &#40;directly convert to PDF&#41;. If you would like help with these options, come talk to Vivek.</p>
+<h4 id="converting_with_nbviewer"><a href="#converting_with_nbviewer" class="header-anchor">Converting with NBViewer</a></h4>
+<p>After you&#39;ve evaluated your notebook&#39;s cells, saved this version of the notebook, and <a href="/climate-risk-analysis/software/#commit-changes">committed</a> and <a href="/climate-risk-analysis/software/#pushing-commits">pushed</a> the <code>.ipynb</code> file to GitHub, you can navigate to your repository and click on the <code>.ipynb</code> file, which should open a page which looks like the following:</p>
+<p><img src="/climate-risk-analysis/assets/images/github-notebook.png" alt="Notebook Displayed Within GitHub" /></p>
+<p>Copy the page&#39;s URL, and go to <a href="https://nbviewer.org/">NBViewer</a>. Paste the URL into the prompt, as shown in the image below.</p>
+<p><img src="/climate-risk-analysis/assets/images/nbviewer.png" alt="Pasting GitHub Notebook URL into NBViewer" /></p>
+<p>Opening this will display your notebook:</p>
+<p><img src="/climate-risk-analysis/assets/images/nbviewer-open.png" alt="Notebook Open in NBViewer" /></p>
+<p>Then you can use your browser to print to a PDF, which can be submitted to Gradescope.</p>
 <div class="page-foot">
   <div class="copyright">
     <a href="https://github.com/vsrikrish/environmental-systems-analysis/"><b><img class="github-logo" src="https://unpkg.com/ionicons@5.1.2/dist/svg/logo-github.svg"></img> repository for this site.</b></a></br>
@@ -86,6 +113,72 @@
 </div>
 </div><!-- CONTENT ENDS HERE -->
     </div>  <!-- div: content container -->
+    
+    
+        
+
+
+        <!-- http://tutsplus.github.io/clipboard/ -->
+
+<script>
+    (function(){
+    
+        // Get the elements.
+        // - the 'pre' element.
+        // - the 'div' with the 'paste-content' id.
+    
+        var pre = document.getElementsByTagName('pre');
+    
+        // Add a copy button in the 'pre' element.
+        // which only has the className of 'language-'.
+    
+        for (var i = 0; i < pre.length; i++) {
+            var isLanguage = pre[i].children[0].className.indexOf('language-');
+    
+            if ( isLanguage === 0 ) {
+                var button           = document.createElement('button');
+                        button.className = 'copy-button';
+                        button.textContent = 'Copy';
+    
+                        pre[i].appendChild(button);
+            }
+        };
+    
+        // Run Clipboard
+    
+        var copyCode = new Clipboard('.copy-button', {
+            target: function(trigger) {
+                return trigger.previousElementSibling;
+        }
+        });
+    
+        // On success:
+        // - Change the "Copy" text to "Copied".
+        // - Swap it to "Copy" in 2s.
+        // - Lead user to the "contenteditable" area with Velocity scroll.
+    
+        copyCode.on('success', function(event) {
+            event.clearSelection();
+            event.trigger.textContent = 'Copied';
+            window.setTimeout(function() {
+                event.trigger.textContent = 'Copy';
+            }, 2000);
+    
+        });
+    
+        // On error (Safari):
+        // - Change the  "Press Ctrl+C to copy"
+        // - Swap it to "Copy" in 2s.
+    
+        copyCode.on('error', function(event) {
+            event.trigger.textContent = 'Press "Ctrl + C" to copy';
+            window.setTimeout(function() {
+                event.trigger.textContent = 'Copy';
+            }, 5000);
+        });
+    
+    })();
+</script>
     
     
   </body>
