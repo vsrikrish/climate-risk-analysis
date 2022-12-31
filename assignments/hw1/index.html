@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  
+   <link rel="stylesheet" href="/climate-risk-analysis/libs/katex/katex.min.css">
+     
    
     <link rel="stylesheet" href="/climate-risk-analysis/libs/highlight/github.min.css">
    
@@ -53,7 +54,144 @@
 <div class="franklin-content"><div class="banner"><h1 id="title_topic"><a href="#title_topic" class="header-anchor">Homework 1: Julia Coding</a></h1></div>
 Here is <a href="https://github.com/ClimateRiskAnalysis/hw1/">the repository for this problem set</a>. </p>
 <p><strong>If you are enrolled in the class, make sure you use the GitHub Classroom link from the Ed Discussion Board rather than downloading directly</strong>.</p>
-<p><p><span style="color:red;">// Literate file matching '/_hw/hw1/hw1.jl' not found. //</span></p>
+<p><div class="franklin-toc"><ol><li><a href="#overview">Overview</a><ol><li><a href="#instructions">Instructions</a></li></ol></li><li><a href="#problems_total_100_points">Problems &#40;Total: 100 Points&#41;</a><ol><li><a href="#problem_1_15_points">Problem 1 &#40;15 points&#41;</a></li><li><a href="#problem_2_25_points">Problem 2 &#40;25 points&#41;</a></li><li><a href="#problem_3_15_points">Problem 3 &#40;15 points&#41;</a></li><li><a href="#problem_4_15_points">Problem 4 &#40;15 points&#41;</a></li><li><a href="#problem_5_15_points">Problem 5 &#40;15 points&#41;</a></li><li><a href="#problem_6_15_points">Problem 6 &#40;15 points&#41;</a></li></ol></li></ol></div><h2 id="overview"><a href="#overview" class="header-anchor">Overview</a></h2>
+<h3 id="instructions"><a href="#instructions" class="header-anchor">Instructions</a></h3>
+<p>This homework consists of two parts:</p>
+<ul>
+<li><p>Problems 1 and 2 involve writing Julia functions to ensure that you have a good grip on basic Julia syntax.</p>
+</li>
+<li><p>Problems 3-6 consist of a series of code snippets for you to interpret and debug. For Problems 3-5, you will be asked to identify relevant error&#40;s&#41; and fix the code. For Problem 6, the code works as intended; your goal is to identify the code&#39;s purpose by following its logic.</p>
+</li>
+</ul>
+<h2 id="problems_total_100_points"><a href="#problems_total_100_points" class="header-anchor">Problems &#40;Total: 100 Points&#41;</a></h2>
+<h3 id="problem_1_15_points"><a href="#problem_1_15_points" class="header-anchor">Problem 1 &#40;15 points&#41;</a></h3>
+<p>This problem involves implementing Newton&#39;s method for computing square roots; it was shamelessly copied from MIT&#39;s <a href="https://computationalthinking.mit.edu/Spring21/hw0/">Introduction to Computational Thinking</a>.</p>
+<h4 id="problem_11_10_points"><a href="#problem_11_10_points" class="header-anchor">Problem 1.1 &#40;10 points&#41;</a></h4>
+<p>Implement the following algorithm in a function <code>newton_sqrt</code>:</p>
+<p>Given <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">x &gt; 0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span>:</p>
+<ol>
+<li><p>Take a guess <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">a</span></span></span></span>.</p>
+</li>
+<li><p>Divide <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">x</span></span></span></span> by <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">a</span></span></span></span>.</p>
+</li>
+<li><p>Update <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">a</span></span></span></span> as the average of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mi mathvariant="normal">/</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">x/a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">x</span><span class="mord">/</span><span class="mord mathnormal">a</span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">a</span></span></span></span>.</p>
+</li>
+<li><p>Repeat until <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mi mathvariant="normal">/</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">x/a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">x</span><span class="mord">/</span><span class="mord mathnormal">a</span></span></span></span> is within a tolerance of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ε</mi></mrow><annotation encoding="application/x-tex">\varepsilon</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">ε</span></span></span></span> from <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">a</span></span></span></span>..</p>
+</li>
+<li><p>Return <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>≈</mo><msqrt><mi>x</mi></msqrt></mrow><annotation encoding="application/x-tex">a \approx \sqrt{x}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.48312em;vertical-align:0em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.04em;vertical-align:-0.23972em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8002800000000001em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="padding-left:0.833em;"><span class="mord mathnormal">x</span></span></span><span style="top:-2.76028em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg width='400em' height='1.08em' viewBox='0 0 400000 1080' preserveAspectRatio='xMinYMin slice'><path d='M95,702
+c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
+c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
+c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
+s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
+c69,-144,104.5,-217.7,106.5,-221
+l0 -0
+c5.3,-9.3,12,-14,20,-14
+H400000v40H845.2724
+s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
+c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
+M834 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.23972em;"><span></span></span></span></span></span></span></span></span>.</p>
+</li>
+</ol>
+<h4 id="problem_12_5_points"><a href="#problem_12_5_points" class="header-anchor">Problem 1.2 &#40;5 points&#41;</a></h4>
+<p>Use your <code>newton_sqrt</code> function to compute <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msqrt><mn>2</mn></msqrt></mrow><annotation encoding="application/x-tex">\sqrt{2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.04em;vertical-align:-0.13278em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.90722em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="padding-left:0.833em;"><span class="mord">2</span></span></span><span style="top:-2.86722em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg width='400em' height='1.08em' viewBox='0 0 400000 1080' preserveAspectRatio='xMinYMin slice'><path d='M95,702
+c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
+c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
+c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
+s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
+c69,-144,104.5,-217.7,106.5,-221
+l0 -0
+c5.3,-9.3,12,-14,20,-14
+H400000v40H845.2724
+s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
+c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
+M834 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.13278em;"><span></span></span></span></span></span></span></span></span> to within a tolerance of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ε</mi><mo>=</mo><mn>0.01</mn></mrow><annotation encoding="application/x-tex">\varepsilon = 0.01</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">ε</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0.01</span></span></span></span></p>
+<h3 id="problem_2_25_points"><a href="#problem_2_25_points" class="header-anchor">Problem 2 &#40;25 points&#41;</a></h3>
+<h4 id="problem_21_10_points"><a href="#problem_21_10_points" class="header-anchor">Problem 2.1 &#40;10 points&#41;</a></h4>
+<p>Load the <code>Distributions.jl</code> package &#40;which is provided in the notebook environment&#41; and sample 100 variables from a normal distribution with mean 1 and standard deviation 5, e.g. <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>i</mi></msub><mo>∼</mo><mi>N</mi><mo stretchy="false">(</mo><mn>1</mn><mo separator="true">,</mo><mn>5</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">x_i \sim N(1, 5)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mopen">(</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">5</span><span class="mclose">)</span></span></span></span>.</p>
+<h4 id="problem_22_10_points"><a href="#problem_22_10_points" class="header-anchor">Problem 2.2 &#40;10 points&#41;</a></h4>
+<p>Write a function <code>mean_loop</code> to compute the mean of this vector <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover accent="true"><mi>x</mi><mo>ˉ</mo></mover></mrow><annotation encoding="application/x-tex">\bar{x}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.56778em;vertical-align:0em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.56778em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal">x</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.22222em;"><span class="mord">ˉ</span></span></span></span></span></span></span></span></span></span> using a <code>for</code> loop.</p>
+<h4 id="problem_23_5_points"><a href="#problem_23_5_points" class="header-anchor">Problem 2.3 &#40;5 points&#41;</a></h4>
+<p>Use broadcasting to subtract the mean <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover accent="true"><mi>x</mi><mo>ˉ</mo></mover></mrow><annotation encoding="application/x-tex">\bar{x}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.56778em;vertical-align:0em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.56778em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal">x</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.22222em;"><span class="mord">ˉ</span></span></span></span></span></span></span></span></span></span> from each element of your vector of sampled variables.</p>
+<h3 id="problem_3_15_points"><a href="#problem_3_15_points" class="header-anchor">Problem 3 &#40;15 points&#41;</a></h3>
+<p>You&#39;ve been tasked with writing code to identify the minimum value in an array. You cannot use a predefined function. Your colleague suggested the function below, but it does not return the minimum value.</p>
+<pre><code class="julia hljs"><span class="hljs-keyword">function</span> minimum(array)
+    min_value = <span class="hljs-number">0</span> <span class="hljs-comment"># variable which stores minimum value</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">1</span>:length(array)
+        <span class="hljs-keyword">if</span> array[i] &lt; min_value
+            min_value = array[i]
+        <span class="hljs-keyword">end</span>
+    <span class="hljs-keyword">end</span>
+    <span class="hljs-keyword">return</span> min_value
+<span class="hljs-keyword">end</span>
+
+array_values = [<span class="hljs-number">89</span>, <span class="hljs-number">90</span>, <span class="hljs-number">95</span>, <span class="hljs-number">100</span>, <span class="hljs-number">100</span>, <span class="hljs-number">78</span>, <span class="hljs-number">99</span>, <span class="hljs-number">98</span>, <span class="hljs-number">100</span>, <span class="hljs-number">95</span>]
+<span class="hljs-meta">@show</span> minimum(array_values);</code></pre><pre><code class="plaintext hljs">minimum(array_values) = 0
+</code></pre>
+<h4 id="problem_31_5_points"><a href="#problem_31_5_points" class="header-anchor">Problem 3.1 &#40;5 points&#41;</a></h4>
+<p>Describe the logic error.</p>
+<h4 id="problem_32_5_points"><a href="#problem_32_5_points" class="header-anchor">Problem 3.2 &#40;5 points&#41;</a></h4>
+<p>Write a fixed version of the function.</p>
+<h4 id="problem_33_5_points"><a href="#problem_33_5_points" class="header-anchor">Problem 3.3 &#40;5 points&#41;</a></h4>
+<p>Use your fixed function to find the minimum value of <code>array_values</code>.</p>
+<h3 id="problem_4_15_points"><a href="#problem_4_15_points" class="header-anchor">Problem 4 &#40;15 points&#41;</a></h3>
+<p>Your team is trying to compute the average grade for your class, but the following code produces an error.</p>
+<pre><code class="julia hljs">student_grades = [<span class="hljs-number">89</span>, <span class="hljs-number">90</span>, <span class="hljs-number">95</span>, <span class="hljs-number">100</span>, <span class="hljs-number">100</span>, <span class="hljs-number">78</span>, <span class="hljs-number">99</span>, <span class="hljs-number">98</span>, <span class="hljs-number">100</span>, <span class="hljs-number">95</span>]
+<span class="hljs-keyword">function</span> class_average(grades)
+  average_grade = mean(student_grades)
+  <span class="hljs-keyword">return</span> average_grade
+<span class="hljs-keyword">end</span>
+
+<span class="hljs-meta">@show</span> average_grade;</code></pre>
+<h4 id="problem_41_5_points"><a href="#problem_41_5_points" class="header-anchor">Problem 4.1 &#40;5 points&#41;</a></h4>
+<p>Describe the logic and/or syntax error.</p>
+<h4 id="problem_42_5_points"><a href="#problem_42_5_points" class="header-anchor">Problem 4.2 &#40;5 points&#41;</a></h4>
+<p>Write a fixed version of the code.</p>
+<h4 id="problem_43_5_points"><a href="#problem_43_5_points" class="header-anchor">Problem 4.3 &#40;5 points&#41;</a></h4>
+<p>Use your fixed code to compute the average grade for the class.</p>
+<h3 id="problem_5_15_points"><a href="#problem_5_15_points" class="header-anchor">Problem 5 &#40;15 points&#41;</a></h3>
+<p>Your team has collected data on the mileage of different car models. You want to calculate the average mileage per gallon &#40;MPG&#41; for the different cars, but your code produces the same value for all of the vehicles, which makes you suspicious.</p>
+<pre><code class="julia hljs"><span class="hljs-comment"># function to calculate MPG given a tuple of miles and gallons</span>
+<span class="hljs-keyword">function</span> calculate_MPG((miles, gallons))
+    <span class="hljs-keyword">return</span> miles / gallons
+<span class="hljs-keyword">end</span>
+
+car_miles =  [(<span class="hljs-number">334</span>, <span class="hljs-number">11</span>), (<span class="hljs-number">289</span>, <span class="hljs-number">15</span>), (<span class="hljs-number">306</span>, <span class="hljs-number">12</span>), (<span class="hljs-number">303</span>, <span class="hljs-number">20</span>), (<span class="hljs-number">350</span>, <span class="hljs-number">20</span>), (<span class="hljs-number">294</span>, <span class="hljs-number">14</span>)]
+
+mpg = zeros(length(car_miles))
+
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">1</span>:length(car_miles)
+    miles = car_miles[<span class="hljs-number">1</span>][<span class="hljs-number">1</span>]
+    gallon = car_miles[<span class="hljs-number">1</span>][<span class="hljs-number">2</span>]
+    mpg[i] = calculate_MPG((miles, gallon))
+<span class="hljs-keyword">end</span>
+<span class="hljs-meta">@show</span> mpg;</code></pre><pre><code class="plaintext hljs">mpg = [30.363636363636363, 30.363636363636363, 30.363636363636363, 30.363636363636363, 30.363636363636363, 30.363636363636363]
+</code></pre>
+<h5 id="problem_51_5_points"><a href="#problem_51_5_points" class="header-anchor">Problem 5.1 &#40;5 points&#41;</a></h5>
+<p>Describe the logic error.</p>
+<h4 id="problem_52_5_points"><a href="#problem_52_5_points" class="header-anchor">Problem 5.2 &#40;5 points&#41;</a></h4>
+<p>Write a fixed version of the code.</p>
+<h4 id="problem_53_5_points"><a href="#problem_53_5_points" class="header-anchor">Problem 5.3 &#40;5 points&#41;</a></h4>
+<p>Use your fixed code to compute the MPGs.</p>
+<h3 id="problem_6_15_points"><a href="#problem_6_15_points" class="header-anchor">Problem 6 &#40;15 points&#41;</a></h3>
+<p>You&#39;ve been handed some code to analyze. The original coder was not very considerate of other potential users: the function is called <code>mystery_function</code> and there are no comments explaining the purpose of the code. It appears to take in an array and return some numbers, and you&#39;ve been assured that the code works as intended.</p>
+<pre><code class="julia hljs"><span class="hljs-keyword">function</span> mystery_function(values)
+    y = []
+    <span class="hljs-keyword">for</span> v <span class="hljs-keyword">in</span> values
+        <span class="hljs-keyword">if</span> !(v <span class="hljs-keyword">in</span> y)
+            append!(y, v)
+        <span class="hljs-keyword">end</span>
+    <span class="hljs-keyword">end</span>
+    <span class="hljs-keyword">return</span> y
+<span class="hljs-keyword">end</span>
+
+list_of_values = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>]
+<span class="hljs-meta">@show</span> mystery_function(list_of_values);</code></pre><pre><code class="plaintext hljs">mystery_function(list_of_values) = Any[1, 2, 3, 4]
+</code></pre>
+<h4 id="problem_61_5_points"><a href="#problem_61_5_points" class="header-anchor">Problem 6.1 &#40;5 points&#41;</a></h4>
+<p>Explain the purpose of <code>mystery_function</code>.</p>
+<h4 id="problem_62_10_points"><a href="#problem_62_10_points" class="header-anchor">Problem 6.2 &#40;10 points&#41;</a></h4>
+<p>Add comments to each line of code, explaining what it is doing and why.</p>
+
 <div class="page-foot">
   <div class="copyright">
     <a href="https://github.com/vsrikrish/climate-risk-analysis/"><b><img class="github-logo" src="https://unpkg.com/ionicons@5.1.2/dist/svg/logo-github.svg"></img> repository for this site.</b></a></br>
@@ -63,6 +201,11 @@ Here is <a href="https://github.com/ClimateRiskAnalysis/hw1/">the repository for
 </div>
 </div><!-- CONTENT ENDS HERE -->
     </div>  <!-- div: content container -->
+    
+        
+
+
+
     
     
         
