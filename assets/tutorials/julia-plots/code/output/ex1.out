@@ -1,0 +1,7 @@
+Unable to automatically download/install artifact 'HarfBuzz' from sources listed in '/home/runner/.julia/packages/HarfBuzz_jll/zavaV/Artifacts.toml'.
+Sources attempted:
+- https://pkg.julialang.org/artifact/ee20a84d0166c074dfa736b642902dd87b4da48d
+    Error: HTTP/2 502 while requesting https://pkg.julialang.org/artifact/ee20a84d0166c074dfa736b642902dd87b4da48d
+- https://github.com/JuliaBinaryWrappers/HarfBuzz_jll.jl/releases/download/HarfBuzz-v2.8.1+1/HarfBuzz.v2.8.1.x86_64-linux-gnu.tar.gz
+    Error: HTTP/2 403 while requesting https://github.com/JuliaBinaryWrappers/HarfBuzz_jll.jl/releases/download/HarfBuzz-v2.8.1+1/HarfBuzz.v2.8.1.x86_64-linux-gnu.tar.gz
+
