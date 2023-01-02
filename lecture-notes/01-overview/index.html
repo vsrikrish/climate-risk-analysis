@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Class Overview</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+    <link rel="stylesheet" href="../stylesheets/katex.min.css">
+
+
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+.title[Class Overview]
+<hr>
+.left-column[.course[BEE 6940] .subtitle[Lecture 1]] .date[January 23, 2023]
+
+???
+
+Hello everyone, and welcome to BEE 6940, Climate Risk Analysis. My name is Professor Vivek Srikrishnan, in Biological & Environmental Engineering here at Cornell. 
+ 
+---
+
+name: toc
+class: left
+
+# Table of Contents
+<hr>
+
+1. [Welcome and Overview](#welcome)
+2. [Policies](#policies)
+3. [Computing Tools](#tools)
+5. [Tips](#tips)
+6. *[What Is Climate Risk?](#climate)*
+
+???
+This is an overview of the topics we'll cover in today's lecture. The italics around the last topic reflect that it's an "optional" topic that we may get to if time allows.
+
+---
+
+name: overview
+class: center, middle
+
+# Class Overview
+<hr>
+
+???
+Let's get started with an overview of the course's goals.
+
+---
+class: left
+
+# Climate Risks are Diverse and Growing
+
+<hr>
+
+.center[![:img Map of top climate risks in 2040, 75%](https://static01.nyt.com/images/2021/03/25/learning/ClimateRiskMapLN/ClimateRiskMapLN-superJumbo.png)]
+.center[.cite[Source: [Four Twenty Seven and the New York Times](https://www.nytimes.com/2021/03/25/learning/whats-going-on-in-this-graph-global-climate-risks.html)]]
+
+???
+Climate change impacts the intensity, frequency, and duration of a variety of hazards, affecting a large number of sectors. There is certainly a lot of spatial and temporal variability to these changes, but they are highly uncertain, for a number of reasons. Despite this uncertainty, we have to make decisions about how to manage these risks on relatively short time scales.
+
+This map actually understates things by focusing on an estimate of the "top" risk in a given location, and there can be a number of compounding effects from multiple stressors. More on that later.
+
+---
+class: left
+
+# Motivating Questions
+<hr>
+
+1. What are the potential impacts of climate change?
+2. What can we say about their uncertainties?
+3. What are the impacts of those uncertainties on the performance of risk-management strategies?
+
+???
+This raises a number of questions, but here are the ones that we are going to focus on in this class. Note that these are questions which will motivate our content, but any given course can only scratch the surface. 
+
+We will spend most of our effort on question 2, as any given analysis will depend on the context: what are impacted systems and sectors, what hazards might affect those systems and sectors, and what options exist for risk management? However, we can (and will) learn how to apply appropriate and principled uncertainty analysis measures, and explore why this matters for decision analyses.
+
+---
+name: poll-answer
+layout: true
+class: left
+
+# Poll
+<hr>
+
+.left-column[.center[![Poll Everywhere QR Code](../vsrikrish-polleverywhere.png)]]
+
+.right-column[
+
+*URL*: <https://pollev.com/vsrikrish>
+
+*Text*: **VSRIKRISH** to 22333, then message]
+
+---
+***What are you hoping to get out of this course?***
+
+???
+Let's do a poll: what are you hoping to get out of this class? 
+
+We're using Poll Everywhere for this class: you can scan the QR Code, go to the URL, or text.
+
+---
+layout: false
+class: left
+
+# Course Goals
+<hr>
+
+- Identify sources of uncertainties impacting climate risk assessment and management.
+- Apply *appropriate* uncertainty quantification and characterization methods.
+- Understand how uncertainty can impact decision-making.
+
+???
+With those motivating questions in mind, here are the overarching goals for the course.
+
+There is a major emphasis on the application of methods, but also to ensure that we understand how to gauge the appropriateness and limitations of various approaches, particularly for UC/UQ. My goal is to find a sweet spot between two extremes: purely mechanical "crank-turning" and too theoretical. Please let me know if we're achieving this! This semester is a good chance to dial this in, but I can only ensure that I'm doing that with your feedback.
+
+---
+# Course Organization
+<hr>
+
+1. Introduction to Climate Risk
+2. Uncertainty Analysis
+  1. Uncertainty Quantification
+  2. *Sensitivity Analysis*
+  3. *Scenario Discovery*
+3. Impacts of Uncertainty on Decision-Making
+
+**Motivating Example**: Coastal Flood Risk
+
+???
+The course is organized in three large sections. Our major motivating example is sea-level rise and coastal flood risk management, but these approaches and considerations should apply to other contexts.
+
+---
+name: policies
+class: center, middle
+
+# Course Logistics and Policies
+<hr>
+
+???
+Now let's discuss the class itself and how it will operate.
+
+---
+layout: true
+name: structure
+class: left
+
+# Class Structure
+<hr>
+
+---
+**Instructor**: Vivek Srikrishnan ([viveks@cornell.edu](mailto: viveks@cornell.edu))
+
+**TA**: Chloe Darnell (ced227@cornell.edu)
+
+**Website**: <https://viveks.me/climate-risk-analysis>
+
+**Meetings**: MW 1-2:15pm, 225 Riley-Robb Hall
+- Mondays: primarily lecture
+- Wednesdays: primarily lab/discussion mixture
+
+**Office Hours**: By appointment (or come chat after class)
+
+???
+We meet twice a week, on MW, for 75 minutes. Office hours will be largely by appointment, given how small the course is; if there's a lot of demand, I'm happy to revisit this later. 
+
+The website is an important resource, and will be linked from Canvas for simplicity's sake. All lecture notes, lab notebooks, etc. will be linked through there, and there are a number of resources and tutorials as well. Let's take a quick look now.
+
+The idea behind the lecture/lab split is to spend Mondays discussing *why*, *when*, and *what* for a given topic, and on Wednesdays to address *how*. 
+
+---
+class: left
+
+## Mondays
+
+- Lecture-focused
+- Slides available ahead of time on [website](https://viveks.me/climate-risk-analysis)
+
+???
+As mentioned, the goal on Mondays is to motivate an approach and develop an understanding of relevant methods. Slides will be made available on the website, but they may not be finalized until right before/after the class (if there are mistakes, for example).
+
+---
+class: left
+
+## Wednesdays
+
+- Computation and discussion focused
+- Notebooks will be made available on GitHub / [website](https://viveks.me/climate-risk-analysis2.
+- Bring laptop and clone relevant repositories ahead of class.
+- If unable to bring laptop, can work with others.
+
+???
+Wednesdays are a "lab" day. We will use Jupyter notebooks to get some hands-on experience working with particular approaches. These will be linked on the website schedule via a relevant GitHub repository, which will also include all needed packages and environment files. Make sure you clone these ahead of time.
+
+---
+layout: true
+class: left
+
+# Class Policies
+<hr>
+
+---
+class: left 
+
+## Accommodations
+
+If you encounter any obstacles or access barriers in this class, let me know ASAP.
+
+If special accommodations would help, reach out to me with your SDS letter as early as possible.
+
+???
+My goal in this class is to minimize any access barriers. I almost certainly won't succeed, so if you would benefit from any accommodations, please let me know as soon as possible. If anything official is required, send me your SDS letter as soon as you have one, but we can make more informal accommodations in the mean time.
+
+
+---
+class: left
+
+## Diversity and Inclusion
+
+**Goal**: Foster an inclusive learning environment.
+
+--
+- Please be open and respectul of others' backgrounds, beliefs, and viewpoints.
+- Communicate in a respectful manner, and be aware that how we come off in writing does not always reflect intent. 
+- Miscommunications and misinterpretations happen, assume good faith!
+
+???
+Inclusivity is an essential part of creating a vibrant learning environment --- this class works best when we can all learn with and from each other. Please extend good faith to everyone in this class --- how we come off in writing isn't always what we intend!
+
+---
+class: left
+
+## Grading
+
+- Class Participation: 10%
+- Reading Annotations: 10%
+- Reading Responses: 10%
+- In-Class Lab Notebooks: 20%
+- Homework Assignments: 25%
+- Final Project: 25%
+
+???
+Here is the grade breakdown.
+
+---
+class: left
+
+## Participation 
+
+- Class and online discussions
+- No specific targets, but based on sense of activity and contribution to the class.
+- **Please ask questions!** If you're struggling to understand something, it's likely my fault, not yours!
+
+???
+The class participation is based on "vibes" of how much you're contributing to the class discussions, both in-person and online.
+
+I don't want to set specific participation targets, so this won't become an exercise in counting and box-checking, and there may be some weeks where you feel like you have more or less to contribute. That's ok! But in general, this class will work the best when we can all learn with each other.
+
+---
+class: left
+
+## Reading Annotations
+
+- Weekly assigned readings (starting next week)
+- Social annotation "assignments" on Canvas using [Hypothesis](https://web.hypothes.is/).
+- Annotation grade involves annotating / interacting with other's annotations in a meaningful fashion showing engagement.
+- Grade based on annotations prior to Wednesday's lab day, but can add later for broader use.
+
+???
+We have weekly assigned readings, and one of the grade components associated with those are participation in social annotations. We'll use Hypothesis, which is a social annotation framework built into Canvas --- no downloads or installations required. Let's see how this looks for the syllabus now.
+
+Your grade is again based on demonstrating engagement with the reading and/or the annotations of others, rather than counting the number of annotations --- quality over quantity. I'm also basing the grade off annotations prior to Wednesday to help ensure we all have discussion points for the class discussion. Feel free to add annotations afterwards if you have additional thoughts.
+
+---
+class: left
+
+## Reading Responses
+
+- Other grade component related to readings is one-page written "responses".
+  - What are your key takeaways, critiques, thoughts on next steps, etc?
+- Submit PDFs to Gradescope prior to next Monday's class.
+- Grade based only on completion.
+- I'll drop two of these. Life happens!
+
+???
+The other grade component related to the readings is a written response: takeaways, critiques, etc.
+
+This should be no more than one page. Submit a PDF to Gradescope prior to the next Monday's class. I'll only grade these based on completion, and will drop up to two missing ones.
+
+---
+class: left
+
+## Lab Notebooks
+
+- Typically one every Wednesday, based on the week's topic.
+- Available via GitHub, repositories linked from the class schedule.
+- Intended to gain familiarity with the *how* &mdash; applying the methods from class.
+- Submit PDF of notebook to Gradescope by the end of the weekend, 10% off per day late.
+- Graded based on completion, will drop one.
+
+---
+class: left
+
+## Homework Assignments
+
+- Less frequent (maybe 5-6?)
+- Notebook-based, repositories from GitHub Classroom.
+- Submit PDF of notebook to Gradescope by the due date (typically a Thursday at 9PM ET), 10% off per day late.
+- Will involve more setup / conceptual work than labs.
+- Collaboration encouraged, but give credit to those you worked with.
+
+---
+class: left
+
+## Term Project
+
+- Work in groups of 2 to apply concepts from class (or beyond!) to a climate risk problem of your choice.
+- Poster presentations in class the last week of the semester.
+- Submit poster PDF to Gradescope.
+- Some checkpoints along the way:
+  - Proposal
+  - Draft of work plan
+
+
+---
+class: left
+
+## Attendance
+
+- Not required, but not attending will impact participation scores and might reduce ability to complete notebooks and
+homeworks.
+- **Please do not come to class if sick!** Email me and I will send you a Zoom link.
+- Masks not required, but *please be thoughtful* &mdash; e.g. if you've traveled recently, might be useful to wear one until you're sure you're not sick.
+
+---
+layout: false
+name: tools
+class: center, middle
+
+# Software Tools
+<hr>
+
+---
+layout: true
+name: software-template
+class: left
+
+# Software Tools
+<hr>
+
+---
+class: left
+
+## Julia
+
+This class will use [the Julia programming language](https://julialang.org).
+- Powerful, modern, fast
+- Demos and tips available [on the website (under "Julia Examples")](https://viveks.me/climate-risk-analysis/examples/).
+
+---
+template: poll-answer
+
+***What is your programming background?***
+
+---
+template: software-template
+class: left
+
+## GitHub
+
+[GitHub](https://github.com): Industry-standard version control system.
+- Good to incorporate in your research workflow.
+- GitHub Classroom will be used to distribute homework assignments.
+- Repositories will be kept public to facilitate collaboration.
+- Please share repository links when looking for code help, rather than emailing scripts.
+
+---
+template: poll-answer
+
+***Have you used GitHub before?***
+
+---
+template: software-template
+class: left
+
+## Gradescope
+
+[Gradescope](https://gradescope.com) will be used for submitting PDFs of notebooks, reading responses, homework.
+
+---
+layout: false
+class: center, middle
+name: tips
+
+# Tips For Success
+<hr>
+
+---
+class: left
+
+# Tips For Success
+<hr>
+
+- Start assignments early: you should be able to pick away at them early on.
+- Ask questions, try to help each other. This course is intended to be collaborative, and we all have different backgrounds, interests, and perspectives.
+- Give me feedback!
+
+---
+class: left
+
+# Upcoming Schedule
+<hr>
+
+**Wednesday**: Make sure everyone has a GitHub account, is set up with Julia, and work on basic Julia skills notebook.
+
+**Next Monday**: What is "climate risk"?
+
+    </textarea>
+
+
+    <script src="../javascript/remark.min.js" type="text/javascript"></script>
+    <script defer src="../javascript/katex.min.js"></script>
+    <script defer src="../javascript/auto-render.min.js"></script>
+    <script type="text/javascript" src="../javascript/call-javascript.js"></script>
+
+  </body>
+</html>

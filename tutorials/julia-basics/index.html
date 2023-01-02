@@ -102,7 +102,7 @@ This tutorial can be downloaded as a <a href="https://raw.githubusercontent.com/
 Closest candidates are:
   +(::Any, ::Any, !Matched::Any, !Matched::Any...) at operators.jl:591
   +(!Matched::T, ::T) where T&lt;:Union{Int128, Int16, Int32, Int64, Int8, UInt128, UInt16, UInt32, UInt64, UInt8} at int.jl:87
-  +(!Matched::Distributions.Laplace, ::Real) at ~/.julia/packages/Distributions/QLJcf/src/univariate/continuous/laplace.jl:117
+  +(!Matched::SentinelArrays.ChainedVectorIndex, ::Integer) at ~/.julia/packages/SentinelArrays/EQtMp/src/chainedvector.jl:206
   ...
 </code></pre>
 <p>However, you can try to tell Julia to interpret a string encoding a numeric character as a numeric value using the <code>parse&#40;&#41;</code> function. This can also be used to encode a numeric data as a string.</p>
