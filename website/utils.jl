@@ -117,7 +117,7 @@ function hfun_solution_badges(params)
 end
 
 function lecture_badge(num)  
-  path_names = filter(isdir, readdir("_assets/lecture-notes"; join=true))
+  path_names = filter(isdir, readdir("lecture-notes"; join=true))
   lecture_path = filter(x -> contains(x, num), path_names)
   name = split(lecture_path[1], "-")[3]
   link = string("/", strip(lecture_path[1], '_'), "/index.html")

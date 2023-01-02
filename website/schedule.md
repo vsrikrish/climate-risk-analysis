@@ -8,11 +8,11 @@ The following table gives a schedule of topics we will cover in lecture, along w
 
 Links to readings from peer-reviewed literature may require a Cornell login for access, and the articles will also be made available as Library Reserves in Canvas.
 
-To save the lecture slides as a pdf, print the HTML to a PDF using your browser.
+To save the lecture slides as a PDF, save the web version of the slides to a PDF using your browser.
 
 Please make sure that you have updated (with a `git pull`) your local version of the class lab notebook repository ahead of lab sessions.
 
 | Week | Topic | Slides | Lab Notebook | Readings | Resources |
 |:-------:|-------|:----:|:-----:|----------|-----------|
 |   | *Overview of Climate Risk Management* | 
-| 1 | What Is Climate Risk Management? |   |  | [Keller et al (2021)](https://www-annualreviews-org.proxy.library.cornell.edu/doi/full/10.1146/annurev-earth-080320-055847) | |
+| 1 | Class Overview | {{lecture_badge 01}}  |  | [Keller et al (2021)](https://www-annualreviews-org.proxy.library.cornell.edu/doi/full/10.1146/annurev-earth-080320-055847) | |
