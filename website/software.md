@@ -10,9 +10,9 @@
 
 ### Install Julia
 
-Go to <https://julialang.org/downloads> and download the latest stable release (**v1.7.3**, as of 7/8/22, but any 1.7.x should work cleanly with the homework and notebook environments) for your operating system. Install Julia using the downloaded file.
+Go to <https://julialang.org/downloads> and download the latest stable release (**v1.8.2**, as of 1/2/23, but any 1.8.x should work cleanly with the homework and notebook environments) for your operating system. Install Julia using the downloaded file.
 
-After installing, make sure that you can run Julia. You may have a "Julia 1.7" program on your computer, or you can run the command `julia` in a command line. Either way, you should see a window (or terminal) like the following:
+After installing, make sure that you can run Julia. You may have a "Julia 1.8" program on your computer, or you can run the command `julia` in a command line. Either way, you should see a window (or terminal) like the following:
 
 ![Image of Julia Terminal](/assets/images/julia-terminal.png)
 This is called the [**Julia REPL**](https://docs.julialang.org/en/v1/stdlib/REPL/), which is the primary environment for interactively executing Julia commands. Make sure that you can execute `1+1`.
