@@ -15,5 +15,5 @@ Please make sure that you have updated (with a `git pull`) your local version of
 | Week | Topic | Slides | Lab Notebook | Readings | Resources |
 |:-------:|-------|:----:|:-----:|----------|-----------|
 |   | *Overview of Climate Risk Management* | 
-| 1 | Class Overview | {{lecture_badges 01}}  |  |  | |
+| 1 | Class Overview | {{lecture_badges 01}}  | {{lab_badges 01}} |  | |
 | 2 | Intro to Climate Risk Management | | | | [Keller et al (2021)](https://www-annualreviews-org.proxy.library.cornell.edu/doi/full/10.1146/annurev-earth-080320-055847) | |
