@@ -122,9 +122,7 @@ function lecture_badge(num)
   name = split(lecture_path[1], "-")[3]
   link = string("/", strip(lecture_path[1], '_'), "/index.html")
   alt_text = string(titlecase(name), " Notes")
-  badge_right = "web"
-  badge_left = "Notes"
-  badge_url = string("https://img.shields.io/static/v1?label=", badge_left, "&message=", badge_right, "&color=b31b1b&labelColor=222222&style=flat")
+  badge_url = string("https://img.shields.io/static/v1?label=Web&message=Lecture%20$num&color=b31b1b&labelColor=222222&style=flat")
   badge_string = string(
     "[!", "[", alt_text, "]", 
     "(", badge_url, ")", "]",
@@ -147,14 +145,9 @@ function hfun_lecture_badges(params::Vector{String})
 end
 
 function lab_badge(num)  
-  path_names = filter(isdir, readdir("_assets/lecture-notes"; join=true))
-  lecture_path = filter(x -> contains(x, num), path_names)
-  name = split(lecture_path[1], "-")[3]
-  link = string("/", strip(lecture_path[1], '_'), "/index.html")
-  alt_text = string(titlecase(name), " Notes")
-  badge_right = "web"
-  badge_left = "Notes"
-  badge_url = string("https://img.shields.io/static/v1?label=", badge_left, "&message=", badge_right, "&color=b31b1b&labelColor=222222&style=flat")
+  link = "https://github.com/ClimateRiskAnalysis/lab$num"
+  alt_text = "Lab $num"
+  badge_url = "https://img.shields.io/static/v1?label=Repository&logo=github&message=Lab%20$num&color=b31b1b&labelColor=222222&style=flat"
   badge_string = string(
     "[!", "[", alt_text, "]", 
     "(", badge_url, ")", "]",
@@ -169,7 +162,7 @@ function hfun_lab_badges(params::Vector{String})
   io = IOBuffer()
   write(io, Franklin.fd2html("""
     @@badges
-    $(lecture_badge(name))
+    $(lab_badge(name))
     @@
     """, internal=true)
   )
