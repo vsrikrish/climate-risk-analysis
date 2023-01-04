@@ -7,6 +7,7 @@ prepath = "climate-risk-analysis"
 hasmath = false
 generate_rss = false
 
+keep_path = ["lecture-notes/"]
 ignore = ["node_modules/"]
 weave = false
 +++
