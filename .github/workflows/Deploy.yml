@@ -5,8 +5,6 @@ on:
       - main
       - Spring23
     paths-ignore:
-      - 'lecture-notes/**'
-      - 'syllabus/**'
       - '.github/workflows/**'
   workflow_dispatch:
   repository_dispatch:
