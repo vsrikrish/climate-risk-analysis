@@ -8,9 +8,8 @@
 
 # ### Instructions
 #
-# This homework consists of two parts:
-# - Problems 1 and 2 involve writing Julia functions to ensure that you have a good grip on basic Julia syntax. 
-# - Problems 3-6 consist of a series of code snippets for you to interpret and debug. For Problems 3-5, you will be asked to identify relevant error(s) and fix the code. For Problem 6, the code works as intended; your goal is to identify the code's purpose by following its logic.
+# - Problems 1-4 consist of a series of code snippets for you to interpret and debug. For Problems 1-3, you will be asked to identify relevant error(s) and fix the code. For Problem 4, the code works as intended; your goal is to identify the code's purpose by following its logic.
+# - Problem 5 asks you to rewrite a "script" into a function, which you will then use to conduct an experiment.
 
 #nb # ### Load Environment
 #nb #
