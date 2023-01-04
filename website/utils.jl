@@ -21,62 +21,32 @@ end
 
 
 function hw_badge(num, ftype)  
-  if ftype == "html"
-    link = string("/assignments/hw", num, "/")
-    alt_text = string("HW", num, " Web Instructions")
-    badge_right = "web"
-  elseif ftype == "pdf"
-    link = string("/assignments/hw", num, "/hw", num, ".pdf")
-    alt_text = string("HW", num, " PDF Instructions")
-    badge_right = "pdf"
-  end
-  badge_left = string("HW", num)
-  badge_url = string("https://img.shields.io/static/v1?label=", badge_left, "&message=", badge_right, "&color=b31b1b&labelColor=222222&style=flat")
-  badge_string = string(
-    "[!", "[", alt_text, "]", 
-    "(", badge_url, ")", "]",
-    "(", link, ")"
-  )
+  link = "/assignments/hw$num/"
+  alt_text = "HW$num Instructions"
+  badge_right = "HW$num Assignment"
+  badge_left = "Web"
+  badge_url = "https://img.shields.io/static/v1?label=$badge_left&message=$badge_right&color=b31b1b&labelColor=222222&style=flat"
+  badge_string = "[![$alt_text]($badge_url)]($link)"
   return badge_string
 end
 
-function rubric_badge(num, ftype)  
-  if ftype == "html"
-    link = string("/assignments/hw", num, "/rubric/")
-    alt_text = string("HW", num, " Web Rubric")
-    badge_right = "web"
-  elseif ftype == "pdf"
-    link = string("/assignments/hw", num, "/rubric.pdf")
-    alt_text = string("HW", num, " PDF Rubric")
-    badge_right = "pdf"
-  end
-  badge_left = "rubric"
-  badge_url = string("https://img.shields.io/static/v1?label=", badge_left, "&message=", badge_right, "&color=b31b1b&labelColor=222222&style=flat")
-  badge_string = string(
-    "[!", "[", alt_text, "]", 
-    "(", badge_url, ")", "]",
-    "(", link, ")"
-  )
+function rubric_badge(num)  
+  link = "/assignments/hw$num/rubric/"
+  alt_text = "HW$num Rubric"
+  badge_right = "HW$num Rubric"
+  badge_left = "Web"
+  badge_url = "https://img.shields.io/static/v1?label=$badge_left&message=$badge_right&color=b31b1b&labelColor=222222&style=flat"
+  badge_string = "[![$alt_text]($badge_url)]($link)"
   return badge_string
 end
 
-function solution_badge(num, ftype)  
-  if ftype == "html"
-    link = string("/assignments/hw", num, "/vivek-solution/")
-    alt_text = string("HW", num, " Solution")
-    badge_right = "web"
-  elseif ftype == "pdf"
-    link = string("/assignments/hw", num, "/vivek-solution.pdf")
-    alt_text = string("HW", num, " Solution")
-    badge_right = "pdf"
-  end
-  badge_left = "solution"
-  badge_url = string("https://img.shields.io/static/v1?label=", badge_left, "&message=", badge_right, "&color=b31b1b&labelColor=222222&style=flat")
-  badge_string = string(
-    "[!", "[", alt_text, "]", 
-    "(", badge_url, ")", "]",
-    "(", link, ")"
-  )
+function solution_badge(num)  
+  link = "/assignments/hw$num/solution/"
+  alt_text = string("HW", num, " Solution")
+  badge_right = "HW$num Solution"
+  badge_left = "Web"
+  badge_url = "https://img.shields.io/static/v1?label=$badge_left&message=$badge_right&color=b31b1b&labelColor=222222&style=flat"
+  badge_string = "[![$alt_text]($badge_url)]($link)"
   return badge_string
 end
 
@@ -85,7 +55,7 @@ function hfun_hw_badges(params)
   io = IOBuffer()
   write(io, Franklin.fd2html("""
     @@badges
-    $(hw_badge(num, "html"))
+    $(hw_badge(num))
     @@
     """, internal=true)
   )
@@ -97,7 +67,7 @@ function hfun_rubric_badges(params)
   io = IOBuffer()
   write(io, Franklin.fd2html("""
     @@badges
-    $(rubric_badge(num, "html"))
+    $(rubric_badge(num))
     @@
     """, internal=true)
   )
@@ -109,7 +79,7 @@ function hfun_solution_badges(params)
   io = IOBuffer()
   write(io, Franklin.fd2html("""
     @@badges
-    $(solution_badge(num, "html"))
+    $(solution_badge(num))
     @@
     """, internal=true)
   )
@@ -122,12 +92,8 @@ function lecture_badge(num)
   name = split(lecture_path[1], "-")[3]
   link = string("/", strip(lecture_path[1], '_'), "/index.html")
   alt_text = string(titlecase(name), " Notes")
-  badge_url = string("https://img.shields.io/static/v1?label=Web&message=Lecture%20$num&color=b31b1b&labelColor=222222&style=flat")
-  badge_string = string(
-    "[!", "[", alt_text, "]", 
-    "(", badge_url, ")", "]",
-    "(", link, ")"
-  )
+  badge_url = "https://img.shields.io/static/v1?label=Web&message=Lecture%20$num&color=b31b1b&labelColor=222222&style=flat"
+  badge_string = "[![$alt_text]($badge_url)]($link)"
   return badge_string
 end
 
@@ -148,11 +114,7 @@ function lab_badge(num)
   link = "https://github.com/ClimateRiskAnalysis/lab$num"
   alt_text = "Lab $num"
   badge_url = "https://img.shields.io/static/v1?label=Repository&logo=github&message=Lab%20$num&color=b31b1b&labelColor=222222&style=flat"
-  badge_string = string(
-    "[!", "[", alt_text, "]", 
-    "(", badge_url, ")", "]",
-    "(", link, ")"
-  )
+  badge_string = "[![$alt_text]($badge_url)]($link)"
   return badge_string
 end
 
@@ -180,12 +142,8 @@ function project_badge(nm, ftype)
     badge_right = "pdf"
   end
   badge_left = "project"
-  badge_url = string("https://img.shields.io/static/v1?label=", badge_left, "&message=", badge_right, "&color=b31b1b&labelColor=222222&style=flat")
-  badge_string = string(
-    "[!", "[", alt_text, "]", 
-    "(", badge_url, ")", "]",
-    "(", link, ")"
-  )
+  badge_url = "https://img.shields.io/static/v1?label=$badge_left&message=$badge_right&color=b31b1b&labelColor=222222&style=flat"
+  badge_string = "[![$alt_text]($badge_url)]($link)"
   return badge_string
 end
 
