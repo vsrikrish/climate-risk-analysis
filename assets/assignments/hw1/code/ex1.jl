@@ -1,6 +1,6 @@
 # This file was generated, do not modify it. # hide
 function minimum(array)
-    min_value = 0 # variable which stores minimum value
+    min_value = 0
     for i in 1:length(array)
         if array[i] < min_value
             min_value = array[i]

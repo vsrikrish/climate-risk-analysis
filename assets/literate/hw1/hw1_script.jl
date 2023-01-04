@@ -1,7 +1,7 @@
 # This file was generated, do not modify it.
 
 function minimum(array)
-    min_value = 0 # variable which stores minimum value
+    min_value = 0
     for i in 1:length(array)
         if array[i] < min_value
             min_value = array[i]
@@ -23,7 +23,6 @@ try #hide
 @show average_grade;
 catch err; showerror(stderr, err); end  #hide
 
-# function to calculate MPG given a tuple of miles and gallons
 function calculate_MPG((miles, gallons))
     return miles / gallons
 end
@@ -51,4 +50,22 @@ end
 
 list_of_values = [1, 2, 3, 4, 3, 4, 2, 1]
 @show mystery_function(list_of_values);
+
+# initialize variables, as this code works by iterating over each coin flip and adding
+let payoff = 0, count = 0
+
+    # loop over coin flips and compute payoff: this code is pretty literal with the rules of the game other than just using `rand()` to produce the heads vs. tails coin outcome.
+    for i in 1:10
+        U = rand()
+        if U < 0.5
+            count += 1
+        else
+            count = 0
+        end
+        if count == 3
+            payoff = 1
+        end
+    end
+    @show payoff;
+end
 

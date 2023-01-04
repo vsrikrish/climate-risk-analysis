@@ -1,5 +1,4 @@
 # This file was generated, do not modify it. # hide
-# function to calculate MPG given a tuple of miles and gallons
 function calculate_MPG((miles, gallons))
     return miles / gallons
 end
