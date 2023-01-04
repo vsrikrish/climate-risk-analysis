@@ -21,6 +21,11 @@ jobs:
         persist-credentials: false
         submodules: true
         fetch-depth: 0
+        # Update references
+    - name: Update Submodules
+      run: |
+        git pull --recurse-submodules
+        git submodule update --remote --recursive
     # NOTE: Python is necessary for the pre-rendering (minification) step
     - name: Install python
       uses: actions/setup-python@v2
