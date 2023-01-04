@@ -101,7 +101,7 @@ Write a fixed version of the code.
 
 Use your fixed code to compute the MPGs.
 
-### Problem 4 (15 points)
+### Problem 4 (20 points)
 
 You've been handed some code to analyze. The original coder was not very considerate of other potential users: the function is called `mystery_function` and there are no comments explaining the purpose of the code. It appears to take in an array and return some numbers, and you've been assured that the code works as intended.
 
@@ -124,7 +124,7 @@ list_of_values = [1, 2, 3, 4, 3, 4, 2, 1]
 
 Explain the purpose of `mystery_function`.
 
-#### Problem 4.2 (5 points)
+#### Problem 4.2 (10 points)
 
 Add comments to the code, explaining why and how it works. Refer to ["Best Practices for Writing Code Comments"](https://stackoverflow.blog/2021/12/23/best-practices-for-writing-code-comments/), and remember that bad comments can be just as bad as no comments at all. You do not need to add comments to every line (in fact, this is very bad practice), but you should note the *purpose* of every "section" of code, and add comments explaining any code sequences that you don't immediately understand.
 
