@@ -20,7 +20,7 @@ function lx_baz(com, _)
 end
 
 
-function hw_badge(num, ftype)  
+function hw_badge(num)  
   link = "/assignments/hw$num/"
   alt_text = "HW$num Instructions"
   badge_right = "HW$num Assignment"
@@ -42,7 +42,7 @@ end
 
 function solution_badge(num)  
   link = "/assignments/hw$num/solution/"
-  alt_text = string("HW", num, " Solution")
+  alt_text = "HW$num Solution"
   badge_right = "HW$num Solution"
   badge_left = "Web"
   badge_url = "https://img.shields.io/static/v1?label=$badge_left&message=$badge_right&color=b31b1b&labelColor=222222&style=flat"
