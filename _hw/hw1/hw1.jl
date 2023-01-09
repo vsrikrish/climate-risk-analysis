@@ -158,7 +158,7 @@ let payoff = 0, count = 0
     end
     @show payoff;
 end
-# However, you would like to conduct multiple trials to compute the expected payoff, and might want to look at coins which are not fair ($p = 0.5$). To minimize copying-and-pasting code, you decide to turn this script into a function.
+# However, you would like to conduct multiple trials to compute the expected payoff, and might want to look at coins which are not fair ($p \neq 0.5$). To minimize copying-and-pasting code, you decide to turn this script into a function.
 
 # #### Problem 5.1 (10 points)
 # 
