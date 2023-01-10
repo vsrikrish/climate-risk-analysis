@@ -86,13 +86,22 @@ function hfun_solution_badges(params)
   return String(take!(io))
 end
 
-function lecture_badge(num)  
+function lecture_badge(num, ftype)  
   path_names = filter(isdir, readdir("lecture-notes"; join=true))
   lecture_path = filter(x -> contains(x, num), path_names)
+  lecture_name = split(lecture_path[1], "/")[2]
   name = split(lecture_path[1], "-")[3]
-  link = string("/", strip(lecture_path[1], '_'), "/index.html")
+  if ftype == "html"
+    link = "/lecture-notes/$lecture_name/index.html"
+  elseif ftype == "pdf"
+    link = link = "/lecture-notes/$lecture_name/$lecture_name.pdf"
+  end
   alt_text = string(titlecase(name), " Notes")
-  badge_url = "https://img.shields.io/static/v1?label=Web&message=Lecture%20$num&color=b31b1b&labelColor=222222&style=flat"
+  if ftype == "html"
+    badge_url = "https://img.shields.io/static/v1?label=Web&message=Lecture%20$num&color=b31b1b&labelColor=222222&style=flat"
+  elseif ftype == "pdf"
+    badge_url = "https://img.shields.io/static/v1?label=PDF&message=Lecture%20$num&color=b31b1b&labelColor=222222&style=flat"
+  end
   badge_string = "[![$alt_text]($badge_url)]($link)"
   return badge_string
 end
@@ -103,7 +112,8 @@ function hfun_lecture_badges(params::Vector{String})
   io = IOBuffer()
   write(io, Franklin.fd2html("""
     @@badges
-    $(lecture_badge(name))
+    $(lecture_badge(name, "html")) 
+    $(lecture_badge(name, "pdf"))
     @@
     """, internal=true)
   )
