@@ -202,7 +202,7 @@ topics = ["Class Overview",
           "Frequentist Uncertainty Quantification: The Bootstrap",
           "Bayesian Computation and the Role of Priors",
           "Markov Chain Monte Carlo",
-          "Model Calibration and Discrepancies",
+          "Model Calibration with MCMC and Discrepancies",
           "Extreme Events and Extreme Value Distributions",
           "Hypothesis Testing and Model Selection",
           "Verification, Validation, and Extrapolation",
@@ -234,5 +234,6 @@ cschedule = DataFrame(Dates=cdays, Topic=topics)
 
 # highlight holidays
 #pretty_table(cschedule; nosubheader=true, backend=Val(:latex), tf=tf_latex_modern, formatters=ft_nomissing, row_names=1:numweeks, row_name_alignment=:r, row_name_column_title = "Week", alignment=:l)
+cschedule[!, :Readings] = readings
 pretty_table(cschedule; nosubheader=true, backend=Val(:html), tf=tf_html_minimalist, formatters=ft_nomissing, row_names=1:numweeks, row_name_alignment=:r, row_name_column_title = "Week", alignment=:l)
 ```
