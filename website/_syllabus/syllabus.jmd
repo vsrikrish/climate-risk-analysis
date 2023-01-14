@@ -9,6 +9,21 @@ weave_options:
   number_sections: FALSE
 ---
 
+```julia; echo = false
+import Pkg;
+Pkg.activate(dirname(@__DIR__));
+
+using Dates;
+using DataFrames;
+using PrettyTables;
+
+semester_d1 = "2023-01-23";
+semester_end = "2023-05-09";
+holiday_dates = ["2023-02-27", "2023-04-03", "2023-04-05"];
+holidays = DataFrame(Date=Dates.format.(Date.(holiday_dates), "mm-dd"), 
+                    Holiday=["February Break", "Spring Break", "Spring Break"]);
+```
+
 ## Course Information
 
 - **Instructor**: Prof. Vivek Srikrishnan ([viveks@cornell.edu](mailto:viveks@cornell.edu))
@@ -165,25 +180,59 @@ In general, please err on the side of not attending class if you suspect that yo
 
 ## Tentative Lesson Plan
 
-This lesson plan is subject to change; see the schedule on the course website for more details and up-to-date information.
+This lesson plan is provided only as a rough overview of covered topics and is subject (even likely) to change; see the schedule on the course website for more details and up-to-date information.
 
-| Week | Topic | Reading |
-|:-----|:------|:--------|
-|   | *Class Introduction* | |
-| 1 | Class Overview |  |
-| 2 | Climate Risk and Deep Uncertainty | Keller et al (2021). "Climate risk management". Annual Review of Earth and Planetary Sciences, 49, 95–116. <https://doi.org/10.1146/annurev-earth-080320-055847> |
-|  | *Uncertainty Analysis* | |
-| 3 | Motivating Problem: Coastal Flood Risk | Oddo et al. (2020). "Deep uncertainties in Sea‐Level rise and storm surge projections: implications for coastal flood risk management". Risk Analysis, 40(1), 153–168. <https://doi.org/10.1111/risa.12888> |
-| 4 | Quantifying Uncertainties With The Bootstrap | Efron & Tibshirani (1986). "Bootstrap methods for standard errors, confidence intervals, and other measures of statistical accuracy". Statistical Science, 1(1), 54–75. <https://doi.org/10.1214/ss/​1177013815> |
-| 5 | Bayesian Computation and the Role of Priors | Gelman et al (2017). "The Prior Can Often Only Be Understood in the Context of the Likelihood". Entropy, 19(10), 555. <https://doi.org/10.3390/e19100555> |
-| 6 | Bayesian Computation and The Role of Priors (cont'd) | |
-| 7 | Markov Chain Monte Carlo | Chapter 11 of Gelman et al (2013). Bayesian Data Analysis. (Third). Boca Raton, FL: CRC Press. Retrieved from <http://www.stat.columbia.edu/~gelman/book/BDA3.pdf> |
-| 8 | Model Calibration and Discrepancies | Ruckert et al (2017). "The effects of time-varying observation errors on semi-empirical sea-level projections". Climatic Change, 140(3–4), 349–360. <https://doi.org/10.1007/s10584-016-1858-z> |
-| 9 |  Extreme Events and Extreme Value Distributions | Ghil et al (2011). "Extreme events: dynamics, statistics and prediction". Nonlinear Processes in Geophysics, 18(3), 295–350. <https://doi.org/10.5194/npg-18-295-2011> |
-| 10 | Hypothesis Testing and Model Selection | Wong et al. (2018). "Neglecting model structural uncertainty underestimates upper tails of flood hazard". Environmental Research Letters, 13(7), 074019. <https://doi.org/10.1088/1748-9326/aacb3d> |
-| 11 | Identifying Factors and Scenarios of Interest | Chapters 3 and 4 of Reed et al (2022). Addressing uncertainty in multisector dynamics research. Zenodo. <https://doi.org/10.5281/zenodo.6110623> |
-| | *Decision-Making and Risk Management* | |
-| 12 | Bayesian Decision-Making and Loss Functions | Oppenheimer et al (2008). "Negative learning". Climatic Change, 89(1–2), 155–172. <https://doi.org/10.1007/s10584-008-9405-1> |
-| 13 | Time Preferences and Discounting | Weitzman, M. L. (1998). Why the far-distant future should be discounted at its lowest possible rate. Journal of Environmental Economics and Management, 36(3), 201–208. <https://doi.org/10.1006/jeem.1998.1052> |
-| 14 | Robustness Under Deep Uncertainty | Herman et al (2015). "How Should Robustness Be Defined for Water Systems Planning under Change?". Journal of Water Resources Planning and Management, 141(10), 04015012. <https://doi.org/10.1061/(ASCE)WR.1943-5452.0000509> |
-| 15 | Verification, Validation, and Extrapolation | Reading: Oreskes et al (1994). "Verification, validation, and confirmation of numerical models in the earth sciences". Science, 263(5147), 641–646. <https://doi.org/10.1126/science.263.5147.641> |
+```julia; echo=false; results="raw"
+
+# set vector of class dates (including holidays)
+cdates = filter(d -> Dates.dayname(d) ∈ ["Monday", "Wednesday"], Date(semester_d1):Day(1):Date(semester_end));
+cdates = cdates[findall(d -> d ∉ Date.(holiday_dates), cdates)]
+# find weeks from first week of classes
+cweeks = week.(cdates) .- (week(Date(semester_d1)) - 1)
+numweeks = length(unique(cweeks))
+get_days(n) = Dates.format.(cdates[cweeks .== n], "u dd")
+
+# set vector of class topics
+topics = ["Class Overview",
+          "Intro to Climate Risk",
+          "Motivating Problem: Coastal Flood Risk",
+          "Climate System Uncertainty, Correlations, and Risk",
+          "Scenarios and Decision Making Under Uncertainty",
+          "Overview of Uncertainty Quantification",
+          "Frequentist Uncertainty Quantification: The Bootstrap",
+          "Bayesian Computation and the Role of Priors",
+          "Markov Chain Monte Carlo",
+          "Model Calibration and Discrepancies",
+          "Extreme Events and Extreme Value Distributions",
+          "Hypothesis Testing and Model Selection",
+          "Verification, Validation, and Extrapolation",
+          "Time Preferences and Discounting",
+          "Final Project Posters"
+          ]
+
+readings = [nothing,
+            "Keller et al. (2021), \"Climate risk management\"",
+            "Oddo et al. (2020), \"Deep uncertainties in Sea‐Level rise and storm surge projections: implications for coastal flood risk management\"",
+            "Urban & Keller (2009), \"Complementary observational constraints on climate sensitivity.\"",
+            "Morgan & Keith (2008), \"Improving the way we think about projecting future energy use and emissions of carbon dioxide\"",
+            "Efron & Tibshirani (1986), \"Bootstrap methods for standard errors, confidence intervals, and other measures of statistical accuracy\"",
+            nothing,
+            "Gelman et al. (2017), \"The Prior Can Often Only Be Understood in the Context of the Likelihood\"",
+            "Chapter 11 of Gelman et al. (2013), \"Bayesian Data Analysis.\"",
+            "Ruckert et al. (2017), \"The effects of time-varying observation errors on semi-empirical sea-level projections\"",
+            "Ghil et al. (2011), \"Extreme events: dynamics, statistics and prediction\"",
+            "Wong et al. (2018), \"Neglecting model structural uncertainty underestimates upper tails of flood hazard\"",
+            "Oreskes et al (1994), \"Verification, validation, and confirmation of numerical models in the earth sciences\"",
+            "Weitzman, M. L. (1998). \"Why the far-distant future should be discounted at its lowest possible rate\"",
+            nothing
+            ]
+
+# add in holidays
+ctopics = Vector{String}(undef, length(cweeks)); # initialize array
+cdays = join.(get_days.(unique(cweeks)), ", ")
+cschedule = DataFrame(Dates=cdays, Topic=topics)
+
+# highlight holidays
+#pretty_table(cschedule; nosubheader=true, backend=Val(:latex), tf=tf_latex_modern, formatters=ft_nomissing, row_names=1:numweeks, row_name_alignment=:r, row_name_column_title = "Week", alignment=:l)
+pretty_table(cschedule; nosubheader=true, backend=Val(:html), tf=tf_html_minimalist, formatters=ft_nomissing, row_names=1:numweeks, row_name_alignment=:r, row_name_column_title = "Week", alignment=:l)
+```

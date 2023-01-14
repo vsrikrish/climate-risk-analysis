@@ -7,14 +7,11 @@
 \usepackage{graphicx}
 \usepackage{microtype}
 \usepackage{hyperref}
-\usepackage{booktabs}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{1.2ex}
-\usepackage{longtable}
-\setcounter{secnumdepth}{0}
 
 \hypersetup
-       {   pdfauthor = { Vivek Srikrishnan },
+       {   pdfauthor = { Cornell University },
            pdftitle={ BEE 6940: Climate Risk Analysis },
            colorlinks=TRUE,
            linkcolor=black,
@@ -127,6 +124,14 @@
 
 \maketitle
 
+\begin{lstlisting}
+Error: ArgumentError: Package PrettyTables not found in current path, maybe
+ you meant (*@{{\textasciigrave}}@*)import/using .PrettyTables(*@{{\textasciigrave}}@*).
+- Otherwise, run (*@{{\textasciigrave}}@*)import Pkg; Pkg.add((*@{"{}}@*)PrettyTables(*@{"{}}@*))(*@{{\textasciigrave}}@*) to install the Prett
+yTables package.
+\end{lstlisting}
+
+
 \subsection{Course Information}
 \begin{itemize}
 \item \textbf{Instructor}: Prof. Vivek Srikrishnan (\href{mailto:viveks@cornell.edu}{viveks@cornell.edu})
@@ -142,6 +147,7 @@
 
 
 \item \textbf{Website}: \href{https://viveks.me/climate-risk-analysis}{https://viveks.me/climate-risk-analysis}
+
 
 \item \textbf{TA}: Chloe Darnell (\href{mailto:ced227@cornell.edu}{ced227@cornell.edu}); \textbf{Office Hours}: by appointment
 
@@ -315,33 +321,11 @@ The particulars of how COVID-19 will affect class are fluid, depending on Cornel
 In general, please err on the side of not attending class if you suspect that you might be ill, with COVID-19 or anything else. Class is not worth risking your health or that of your classmates.
 
 \subsection{Tentative Lesson Plan}
-This lesson plan is subject to change; see the schedule on the course website for more details and up-to-date information.
+This lesson plan is provided only as a rough overview of covered topics and is subject (even likely) to change; see the schedule on the course website for more details and up-to-date information.
 
-\begin{longtable}{r | p{1.5in} | p{3.5in}}
-Week & Topic & Reading \\
-\toprule
-\endhead
- & \emph{Class Introduction} &  \\
-1 & Class Overview &  \\
-2 & Climate Risk and Deep Uncertainty & Keller et al (2021). "Climate risk management". Annual Review of Earth and Planetary Sciences, 49, 95--116. \href{https://doi.org/10.1146/annurev-earth-080320-055847}{https://doi.org/10.1146/annurev-earth-080320-055847} \\
-\midrule
- & \emph{Uncertainty Analysis} &  \\
-3 & Motivating Problem: Coastal Flood Risk & Oddo et al. (2020). "Deep uncertainties in Sea‐Level rise and storm surge projections: implications for coastal flood risk management". Risk Analysis, 40(1), 153--168. \href{https://doi.org/10.1111/risa.12888}{https://doi.org/10.1111/risa.12888} \\
-4 & Quantifying Uncertainties With The Bootstrap & Efron \& Tibshirani (1986). "Bootstrap methods for standard errors, confidence intervals, and other measures of statistical accuracy". Statistical Science, 1(1), 54--75. \href{https://doi.org/10.1214/ss/​1177013815}{https://doi.org/10.1214/ss/​1177013815} \\
-5 & Bayesian Computation and the Role of Priors & Gelman et al (2017). "The Prior Can Often Only Be Understood in the Context of the Likelihood". Entropy, 19(10), 555. \href{https://doi.org/10.3390/e19100555}{https://doi.org/10.3390/e19100555} \\
-6 & Bayesian Computation and The Role of Priors (cont'd) &  \\
-7 & Markov Chain Monte Carlo & Chapter 11 of Gelman et al (2013). Bayesian Data Analysis. (Third). Boca Raton, FL: CRC Press. Retrieved from \href{http://www.stat.columbia.edu/~gelman/book/BDA3.pdf}{http://www.stat.columbia.edu/{\textasciitilde}gelman/book/BDA3.pdf} \\
-8 & Model Calibration and Discrepancies & Ruckert et al (2017). "The effects of time-varying observation errors on semi-empirical sea-level projections". Climatic Change, 140(3--4), 349--360. \href{https://doi.org/10.1007/s10584-016-1858-z}{https://doi.org/10.1007/s10584-016-1858-z} \\
-9 & Extreme Events and Extreme Value Distributions & Ghil et al (2011). "Extreme events: dynamics, statistics and prediction". Nonlinear Processes in Geophysics, 18(3), 295--350. \href{https://doi.org/10.5194/npg-18-295-2011}{https://doi.org/10.5194/npg-18-295-2011} \\
-10 & Hypothesis Testing and Model Selection & Wong et al. (2018). "Neglecting model structural uncertainty underestimates upper tails of flood hazard". Environmental Research Letters, 13(7), 074019. \href{https://doi.org/10.1088/1748-9326/aacb3d}{https://doi.org/10.1088/1748-9326/aacb3d} \\
-11 & Identifying Factors and Scenarios of Interest & Chapters 3 and 4 of Reed et al (2022). Addressing uncertainty in multisector dynamics research. Zenodo. \href{https://doi.org/10.5281/zenodo.6110623}{https://doi.org/10.5281/zenodo.6110623} \\
-\midrule
- & \emph{Decision-Making and Risk Management} &  \\
-12 & Bayesian Decision-Making and Loss Functions & Oppenheimer et al (2008). "Negative learning". Climatic Change, 89(1--2), 155--172. \href{https://doi.org/10.1007/s10584-008-9405-1}{https://doi.org/10.1007/s10584-008-9405-1} \\
-13 & Time Preferences and Discounting & Weitzman, M. L. (1998). Why the far-distant future should be discounted at its lowest possible rate. Journal of Environmental Economics and Management, 36(3), 201--208. \href{https://doi.org/10.1006/jeem.1998.1052}{https://doi.org/10.1006/jeem.1998.1052} \\
-14 & Robustness Under Deep Uncertainty & Herman et al (2015). "How Should Robustness Be Defined for Water Systems Planning under Change?". Journal of Water Resources Planning and Management, 141(10), 04015012. \href{https://doi.org/10.1061/(ASCE)WR.1943-5452.0000509}{https://doi.org/10.1061/(ASCE)WR.1943-5452.0000509} \\
-15 & Verification, Validation, and Extrapolation & Reading: Oreskes et al (1994). "Verification, validation, and confirmation of numerical models in the earth sciences". Science, 263(5147), 641--646. \href{https://doi.org/10.1126/science.263.5147.641}{https://doi.org/10.1126/science.263.5147.641} \\
-\bottomrule
-\end{longtable}
+
+Error: UndefVarError: semester_d1 not defined
+
+
 
 \end{document}
