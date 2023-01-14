@@ -11,11 +11,6 @@
 \lineskip
 
 \toc 
-
-## Syllabus
-
-You can (and should) download a PDF of the full syllabus [here](../assets/BEE6940-Syllabus.pdf) (or view on Canvas). This page summarizes and goes into more depth on course policies. This page will be kept more up to date than the syllabus as some of these policies evolve over the semester; all changes will be announced on Ed Discussion.
-
 ## Communications
 
 [Email has gone from a convenience to a stressor and a burden](https://annehelen.substack.com/p/how-email-became-work), and [potential email substitutes don't help and may be worse](https://www.vox.com/recode/2019/5/1/18511575/productivity-slack-google-microsoft-facebook). These guidelines are aimed at reducing everyone's stress and improving the quality of our communications as a group.
