@@ -121,7 +121,7 @@ Homeworks will be assigned using GitHub Classroom. They will be provided as Jupy
 
 ### Term Project (25%)
 
-Students will work in groups of 2 to complete a final term project, which will focus on a climate risk management problem of their choice. This project will involve identifying a problem of interest and analyzing it using the methods from this class as a starting point. Groups will submit a one-page proposal (not including references), a draft of the work plan, and a final poster, which can be accompanied by a supplemental PDF. These materials should be submitted through Gradescope.
+Students will work in groups of 2 to complete a final term project, which will focus on a climate risk management problem of their choice. This project will involve identifying a problem of interest and analyzing it using the methods from this class as a starting point. Groups will submit a one-page proposal (not including references), a draft of the work plan, and a final poster, which can be accompanied by a supplemental PDF. These materials should be submitted through Gradescope. On the last day of class, groups will present their project with 5 minute "lightning" talks (and up to 5 minutes of Q&A each). The poster PDFs will be presented digitally, so there will be no need to print them out.
 
 ## Diversity and Inclusion
 
@@ -227,13 +227,14 @@ readings = [nothing,
             nothing
             ]
 
-# add in holidays
 ctopics = Vector{String}(undef, length(cweeks)); # initialize array
 cdays = join.(get_days.(unique(cweeks)), ", ")
 cschedule = DataFrame(Dates=cdays, Topic=topics)
 
-# highlight holidays
-#pretty_table(cschedule; nosubheader=true, backend=Val(:latex), tf=tf_latex_modern, formatters=ft_nomissing, row_names=1:numweeks, row_name_alignment=:r, row_name_column_title = "Week", alignment=:l)
-cschedule[!, :Readings] = readings
-pretty_table(cschedule; nosubheader=true, backend=Val(:html), tf=tf_html_minimalist, formatters=ft_nomissing, row_names=1:numweeks, row_name_alignment=:r, row_name_column_title = "Week", alignment=:l)
+if haskey(WEAVE_ARGS, "out")
+  return pretty_table(cschedule; nosubheader=true, backend=Val(:latex), tf=tf_latex_modern, formatters=ft_nomissing, row_names=1:numweeks, row_name_alignment=:r, row_name_column_title = "Week", alignment=:l)
+else
+  cschedule[!, :Readings] = readings
+  return pretty_table(cschedule; nosubheader=true, backend=Val(:html), tf=tf_html_minimalist, formatters=ft_nomissing, row_names=1:numweeks, row_name_alignment=:r, row_name_column_title = "Week", alignment=:l)
+end
 ```
