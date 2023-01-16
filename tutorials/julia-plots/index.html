@@ -152,7 +152,7 @@ plot(Normal(<span class="hljs-number">2</span>, <span class="hljs-number">5</spa
 <pre><code class="julia hljs"><span class="hljs-keyword">using</span> DataFrames
 dat = DataFrame(a = <span class="hljs-number">1</span>:<span class="hljs-number">10</span>, b = <span class="hljs-number">10</span> .+ rand(<span class="hljs-number">10</span>), c = <span class="hljs-number">10</span> .* rand(<span class="hljs-number">10</span>))
 <span class="hljs-meta">@df</span> dat density([:b :c], color=[:black :red])</code></pre>
-<p><span style="color:red;">// Image matching '/assets/tutorials/julia-plots/code/dataframe-dist.png' not found. //</span></p>
+<img src="/climate-risk-analysis/assets/tutorials/julia-plots/code/output/dataframe-dist.png" alt="">
 <h3 id="editing_plots_manually"><a href="#editing_plots_manually" class="header-anchor">Editing Plots Manually</a></h3>
 <pre><code class="julia hljs">pl = plot(<span class="hljs-number">1</span>:<span class="hljs-number">4</span>,[<span class="hljs-number">1</span>, <span class="hljs-number">4</span>, <span class="hljs-number">9</span>, <span class="hljs-number">16</span>])</code></pre>
 <img src="/climate-risk-analysis/assets/tutorials/julia-plots/code/output/basic-plot.png" alt="">
