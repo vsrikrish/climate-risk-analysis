@@ -201,8 +201,8 @@ get_days(n) = Dates.format.(cdates[cweeks .== n], "u dd")
 # set vector of class topics
 topics = ["Class Overview",
           "Intro to Climate Risk",
-          "Motivating Problem: Coastal Flood Risk",
           "Climate System Uncertainty, Correlations, and Risk",
+          "Motivating Problem: Coastal Flood Risk",
           "Scenarios and Decision Making Under Uncertainty",
           "Overview of Uncertainty Analysis",
           "Frequentist Uncertainty Quantification: The Bootstrap",
