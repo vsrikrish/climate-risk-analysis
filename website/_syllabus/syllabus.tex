@@ -1,23 +1,75 @@
 \documentclass[12pt,a4paper]{article}
 
-\usepackage[a4paper,text={16.5cm,25.2cm},centering]{geometry}
-\usepackage{lmodern}
+\usepackage[a4paper,centering]{geometry}
 \usepackage{amssymb,amsmath}
 \usepackage{bm}
 \usepackage{graphicx}
 \usepackage{microtype}
+\usepackage{abstract}
+\renewcommand{\abstractname}{}    % clear the title
+\renewcommand{\absnamepos}{empty} % originally center
+\newcommand{\blankline}{\quad\pagebreak[2]}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}} 
+\usepackage{longtable,booktabs}
+\usepackage{array}
+\usepackage{calc}
+\usepackage{tabu}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{colortbl}
+
+\definecolor{CBorange}{HTML}{d95f02}
+\definecolor{CBpurple}{HTML}{7570b3}
+\definecolor{CBgreen}{HTML}{1b9e77}
+
+\usepackage{makecell}
 \usepackage{hyperref}
+\hypersetup{breaklinks=true,
+            colorlinks=true,
+            citecolor=MidnightBlue,
+            urlcolor=MidnightBlue,
+            linkcolor=MidnightBlue,
+            pdfborder={0 0 0}}
+\urlstyle{same}  % don't use monospace font for urls
+
+
+\usepackage{parskip}
+\usepackage{titlesec}
+\titlespacing\section{0pt}{12pt plus 4pt minus 2pt}{6pt plus 2pt minus 2pt}
+\titlespacing\subsection{0pt}{12pt plus 4pt minus 2pt}{6pt plus 2pt minus 2pt}
+
+\titleformat{\subsection}{\normalsize\Large}{}{0}{}
+\titleformat*{\subsubsection}{\normalsize\itshape}
+
+\setcounter{secnumdepth}{0}
+
+\usepackage{titling}
+\setlength{\droptitle}{-.25cm}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{lastpage}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\footrulewidth}{0.0pt} 
+\lhead{}
+\chead{}
+\rhead{\footnotesize BEE 6940: Climate Risk Analysis -- Spring 2023}
+\lfoot{}
+\cfoot{\small \thepage/\pageref*{LastPage}}
+\rfoot{}
+
+\fancypagestyle{firststyle}
+{
+\renewcommand{\headrulewidth}{0pt}%
+   \fancyhf{}
+   \fancyfoot[C]{\small \thepage/\pageref*{LastPage}}
+}
+
+
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{1.2ex}
-
-\hypersetup
-       {   pdfauthor = { Cornell University },
-           pdftitle={ BEE 6940: Climate Risk Analysis },
-           colorlinks=TRUE,
-           linkcolor=black,
-           citecolor=blue,
-           urlcolor=blue
-       }
+\setcounter{tocdepth}{2}
 
 \title{ BEE 6940: Climate Risk Analysis }
 
@@ -25,111 +77,18 @@
 
 \date{ Spring 2023 }
 
-\usepackage{upquote}
-\usepackage{listings}
-\usepackage{xcolor}
-\lstset{
-    basicstyle=\ttfamily\footnotesize,
-    upquote=true,
-    breaklines=true,
-    breakindent=0pt,
-    keepspaces=true,
-    showspaces=false,
-    columns=fullflexible,
-    showtabs=false,
-    showstringspaces=false,
-    escapeinside={(*@}{@*)},
-    extendedchars=true,
-}
-\newcommand{\HLJLt}[1]{#1}
-\newcommand{\HLJLw}[1]{#1}
-\newcommand{\HLJLe}[1]{#1}
-\newcommand{\HLJLeB}[1]{#1}
-\newcommand{\HLJLo}[1]{#1}
-\newcommand{\HLJLk}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
-\newcommand{\HLJLkc}[1]{\textcolor[RGB]{59,151,46}{\textit{#1}}}
-\newcommand{\HLJLkd}[1]{\textcolor[RGB]{214,102,97}{\textit{#1}}}
-\newcommand{\HLJLkn}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
-\newcommand{\HLJLkp}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
-\newcommand{\HLJLkr}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
-\newcommand{\HLJLkt}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
-\newcommand{\HLJLn}[1]{#1}
-\newcommand{\HLJLna}[1]{#1}
-\newcommand{\HLJLnb}[1]{#1}
-\newcommand{\HLJLnbp}[1]{#1}
-\newcommand{\HLJLnc}[1]{#1}
-\newcommand{\HLJLncB}[1]{#1}
-\newcommand{\HLJLnd}[1]{\textcolor[RGB]{214,102,97}{#1}}
-\newcommand{\HLJLne}[1]{#1}
-\newcommand{\HLJLneB}[1]{#1}
-\newcommand{\HLJLnf}[1]{\textcolor[RGB]{66,102,213}{#1}}
-\newcommand{\HLJLnfm}[1]{\textcolor[RGB]{66,102,213}{#1}}
-\newcommand{\HLJLnp}[1]{#1}
-\newcommand{\HLJLnl}[1]{#1}
-\newcommand{\HLJLnn}[1]{#1}
-\newcommand{\HLJLno}[1]{#1}
-\newcommand{\HLJLnt}[1]{#1}
-\newcommand{\HLJLnv}[1]{#1}
-\newcommand{\HLJLnvc}[1]{#1}
-\newcommand{\HLJLnvg}[1]{#1}
-\newcommand{\HLJLnvi}[1]{#1}
-\newcommand{\HLJLnvm}[1]{#1}
-\newcommand{\HLJLl}[1]{#1}
-\newcommand{\HLJLld}[1]{\textcolor[RGB]{148,91,176}{\textit{#1}}}
-\newcommand{\HLJLs}[1]{\textcolor[RGB]{201,61,57}{#1}}
-\newcommand{\HLJLsa}[1]{\textcolor[RGB]{201,61,57}{#1}}
-\newcommand{\HLJLsb}[1]{\textcolor[RGB]{201,61,57}{#1}}
-\newcommand{\HLJLsc}[1]{\textcolor[RGB]{201,61,57}{#1}}
-\newcommand{\HLJLsd}[1]{\textcolor[RGB]{201,61,57}{#1}}
-\newcommand{\HLJLsdB}[1]{\textcolor[RGB]{201,61,57}{#1}}
-\newcommand{\HLJLsdC}[1]{\textcolor[RGB]{201,61,57}{#1}}
-\newcommand{\HLJLse}[1]{\textcolor[RGB]{59,151,46}{#1}}
-\newcommand{\HLJLsh}[1]{\textcolor[RGB]{201,61,57}{#1}}
-\newcommand{\HLJLsi}[1]{#1}
-\newcommand{\HLJLso}[1]{\textcolor[RGB]{201,61,57}{#1}}
-\newcommand{\HLJLsr}[1]{\textcolor[RGB]{201,61,57}{#1}}
-\newcommand{\HLJLss}[1]{\textcolor[RGB]{201,61,57}{#1}}
-\newcommand{\HLJLssB}[1]{\textcolor[RGB]{201,61,57}{#1}}
-\newcommand{\HLJLnB}[1]{\textcolor[RGB]{59,151,46}{#1}}
-\newcommand{\HLJLnbB}[1]{\textcolor[RGB]{59,151,46}{#1}}
-\newcommand{\HLJLnfB}[1]{\textcolor[RGB]{59,151,46}{#1}}
-\newcommand{\HLJLnh}[1]{\textcolor[RGB]{59,151,46}{#1}}
-\newcommand{\HLJLni}[1]{\textcolor[RGB]{59,151,46}{#1}}
-\newcommand{\HLJLnil}[1]{\textcolor[RGB]{59,151,46}{#1}}
-\newcommand{\HLJLnoB}[1]{\textcolor[RGB]{59,151,46}{#1}}
-\newcommand{\HLJLoB}[1]{\textcolor[RGB]{102,102,102}{\textbf{#1}}}
-\newcommand{\HLJLow}[1]{\textcolor[RGB]{102,102,102}{\textbf{#1}}}
-\newcommand{\HLJLp}[1]{#1}
-\newcommand{\HLJLc}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
-\newcommand{\HLJLch}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
-\newcommand{\HLJLcm}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
-\newcommand{\HLJLcp}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
-\newcommand{\HLJLcpB}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
-\newcommand{\HLJLcs}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
-\newcommand{\HLJLcsB}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
-\newcommand{\HLJLg}[1]{#1}
-\newcommand{\HLJLgd}[1]{#1}
-\newcommand{\HLJLge}[1]{#1}
-\newcommand{\HLJLgeB}[1]{#1}
-\newcommand{\HLJLgh}[1]{#1}
-\newcommand{\HLJLgi}[1]{#1}
-\newcommand{\HLJLgo}[1]{#1}
-\newcommand{\HLJLgp}[1]{#1}
-\newcommand{\HLJLgs}[1]{#1}
-\newcommand{\HLJLgsB}[1]{#1}
-\newcommand{\HLJLgt}[1]{#1}
-
 
 \begin{document}
 
 \maketitle
 
-\begin{lstlisting}
-Error: ArgumentError: Package PrettyTables not found in current path, maybe
- you meant (*@{{\textasciigrave}}@*)import/using .PrettyTables(*@{{\textasciigrave}}@*).
-- Otherwise, run (*@{{\textasciigrave}}@*)import Pkg; Pkg.add((*@{"{}}@*)PrettyTables(*@{"{}}@*))(*@{{\textasciigrave}}@*) to install the Prett
-yTables package.
-\end{lstlisting}
+\thispagestyle{firststyle}
+
+\noindent\rule{\textwidth}{1pt}
+
+\tableofcontents
+
+\vspace{2mm}
 
 
 \subsection{Course Information}
@@ -257,7 +216,7 @@ Homework assignments will be given as appropriate throughout the course (roughly
 Homeworks will be assigned using GitHub Classroom. They will be provided as Jupyter Notebooks, and should be exported as PDFs before submitting to Gradescope. Rubrics will be provided for each assignment. 
 
 \subsubsection{Term Project (25\%)}
-Students will work in groups of 2 to complete a final term project, which will focus on a climate risk management problem of their choice. This project will involve identifying a problem of interest and analyzing it using the methods from this class as a starting point. Groups will submit a one-page proposal (not including references), a draft of the work plan, and a final poster, which can be accompanied by a supplemental PDF. These materials should be submitted through Gradescope.
+Students will work in groups of 2 to complete a final term project, which will focus on a climate risk management problem of their choice. This project will involve identifying a problem of interest and analyzing it using the methods from this class as a starting point. Groups will submit a one-page proposal (not including references), a draft of the work plan, and a final poster, which can be accompanied by a supplemental PDF. These materials should be submitted through Gradescope. On the last day of class, groups will present their project with 5 minute "lightning" talks (and up to 5 minutes of Q\&A each). The poster PDFs will be presented digitally, so there will be no need to print them out.
 
 \subsection{Diversity and Inclusion}
 Our goal in this class is to foster an inclusive learning environment and make everyone feel comfortable in the classroom, regardless of social identity, background, and specific learning needs. As engineers, our work touches on many critical aspects of society, and questions of inclusion and social justice cannot be separated from considerations of systems analysis, objective selection, risk analysis, and trade-offs. 
@@ -311,7 +270,7 @@ Let me know if you have any access barriers in this course, whether they relate 
 If you need more immediate accommodations, but do not yet have a letter, please let me know and then follow up with SDS.
 
 \subsection{Mental Health resources}
-We all have to take care of our mental health, just as we would our physical health. As a student, you may experience a range of issues which can negatively impact your mental health. Please do not ignore any of these stressors, or feel like you have to navigate these challenges alone! You are part of a community of students, faculty, and staff, who have a responsibility to look for one another's well-being. If you are struggling with managing your mental health, or if you believe a classmate may be struggling, please reach out to the course instructor, the TA, or, for broader support, please take advantage of Cornell's mental health resources \href{https://mentalhealth.cornell.edu/}{https://mentalhealth.cornell.edu/}.
+We all have to take care of our mental health, just as we would our physical health. As a student, you may experience a range of issues which can negatively impact your mental health. Please do not ignore any of these stressors, or feel like you have to navigate these challenges alone! You are part of a community of students, faculty, and staff, who have a responsibility to look for one another's well-being. If you are struggling with managing your mental health, or if you believe a classmate may be struggling, please reach out to the course instructor, the TA, or, for broader support, please take advantage of Cornell's mental health resources, found at \href{https://mentalhealth.cornell.edu/}{https://mentalhealth.cornell.edu/}.
 
 I am not a trained counselor, but I am here to support you in whatever capacity we can. You should never feel that you need to push yourself past your limits to complete any assignment for this class or any other. If we need to make modifications to the course or assignment schedule, you can certainly reach out to me, and all relevant discussions will be kept strictly confidential.
 
@@ -324,8 +283,38 @@ In general, please err on the side of not attending class if you suspect that yo
 This lesson plan is provided only as a rough overview of covered topics and is subject (even likely) to change; see the schedule on the course website for more details and up-to-date information.
 
 
-Error: UndefVarError: semester_d1 not defined
+\begin{tabular}{rll}
+  \noalign{\hrule height 2pt}
+  \textbf{Week} & \textbf{Dates} & \textbf{Topic} \\\noalign{\hrule height 2pt}
+  1 & Jan 23, Jan 25 & Class Overview \\
+  2 & Jan 30, Feb 01 & Intro to Climate Risk \\
+  3 & Feb 06, Feb 08 & Motivating Problem: Coastal Flood Risk \\
+  4 & Feb 13, Feb 15 & Climate System Uncertainty, Correlations, and Risk \\
+  5 & Feb 20, Feb 22 & Scenarios and Decision Making Under Uncertainty \\
+  6 & Mar 01 & Overview of Uncertainty Analysis \\
+  7 & Mar 06, Mar 08 & Frequentist Uncertainty Quantification: The Bootstrap \\
+  8 & Mar 13, Mar 15 & Bayesian Computation and the Role of Priors \\
+  9 & Mar 20, Mar 22 & Markov Chain Monte Carlo \\
+  10 & Mar 27, Mar 29 & Model Calibration with MCMC and Discrepancies \\
+  11 & Apr 10, Apr 12 & Extreme Events and Extreme Value Distributions \\
+  12 & Apr 17, Apr 19 & Hypothesis Testing and Model Selection \\
+  13 & Apr 24, Apr 26 & Impacts of Uncertainty on Decision-Making \\
+  14 & May 01, May 03 & Caution: Calibration and Extrapolation Under Nonstationarity \\
+  15 & May 08 & Final Project Posters \\\noalign{\hrule height 2pt}
+\end{tabular}
 
 
 
 \end{document}
+
+\makeatletter
+\def\@maketitle{%
+  \newpage
+%  \null
+%  \vskip 2em%
+%  \begin{center}%
+  \let \footnote \thanks
+    {\fontsize{18}{20}\selectfont\raggedright  \setlength{\parindent}{0pt} \@title \par}%
+}
+%\fi
+\makeatother
