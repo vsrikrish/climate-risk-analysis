@@ -21,6 +21,10 @@
     text-align: left;
 }
 
+.right-column ~ p {clear: both;}
+.right-column ~ ul {clear: both;}
+.right-column ~ .cite {clear: both;}
+
 .column:first-of-type {float:left;}
 .column:last-of-type {float:right;}
 
@@ -31,8 +35,10 @@
 
 .split-40 .column:first-of-type {width: 40%;}
 .split-40 .column:last-of-type {width: 60%;}
+.split-50 .column:first-of-type {width: 50%;}
+.split-50 .column:last-of-type {width: 50%;}
 .split-60 .column:first-of-type {width 60%;}
-.split-60 .column:last-of-type {width 50%;}
+.split-60 .column:last-of-type {width 60%;}
 
 /* Styling for paragraphs, lists, and divs (thus display equations) */
 .remark-slide-content p,div {font-size: 1.1em;}
