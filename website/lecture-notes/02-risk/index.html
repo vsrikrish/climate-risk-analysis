@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Climate Risk</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+    <link rel="stylesheet" href="../stylesheets/katex.min.css">
+
+
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+.title[Risk and Uncertainty]
+<hr>
+.left-column[.course[BEE 6940] .subtitle[Lecture 2]] .date[January 30, 2023]
+ 
+---
+name: section-header
+layout: true
+class: center, middle
+
+{{content}}
+<hr>
+
+---
+class: center, middle
+layout: false
+
+# **Any Questions?**
+
+---
+layout: false
+name: toc
+class: left
+
+# Table of Contents
+<hr>
+
+1. [What is Climate Risk?](#overview)
+2. [Uncertainty and Probability](#uncertainty)
+3. [Monte Carlo](#monte-carlo)
+
+???
+This is an overview of the topics we'll cover in today's lecture. The italics around the last topic reflect that it's an "optional" topic that we may get to if time allows.
+
+---
+name: overview
+template: section-header
+
+# What Is Climate Risk?
+
+---
+class: left
+
+# What Is Climate Risk?
+<hr>
+
+**Climate risk**: "risk" created or enhanced by the impacts of climate change
+
+--
+
+Strong interactions between these impacts and broader socioeconomic dynamics results in complex dynamics.
+
+---
+
+class: left
+
+# Climate Impacts are Diverse 
+<hr>
+
+.center[![:img Map of top climate risks in 2040, 75%](https://static01.nyt.com/images/2021/03/25/learning/ClimateRiskMapLN/ClimateRiskMapLN-superJumbo.png)
+<br>
+.cite[Source: [Four Twenty Seven and the New York Times](https://www.nytimes.com/2021/03/25/learning/whats-going-on-in-this-graph-global-climate-risks.html)]]
+
+???
+Climate change impacts the intensity, frequency, and duration of a variety of hazards, affecting a large number of sectors. There is certainly a lot of spatial and temporal variability to these changes, but they are highly uncertain, for a number of reasons. Despite this uncertainty, we have to make decisions about how to manage these risks on relatively short time scales.
+
+This map actually understates things by focusing on an estimate of the "top" risk in a given location, and there can be a number of compounding effects from multiple stressors. More on that later.
+
+---
+# Climate Risks are Worsening
+<hr>
+
+.center[![Recent Climate Risk Headlines](figures/climate-headlines.svg)]
+
+---
+layout: true
+class: left
+
+# What Is Risk?
+<hr>
+---
+
+{{content}}
+
+---
+**Intuitively**: "Risk" is the possibility of loss, damages, or harm.
+
+$$\text{Risk} = \text{Probability of Hazard} \times \text{Damages From Event}$$
+
+--
+Things we don't think of as "risk":
+- Good or neutral outcomes
+- Deterministic outcomes
+
+---
+layout: false
+class: left
+
+# Some Cartoons About Risk
+<hr>
+
+.center[![XKCD Comic 2107: Launch Risk](https://imgs.xkcd.com/comics/launch_risk.png)
+<br>
+.cite[Source: [XKCD 2107](https://xkcd.com/2107/)]]
+
+---
+class: left
+
+# Some Cartoons About Risk
+<hr>
+
+.center[![:img XKCD Comic 1252: Increased Risk, 28%](https://imgs.xkcd.com/comics/increased_risk.png)
+<br>
+.cite[Source: [XKCD 1252](https://xkcd.com/1252/)]]
+
+---
+layout: false
+class: left
+
+# What Is Risk?
+<hr>
+
+.left-column[
+Common framework:
+
+**Risk** as a combination of
+- Hazard
+- Exposure
+- Vulnerability
+- *Response* (Simpson et al (2021))
+]
+
+.right-column[
+.center[
+![Determinants of Risk](figures/simpson_risk.svg)
+<br>
+.cite[Source: [Simpson et al (2021)](https://doi.org/10.1016/j.oneear.2021.03.005)]
+]]
+
+---
+class: left
+
+# Defining Climate Risk
+<hr>
+
+**Climate Risk**: Changes in risk stemming from the impacts of or response to climate change.
+--
+
+.left-column[
+*Hazards*
+  - Drought/flooding
+  - Extreme temperatures
+  - Sea level rise
+  - Others!
+]
+
+.right-column[
+*Exposure/Vulnerability*
+  - Compound events
+  - Urbanization
+  - Land Use, Land Cover Change
+]
+
+---
+class: left
+
+# Motivating Questions
+<hr>
+
+1. What are the potential impacts of climate change?
+2. What can we say about their uncertainties?
+3. What are the impacts of those uncertainties on the performance of risk-management strategies?
+
+---
+name: uncertainty
+template: section-header
+
+# Uncertainty and Probability
+
+---
+class: left
+
+# Uncertainty and Risk Analysis
+<hr>
+
+Uncertainty enters into the hazard-exposure-vulnerability-response model in a few ways:
+- Uncertain hazards
+- Uncertainty in model estimates of exposure or vulnerability
+- Uncertainty in responses
+
+---
+class: left
+
+# But...
+<hr>
+
+What exactly do we mean by uncertainty?
+
+*Glib answer*: Uncertainty is a lack of certainty!
+
+--
+
+**Maybe better**: Uncertainty refers to an inability to exactly describe current or future states.
+
+---
+class: left
+
+# Two Categories of Uncertainty
+<hr>
+
+- **Aleatory Uncertainty**: Uncertainty resulting from *inherent randomness*
+- **Epistemic Uncertainty**: Uncertainty resulting from *lack of knowledge*
+
+--
+
+The lines between aleatory and epistemic uncertainty are not always clear! This has implications for modeling and risk analysis.
+
+---
+class: left
+
+# On Epistemic Uncertainty
+<hr>
+
+.center[![XKCD Cartoon: Epistemic Uncertainty](https://imgs.xkcd.com/comics/epistemic_uncertainty.png)
+<br>
+.cite[Source: [XKCD 2440](https://xkcd.com/2440)]]
+
+---
+class: left
+
+# Uncertainty and Probability
+<hr>
+
+We often represent or describe uncertainties in terms of *probabilities*:
+- Long-run frequency of an event (**frequentist**)
+- Degree of belief that a proposition is true (**Bayesian**)
+
+---
+class: left
+
+# Confidence vs. Credible Intervals
+<hr>
+
+The difference between the frequentist and Bayesian perspectives can be illustrated through the difference in how both conceptualize uncertainty in estimates.
+
+---
+class: left
+
+# Confidence vs. Credible Intervals
+<hr>
+.left-column[
+A Bayesian **credible interval** for some random quantity is conceptually straightforward: 
+
+An $\alpha$-credible interval is an interval with an $\alpha$% probability of containing the realized or "true" value.]
+
+.right-column[
+.center[![:img Dartboard from Wikipedia, 80%](https://upload.wikimedia.org/wikipedia/commons/4/42/Dartboard.svg)]
+.center[.cite[*Source*: [Wikipedia](https://en.wikipedia.org/wiki/Darts)]]]
+
+---
+class: left
+
+# Confidence vs. Credible Intervals
+<hr>
+
+However, this notion breaks down with the frequentist viewpoint: there is some "true value" for the associated estimate based on long-run frequencies.
+
+With this view, it is incoherent to talk about probabilities corresponding to parameters. Instead, the key question is how frequently (based on repeated analyses of different datasets) your estimates are "correct".
+
+---
+class: left
+
+# Confidence vs. Credible Intervals
+<hr>
+
+In other words, the confidence level $\alpha\%$ expresses the *pre-experimental* frequency by which a confidence interval will contain the true value. 
+
+So for a 95% confidence interval, there is a 5% chance that a given sample was an outlier and the interval is inaccurate.
+
+---
+class: left
+
+# Confidence vs. Credible Intervals
+<hr>
+
+.left-column[To understand frequentist **confidence intervals**, think of horseshoes! The post is a fixed target, and my accuracy as a horseshoe thrower captures how confident I am that I will hit the target with any given toss.]
+
+
+.right-column[ ![Cartoon of horseshoes](https://www.wikihow.com/images/thumb/2/20/Throw-a-Horseshoe-Step-4-Version-4.jpg/aid448076-v4-728px-Throw-a-Horseshoe-Step-4-Version-4.jpg.webp) .cite[Source: [https://www.wikihow.com/Throw-a-Horseshoe](https://www.wikihow.com/Throw-a-Horseshoe)] ]
+
+---
+class: left
+
+# Confidence vs. Credible Intervals
+<hr>
+
+.left-column[**But once I make the throw, I've either hit or missed.** 
+
+Generating a confidence interval is like throwing a horseshoe with a certain (pre-experimental) degree of accuracy.]
+
+
+.right-column[ ![Cartoon of horseshoes](https://www.wikihow.com/images/thumb/2/20/Throw-a-Horseshoe-Step-4-Version-4.jpg/aid448076-v4-728px-Throw-a-Horseshoe-Step-4-Version-4.jpg.webp) .cite[Source: [https://www.wikihow.com/Throw-a-Horseshoe](https://www.wikihow.com/Throw-a-Horseshoe)] ]
+
+
+---
+class: left
+
+# Probability Distributions
+<hr>
+
+Probabilities are often represented using a probability distribution, which are parameterized by a *probability density function*. 
+
+- Normal (Gaussian) Distribution: mean $\mu$, variance $\sigma^2$
+- Poisson Distribution: rate $\lambda$
+- Binomial Distribution: # trials $n$, probability of success $p$
+- Generalized Extreme Value Distribution: location $\mu$, scale $\sigma$, shape $\xi$
+
+---
+class: left
+
+# Probability Models
+<hr>
+
+A key consideration in uncertainty and risk analysis is defining an appropriate *probability model* for the data.
+
+Many "default" approaches, such as linear regression, assume normal distributions and independent and identically-distributed residuals.
+
+---
+class: left
+
+# Deviations from Normality
+<hr>
+
+Some typical ways in which these assumptions can fail:
+
+.left-column[
+- **skew** (more samples on one side of the mean than the other)]
+
+.right-column[.center[![Linear regression with normal and skewed residuals](figures/norm-skew-residuals.svg)]]
+
+---
+class: left
+
+# Deviations from Normality
+<hr>
+
+Some typical ways in which these assumptions can fail:
+
+.left-column[
+- skew 
+- **fat tails** (probability of extremes)]
+
+.right-column[.center[![Linear regression with normal and skewed residuals](figures/norm-fat-residuals.svg)]]
+
+---
+class: left
+
+# Deviations from Normality
+<hr>
+
+Some typical ways in which these assumptions can fail:
+
+.left-column[
+- skew 
+- fat tails 
+- **(auto-)correlations**]
+
+.right-column[.center[![Linear regression with normal and skewed residuals](figures/norm-corr-residuals.svg)]]
+
+---
+class: left
+
+# Diagnosing Quality of Fit
+<hr>
+
+How can we know if a proposed probability model is appropriate for a data set?
+
+---
+class: left
+# Diagnosing Quality of Fit
+<hr>
+
+**Visual inspection often breaks down**: our brains are very good at imposing structure (look up "gestalt principles").
+
+.left-column[.center[![Linear regression with normal and skewed residuals](figures/norm-skew-residuals-2.svg)]]
+
+.right-column[.center[![Linear regression with normal and skewed residuals](figures/norm-corr-residuals.svg)]]
+
+---
+class: left
+# Quantile-Quantile Plots
+<hr>
+
+
+One useful tool is a **quantile-quantile (Q-Q) plot**, which compares quantiles of two distributions.
+
+.left-column[If the quantiles match, the points will be roughly along the diagonal line, *e.g.* this comparison of normally-distributed data with a normal distribution.
+
+]
+.right-column[.center[![:img Q-Q Plot for Normally Distributed Data, 90%](figures/qq-norm.svg)]
+]
+
+---
+class: left
+# Quantile-Quantile Plots
+<hr>
+
+If the points are below/above the 1:1 line, the theoretical distribution is over/under-predicting the associated quantiles.
+
+.left-column[
+![:img Comparison of Normal and Cauchy distributions, 80%](figures/dist-tails.svg)
+]
+
+.right-column[
+.center[![:img Q-Q Plot for Cauchy Distributed Data, 90%](figures/qq-fat.svg)]
+]
+
+---
+class: left
+# Cumulative Distribution Functions
+<hr>
+
+Q-Q plots show similar information to a **Cumulative Distribution Function (CDF) plot**. 
+
+.left-column[
+![:img Comparison of Normal and Cauchy CDFs, 90%](figures/normal-cauchy-cdf.svg)
+]
+
+.right-column[
+![:img Q-Q Plot for Cauchy Distributed Data, 90%](figures/qq-fat.svg)
+]
+
+---
+class: left
+
+# Autocorrelation
+<hr>
+
+Another critical question is if the samples are **correlated** or **independent**. For a time series, this can be tested using autocorrelation (or cross-correlation for multiple variables).
+
+.left-column[
+![:img Autocorrelation Diagram for Independent Samples, 85%](figures/autocor-ind.svg)
+]
+.right-column[
+![:img Autocorrelation Diagram for Autocorrelated Samples, 85%](figures/autocor-corr.svg)
+]
+
+---
+class: left
+
+# Key Takeaway
+<hr>
+
+Specifying the probability model is important &mdash; getting this too wrong can bias resulting inferences and projections.
+
+**There's no black-box workflow for this**: try exploring different methods, relying on domain knowledge, and looking at different specifications until you convince yourself something makes sense.
+
+---
+template: section-header
+name: monte-carlo
+
+# Monte Carlo
+
+---
+class: left
+
+# Monte Carlo Simulation
+<hr>
+
+A common problem in risk/uncertainty analysis is *uncertainty propagation*: what is the impact of input uncertainties on system outcomes? The most basic way to approach this is through **Monte Carlo simulation**.
+
+.center[
+![Monte Carlo schematic](figures/monte-carlo-scheme.svg)]
+
+---
+class: left
+
+# Monte Carlo Simulation
+<hr>
+
+Monte Carlo simulation involves:
+
+
+1. Sampling input(s) from probability distribution(s);
+2. Simulating the quantity of interest;
+3. *Aggregating the results* (if desired).
+
+--
+
+Note that steps 1 and 2 require the ability to **generate** data from the probability model (or we say that the model is **generative**). This is not always the case!
+
+---
+class: left
+
+# Monte Carlo Simulation
+<hr>
+
+Monte Carlo is a very useful method for calculating complex and high-dimensional integrals (such as expected values), since an integral is an $n$-dimensional area:
+
+
+1. Sample uniformly from the domain;
+2. Compute how many samples are in the area of interest.
+
+
+---
+class: left
+
+# Monte Carlo (Formally)
+<hr>
+
+We can formalize this common use of Monte Carlo as the computation of the expected value of a random quantity $f(Y)$, $Y \sim p$, over a domain $D$: 
+$$\mu = \mathbb{E}[f(Y)] = \int_D f(y)p(y)dy.$$
+
+---
+class: left
+
+# Monte Carlo (Formally)
+<hr>
+
+Generate $n$ independent and identically distributed values $Y\_1, \ldots, Y\_n$.  Then the sample estimate is
+$$\tilde{\mu} = \frac{1}{n}\sum_{i=1}^n f(Y_i)$$
+
+---
+class: left
+
+# The Law of Large Numbers
+<hr>
+
+Monte Carlo works because of the **large of law numbers**:
+
+If 
+
+1. $Y$ is a random variable and its expectation exists and 
+2.  $Y_1, \ldots, Y_n$ are independently and identically distributed
+
+Then by the **strong law of large numbers**:
+
+$$
+\tilde{\mu}_n \to \mu \text{ almost surely as } n \to \infty
+$$
+
+---
+class: left
+
+# Monte Carlo Estimators Are Unbiased 
+<hr>
+
+Notice that the sample mean $\tilde{\mu}_n$ is itself a random variable.
+
+With some assumptions (the mean of $Y$ exists and $Y$ has finite variance), the expected Monte Carlo estimate is
+$$\mathbb{E}[\tilde{\mu}\_n] = \frac{1}{n}\sum_{i=1}^n \mathbb{E}[f(Y_i)] = \frac{1}{n} n \mu = \mu
+$$
+
+This means that the Monte Carlo estimate is an *unbiased* estimate of the mean.
+
+---
+class: left
+
+# Ok, So That Seems Easy...
+<hr>
+
+The *basic* Monte Carlo algorithm is straightforward: draw a large enough set of samples from your input distribution, simulate and/or compute your test statistic for each of those samples, and the sample value will necessarily converge to the population value.
+
+However:
+
+- Are your input distributions correctly specified (including correlations across inputs)?
+- **How large is "large enough"?**
+
+---
+class: left
+
+# Monte Carlo Error
+<hr>
+
+This raises a key question: how can we quantify the **standard error** of a Monte Carlo estimate?
+
+The variance of this estimator is:
+
+$$\tilde{\sigma}_n^2 = \text{Var}\left(\tilde{\mu}_n\right) = \mathbb{E}\left((\tilde{\mu}_n - \mu)^2\right) = \frac{\sigma\_y^2}{n}
+$$
+
+So the standard error $\tilde{\sigma_n}$ decreases approximately as $1/\sqrt{n}$ as $n$ increases.
+
+---
+class: left
+# Monte Carlo Error
+<hr>
+
+In other words, if we want to decrease the Monte Carlo error by 10x, we need 100x additional samples. **This is not an ideal method for high levels of accuracy.** 
+
+
+> Monte Carlo is an extremely bad method. It should only be used when all alternative methods are worse.
+>
+> .cite[&mdash; Sokal, *Monte Carlo Methods in Statistical Mechanics*, 1996]
+
+--
+
+The thing is, though &ndash; for a lot of problems, all alternative methods *are* worse!
+
+---
+class: left
+
+# Reporting Monte Carlo Uncertainty
+<hr>
+
+An **$\alpha$-credible interval** for a Monte Carlo estimate is straightforward: compute an empirical interval containing $\alpha$% of the Monte Carlo sample values (*e.g.* for a 95% credible interval, take the range between the 0.025 and 0.975 quantiles).
+
+---
+class: left
+
+# Monte Carlo Confidence Intervals
+<hr>
+
+To estimate confidence intervals, we can rely on the variance estimate from before.
+
+For "sufficiently large" sample sizes $n$, the **central limit theorem** says that the distribution of the error $\left\|\tilde{\mu}_n - \mu\right\|$ can be approximated by a normal distribution,
+$$\left\|\tilde{\mu}_n - \mu\right\| \to \mathcal{N}\left(0, \frac{\sigma_y^2}{n}\right)
+$$
+
+---
+class: left
+
+# Monte Carlo Confidence Intervals
+<hr>
+
+
+This means that we can construct confidence intervals using the inverse cumulative distribution function for the normal distribution.
+
+The $\alpha$-confidence interval is:
+$$\tilde{\mu}_n \pm \Phi^{-1}\left(1 - \frac{\alpha}{2}\right) \frac{\sigma\_y}{\sqrt{n}}.
+$$
+
+For example, the 95% CI is $\tilde{\mu}_n \pm 1.96 \sqrt{\sigma_y}/{\sqrt{n}}.
+$
+
+---
+class: left
+
+# Monte Carlo Confidence Intervals
+<hr>
+
+Of course, we typically don't know $\sigma_y$. We can replace this with the sample standard deviation, though this will increase the uncertainty of the estimate.
+
+But this gives us a sense of how many more samples we might need to get a more precise estimate.
+
+---
+class: left
+
+# A Dice Example (Cliche Alert!)
+<hr>
+
+**What is the probability of rolling 4 dice for a total of 19?**
+
+Let's solve this using Monte Carlo.
+
+--
+- **Step 1**: Run $n$ trials (say, 10,000) trials of 4 dice rolls each.
+- **Step 2**: Compute the frequency of trials for which the sum is 19, *e.g.* compute the sample average of the indicator function
+$$\frac{1}{n}\sum_{i=1}^n \mathbb{I}(\text{sum of 4 dice} = 19).$$
+
+---
+class: left
+
+# A Dice Example
+<hr>
+
+How does this estimate evolve as we add more samples? 
+
+Note: the true value (given by the red line) is 4.32%.
+
+.center[![:img Simulations from Dice Monte Carlo Experiment, 45%](figures/dice-rolls.png)]
+
+---
+class: left
+
+# More Complex Monte Carlo
+<hr>
+
+We won't spend too much more time here, but for more complex problems, the sample size needed to constrain the Monte Carlo error can be computationally burdensome.
+
+This is typically addressed with more sophisticated sampling schemes which are designed to reduce the variance from random sampling, causing the estimate to converge faster. 
+
+- Importance sampling
+- Quasi-random sampling (*e.g.* Sobol)
+
+---
+class: left
+
+# Key Takeaways (Monte Carlo)
+<hr>
+
+- The basic Monte Carlo algorithm is a simple way to propagate uncertainties and compute approximate estimates of statistics, though its rate of convergence is poor.
+- Can also be used for general simulation (which we will do later) and optimization.
+- **Note**: Monte Carlo is a fundamentally *parametric* statistical approach, that is, it relies on the specification of the data-generation process, including all parameter values.
+- What if we don't know these specifications *a priori*? This is the fundamental challenge of **uncertainty quantification**, which we will discuss more throughout this course.
+
+---
+class: left
+
+# Upcoming Schedule
+<hr>
+
+**Wednesday**: Discuss Simpson (2021) and lab on testing for normality and Monte Carlo (featuring *The Price is Right*!).
+
+**Next Monday**: Representing climate uncertainties and implications for risk management.
+
+    </textarea>
+
+
+    <script src="../javascript/remark.min.js" type="text/javascript"></script>
+    <script defer src="../javascript/katex.min.js"></script>
+    <script defer src="../javascript/auto-render.min.js"></script>
+    <script type="text/javascript" src="../javascript/call-javascript.js"></script>
+
+  </body>
+</html>
