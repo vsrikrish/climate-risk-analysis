@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Climate Risk</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+    <link rel="stylesheet" href="../stylesheets/katex.min.css">
+
+
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+.title[Introduction to Climate Risk]
+<hr>
+.left-column[.course[BEE 6940] .subtitle[Lecture 3]] .date[February 06, 2023]
+ 
+---
+name: section-header
+layout: true
+class: center, middle
+
+
+<hr>
+
+---
+layout: false
+name: toc
+class: left
+
+# Table of Contents
+<hr>
+
+1. [Climate Risk Management](#management)
+2. [Role of Risk Analysis](#risk-analysis)
+3. [Deep Uncertainty](#deep-uncertainty)
+4. [Decision-Making and Deep Uncertainty](#dmdu)
+5. [Upcoming Schedule](#upcoming)
+
+???
+This is an overview of the topics we'll cover in today's lecture. The italics around the last topic reflect that it's an "optional" topic that we may get to if time allows.
+
+---
+template: section-header
+name: management
+
+# Climate Risk Management
+
+---
+class: left
+
+# Climate Change Feedback Loop
+<hr>
+
+.center[![Climate Change Feedback Loop](figures/crm-feedback.svg)]
+.center[.cite[Adapted from [Keller et al (2021)](https://dx.doi.org/10.1146/annurev-earth-080320-055847)]]
+
+---
+class: left
+
+# Feedback Component: Emissions
+<hr>
+
+.center[![:img Emissions Flow, 50%](figures/crm-emissions.svg)]
+
+**Key Dynamics**: economic output, emissions intensity
+
+**Some relevant uncertainties**:
+- Economic Growth
+- Population Growth
+- Technological Change
+
+---
+class: left
+
+# Feedback Component: Carbon Cycle
+<hr>
+
+.left-column[
+**Key Dynamics**: carbon storage/diffusion, fertilization/respiration
+
+**Some relevant uncertainties**:
+- Temperature sensitivities
+- Total carbon sinks/sources
+]
+
+.right-column[
+.center[![Carbon Cycle Flow](figures/crm-carbon.svg)]
+]
+
+---
+class: left
+
+# Feedback Component: Climate
+<hr>
+
+.center[![:img Climate System Flow, 50%](figures/crm-climate.svg)]
+
+
+**Key Dynamics**: greenhouse effect, transient heat transfer, albedo
+
+**Some relevant uncertainties**:
+- Equilibrium climate sensitivity
+- Ocean heat uptake
+- Aerosol-cloud cooling
+
+---
+class: left
+
+# Feedback Component: Impacts
+<hr>
+
+.left-column[
+**Key Dynamics**: climate dynamics, human-natural system interactions
+
+**Some relevant uncertainties**:
+- Atmospheric/ocean circulations
+- Human responses
+]
+
+.right-column[
+.center[![Climate Impacts Flow](figures/crm-impacts.svg)]
+]
+
+---
+class: left
+
+# Climate Risk Management
+<hr>
+
+Climate risk can be the result of any (or several!) of these processes.
+
+This makes risk management potentially complicated: there are several possible intervention points, with (often uncertain) downstream implications.
+
+---
+class: left
+
+# Climate Risk Management Levers
+<hr>
+
+.center[![Climate Change Feedback Loop](figures/crm-levers.svg)]
+.center[.cite[Adapted from [Keller et al (2021)](https://dx.doi.org/10.1146/annurev-earth-080320-055847)]]
+
+---
+# Climate Risk Management Levers
+<hr>
+
+Climate risk management involves choosing among/between this portfolio of approaches, based on a number of factors, including:
+- **Relevant uncertainties**
+- **Differing spatial/time scales**
+- Costs/**benefits**
+- **Reliability**
+- Stakeholder preferences and values
+
+---
+# Climate Risk: Types of Uncertainties
+<hr>
+
+To make things more complicated: climate-relevant uncertainties include both "well-characterized" and "deep" uncertainties, and these uncertainties can be *dynamic*.
+
+- **"Well-characterized" uncertainties**: Those for which we can broadly agree on probability distributions (*e.g.* climate sensitivity)
+- **"Deep" uncertainties**: Those for which there is no consensus distribution (*e.g.* future economic growth)
+
+--
+
+***More on deep uncertainty later...***
+
+---
+# Impact of Correlated Uncertainties
+<hr>
+
+.left-column[
+Many relevant uncertainties, even those that are well-characterized, are subject to **correlations**, which can complicate standard statistical approaches assuming independence.
+]
+
+.right-column[
+.center[![:img Joint distribution of important climate parameters, 70%](figures/climate-pdf.png)]
+.center[.cite[Source: [Errickson et al (2021)](https://www.nature.com/articles/s41586-021-03386-6)]]
+]
+
+---
+# Impact of Correlated Uncertainties
+<hr>
+
+Neglecting these correlations can impact projections!
+
+.center[![:img Hindcast and projections of future change, 85%](figures/climate-hindcast.png)]
+.center[.cite[Source: [Errickson et al (2021)](https://www.nature.com/articles/s41586-021-03386-6)]]
+
+---
+# Key Takeaways (Climate Risk Management)
+<hr>
+
+- Climate risk is the result of the climate change feedback loop.
+- Many relevant uncertainties and processes.
+- Several categories of management strategies (levers).
+- Subject to deep, dynamic, and correlated uncertainties
+- Varying stakeholder preferences.
+
+---
+name: risk-analysis
+template: section-header
+
+# Role of Risk Analysis
+
+---
+class: left
+
+# Risk Analysis for Decision Support
+<hr>
+
+The key goal of risk analysis is providing information to help navigate risk management decisions, which may involve differing:
+- Perceptions of exposure/vulnerability
+- Assessments of hazard probabilities
+- Utilities of anticipated losses 
+
+---
+class: left
+
+# Hazard Assessments Are Uncertain
+<hr>
+
+.left-column[
+![:img Biases in Estimates of Hazard Fatalities, 100%](figures/hazard_estimates.svg)
+]
+.right-column[
+![:img Anchoring and Hazard Fatality Estimates, 80%](figures/risk_anchoring.svg)
+]
+
+.cite[.center[Source: Morgan et al (2002), Risk Communication: A Mental Models Approach
+<br>Adapted from Lichtenstein et al (1978)]]
+
+---
+class: left
+
+# Diminishing Marginal Value of Utility
+<hr>
+
+.left-column[
+> "There is no doubt that a gain of a thousand ducats is more significant to the pauper than to a rich man though both gain the same amount."<br>
+> .cite[&mdash; [D. Bernoulli (1738), reprinted 1954](https://psych.fullerton.edu/mbirnbaum/psych466/articles/bernoulli_econometrica.pdf)]
+]
+.right-column[.center[![:img Saturday Morning Breakfast Cereal: Marginal Utility, 80%](https://www.smbc-comics.com/comics/1456242616-20160223.png)
+<br>
+.cite[Source: [SMBC 02/23/2016](https://www.smbc-comics.com/index.php?id=4029)]
+]]
+
+
+---
+class: left
+
+# Risk Tolerance Can Be Subjective!
+<hr>
+
+.center[![:img Saturday Morning Breakfast Cereal: Risk and Statistics, 29%](https://www.smbc-comics.com/comics/20130517.gif)
+<br>
+.cite[Source: [SMBC 05/17/2013](https://www.smbc-comics.com/comic/2013-05-17)]]
+
+
+---
+class: left
+
+# Comparison of Two Risk Profiles
+<hr>
+
+.left-column[
+Two risk curves:
+- **A**: Increased probability of higher damage events
+- **B**: Increased probability of lower damage events
+]
+
+.right-column[
+.center[![Comparison of Two Risk Curves](figures/risk-curves.svg)]
+]
+
+---
+class: left
+
+# Attitudes Towards Risk
+<hr>
+
+Two scenarios:
+1. A certain payout of $X$?
+2. An uncertain payout of $X-d$ or $X+d$, both equally likely?
+
+---
+class: left
+
+# Attitudes Towards Risk
+<hr>
+
+Two scenarios:
+1. A certain payout of $X$?
+2. An uncertain payout of $X-d$ or $X+d$, both equally likely?
+
+Note that both of these "bets" have the same expected payout $X$. But there are a variety of responses!
+
+---
+class: left
+
+# Risk Neutral
+<hr>
+
+.left-column[
+Linear utility function:
+- Expected utility matches expected bet outcome.
+]
+
+.right-column[
+![Risk Averse Utility Function](figures/risk_neutral.svg)]
+
+
+---
+class: left
+
+# Risk Averse
+<hr>
+
+.left-column[
+Concave utility function:
+- Greater utility impact from the downside of the bet than upside.
+- *Risk Premium (RP)*: "penalty" that would be acceptable to avoid the uncertainty of the gamble.
+]
+
+.right-column[
+![Risk Averse Utility Function](figures/risk_averse.svg)]
+
+---
+class: left
+
+# Risk Seeking
+<hr>
+
+.left-column[
+Convex utility function:
+- Greater utility impact from the upside of the bet than downside.
+- *Risk Premium (RP)*: "bonus" that would be needed to avoid taking the bet.
+]
+
+.right-column[
+![Risk Averse Utility Function](figures/risk_seeking.svg)]
+
+---
+class: left
+
+# Takeaways from Expected Utility Theory
+<hr>
+
+- Can use expected utility to rank preferences; what value does an agent assign to outcomes
+- Risk-averse/neutral/seeking behaviors reflect tolerance for uncertainty.
+
+---
+class: left
+
+# Expected Utility and Risk Analysis
+<hr>
+
+Many value-laden questions about utility and risk:
+- *Whose* utility should we consider?
+- How do we aggregate utilities?
+- Do people even have well-defined and consistent utility functions and preferences?
+- Is utility-maximization (*rational agent assumption*) actually an appropriate perspective or an accurate description of risk-averse/risk-seeking behavior?
+- How can we capture inequities or injustices? Should we?
+
+---
+class: left
+
+# Expected Utility and Deep Uncertainty
+<hr>
+
+Expected utility theory requires the ability to calculate expectations, which requires probabilities. 
+
+But climate risk, as we've seen, involves *deep* uncertainties. What are the implications?
+
+---
+template: section-header
+name: deep-uncertainty
+
+# Deep Uncertainty
+
+---
+class: left
+
+# "Unknown Unknowns"
+<hr>
+
+> Reports that say that something hasn't happened are always interesting to me, because as we know, there are **known knowns; there are things we know we know**. We also know there are **known unknowns; that is to say we know there are some things we do not know**. But there are also **unknown unknowns &mdash; the ones we don't know we don't know**. And if one looks throughout the history of our country and other free countries, it is the latter category that tends to be the difficult ones.<br>
+> .cite[&mdash; [Donald Rumsfeld, former U.S. Secretary of Defense, 2002](https://archive.ph/20180320091111/http://archive.defense.gov/Transcripts/Transcript.aspx?TranscriptID=2636)]
+
+---
+class: left
+
+# Translating the Word Salad
+<hr>
+
+.left-column[
+- **Known Knowns**: Certainty 
+- **Known Unknowns**: "Shallow" Uncertainty
+- **Unknown Unknowns**: "Deep" Uncertainty or ambiguity
+]
+
+.right-column[
+.center[![Mixed Dice Shapes](https://d26tpo4cm8sb6k.cloudfront.net/img/dice.jpg)]
+]
+
+---
+class: left
+
+# Climate Change and Deep Uncertainty
+<hr>
+
+There are many deep climate-relevant uncertainties, including:
+- socioeconomic development &Rightarrow; emissions;
+- technological change;
+- politics and policy;
+- certain geophysical processes (*e.g.* Antarctic MICI/MISI);
+- human-system responses
+
+---
+class: left
+
+# Scenarios
+<hr>
+
+Deep uncertainties are often represented using *scenarios* or future *states of the world*.
+
+For some, "scenario" implies narrative coherence: we will not require this.
+
+---
+class: left
+
+# Scenarios of Future Climate Change
+<hr>
+
+Future changes to the climate (from socioeconomic development and emissions) are an example of scenario usage.
+
+---
+# Representative Concentration Pathways
+<hr>
+
+.left-column[
+.center[![:img Representative Concentration Pathways, 95%](https://skepticalscience.com/pics/forcing-graph-rcp.PNG)]
+]
+
+.right-column[
+The **Representative Concentration Pathways** (RCPs) are scenarios of future radiative forcing.
+
+.bottom[.cite[Source: [Moss et al (2010)](https://dx.doi.org/10.1038/nature08823) via [Skeptical Science](https://skepticalscience.com/rcp.php?t=3#forcings)]]
+]
+
+---
+# Future Warming Is Largely The Result of Cumulative Emissions
+<hr>
+
+.left-column[
+.center[![:img Temperature vs. Cumulative Emissions, 89%](https://andthentheresphysics.files.wordpress.com/2014/12/temperature-cumulative-co2-emisions-20140211.png)]
+.center[.cite[Source: IPCC AR5]]
+]
+
+.right-column[
+**Key idea**: Considering a *plausible range* of emissions also covers a plausible range of future warming, with less emphasis on the particular pathway.
+]
+
+
+---
+# Shared Socioeconomic Pathways
+<hr>
+
+.left-column[
+.center[![Shared Socioeconomic Pathways](figures/ssp.svg)]
+]
+
+.right-column[
+The **Shared Socioeconomic Pathways** (SSPs) are scenarios of future socioeconomic development.
+
+.bottom[.cite[Source: [O'Neill et al (2014)](https://dx.doi.org/10.1007/s10584-013-0905-2) via [Wikipedia](https://en.wikipedia.org/wiki/Shared_Socioeconomic_Pathways)]]
+]
+
+---
+# Latest Generation of Scenarios: SSP-RCPs
+<hr>
+
+.left-column[
+.center[![SSP-RCP Scenario Matrix](https://www.carbonbrief.org/wp-content/uploads/2018/04/SSP-figure-2.jpg)]
+]
+
+.right-column[
+New scenarios (for IPCC Assessment Report 6): combine SSPs and RCPs for more "realistic" emissions scenarios.
+
+.bottom[.cite[Source: [Carbon Brief](https://www.carbonbrief.org/explainer-how-shared-socioeconomic-pathways-explore-future-climate-change/)]]
+]
+
+---
+# These Scenarios Are Used to Run Global Climate Models
+<hr>
+
+.left-column[**Global Climate Models** (GCMs) are very computationally complex, so their runs are often limited to these scenarios.
+
+.bottom[.cite[Source: [Tebaldi et al (2021)](https://doi.org/10.5194/esd-12-253-2021)]]]
+
+.right-column[.center[![Global Temperature Ensembles from CMIP6](figures/cmip6-temps.png)]]
+
+---
+# Simple Climate Models vs. GCMs
+<hr>
+
+So-called "simple" climate models can be used to fill in the gaps (more on this in your lab), as they can run more rapidly at the expense of simplified dynamics/more aggregated output.
+
+---
+template: section-header
+name: dmdu
+
+# Decision-Making and Deep Uncertainty
+
+---
+class: left
+
+# Deep Uncertainty and Utility
+<hr>
+
+How do people make decisions under deep uncertainty?
+
+Let's consider a famous experiment (published in 1961) by Daniel Ellsberg.
+
+
+---
+class: left
+
+# Two Urn Game
+<hr>
+
+Consider two urns, each containing 100 balls. **Urn A** has 50 red, 50 black balls, **Urn B** is an unknown mix.
+
+You are offered the following bets:
+- **Bet 1A**: get $\$1$ if red ball drawn from Urn A, else $\$0$.
+- **Bet 2A**: get $\$1$ if black ball drawn from Urn A, else $\$0$.
+- **Bet 1B**: get $\$1$ if red ball drawn from Urn B, else $\$0$.
+- **Bet 2B**: get $\$1$ if black ball drawn from Urn B, else $\$0$.
+
+---
+class: left
+
+# The Ellsberg Paradox (Part 1)
+<hr>
+
+Participants in this experiment were indifferent between 1A and 2A, which is consistent with expected utility theory.
+
+But they also strictly preferred 1A to 1B and 2A to 2B, even though there was no reason to expect that Urn 2 was stacked against them.
+
+--
+
+**Interpretation**: People have an aversion to deep uncertainty.
+
+---
+class: left
+
+# One-Urn Game
+<hr>
+
+Now there is only one urn, with *30 red balls* and *60 (black or yellow) balls* (in unknown proportions)
+
+Four bets:
+- **Bet A**: you win $\$100$ if you draw a red ball;
+- **Bet B**: you win $\$100$ if you draw a black ball;
+- **Bet C**: you win $\$100$ if you draw a red or yellow ball;
+- **Bet D**: you win $\$100$ if you draw a red or black ball;
+
+---
+class: left
+
+# The Ellsberg Paradox (Part 2)
+<hr>
+
+Ellsberg found subjects prefer Bet A to Bet B. This is consistent with the Two Urn game: deep uncertainty aversion.
+
+--
+
+However: Subjects also preferred Bet D to Bet C. Why is this strange?
+
+--
+
+Expected utility theory implies that people's preferences are reflective of their beliefs about probabilities. 
+
+But the combination of these two bet preferences is **inconsistent** with any consistent assignment of probabilities!
+
+---
+# Implications for Climate Scenarios
+<hr>
+
+The decision to make climate scenarios (SSPs/RCPs) probability-free is defensible (though was debatable at the time, see [Schneider et al (2001)](https://doi.org/10.1023/A:1014276210717)).
+
+However:
+- Debate over scenario plausibility;
+- "Misuse" of scenarios;
+- Overemphasis of RCP 8.5 in impacts literature (*availability heuristic*);
+- Aversion to deep uncertainty.
+
+---
+template: section-header
+name: upcoming
+
+# Wrap-Up and Upcoming Schedule
+
+---
+class: left
+
+# Key Takeaways
+<hr>
+
+- Climate risk evolves along the climate change feedback loop.
+- Risk analysis/management complicated by presence of correlated and deep and dynamic uncertainties.
+- Aversion to deep uncertainty, decision heuristics can complicate use of probability-free scenarios.
+
+
+---
+class: left
+
+# Upcoming Schedule
+<hr>
+
+**Wednesday**: Discuss Morgan & Keith (2008) and lab on using simple climate models.
+
+**Next Monday**: Overview of coastal flood risk management problem.
+
+</textarea>
+
+
+<script src="../javascript/remark.min.js" type="text/javascript"></script>
+<script defer src="../javascript/katex.min.js"></script>
+<script defer src="../javascript/auto-render.min.js"></script>
+<script type="text/javascript" src="../javascript/call-javascript.js"></script>
+
+</body>
+</html>
