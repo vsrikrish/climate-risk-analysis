@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="165.31841mm"
+   height="148.92699mm"
+   viewBox="0 0 165.31841 148.92699"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.1 (9c6d41e4, 2022-07-14)"
+   sodipodi:docname="risk-curves.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.96459612"
+     inkscape:cx="188.68"
+     inkscape:cy="274.72638"
+     inkscape:window-width="1440"
+     inkscape:window-height="780"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect585"
+       is_visible="true"
+       lpeversion="1"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false" />
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect585-8"
+       is_visible="true"
+       lpeversion="1"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-27.304402,-63.705296)">
+    <rect
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1.5875;stroke-linejoin:round"
+       id="rect234"
+       width="146.23491"
+       height="131.77821"
+       x="45.594151"
+       y="64.499046" />
+    <text
+       xml:space="preserve"
+       style="font-style:oblique;font-size:6.35px;font-family:Avenir;-inkscape-font-specification:'Avenir, Oblique';text-align:center;text-anchor:middle;fill:#000000;fill-rule:evenodd;stroke:none;stroke-width:1.5875;stroke-linejoin:round"
+       x="-130.44839"
+       y="35.826199"
+       id="text342"
+       transform="rotate(-90)"><tspan
+         sodipodi:role="line"
+         id="tspan340"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.2889px;font-family:Lora;-inkscape-font-specification:'Lora, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;stroke:none;stroke-width:1.5875"
+         x="-130.44839"
+         y="35.826199">Probability</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:oblique;font-size:6.35px;font-family:Avenir;-inkscape-font-specification:'Avenir, Oblique';text-align:center;text-anchor:middle;fill:#000000;fill-rule:evenodd;stroke:none;stroke-width:1.5875;stroke-linejoin:round"
+       x="119.30998"
+       y="209.57303"
+       id="text342-7"><tspan
+         sodipodi:role="line"
+         id="tspan340-6"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.2889px;font-family:Lora;-inkscape-font-specification:'Lora, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;stroke:none;stroke-width:1.5875"
+         x="119.30998"
+         y="209.57303">Damages</tspan></text>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#4053d3;stroke-width:1.5875;stroke-linejoin:round;stroke-opacity:1"
+       d="m 45.898198,121.76975 c 39.191463,4.2629 78.381872,8.52569 101.819342,20.94152 23.43747,12.41583 31.12034,32.98344 38.80324,53.55113"
+       id="path583"
+       inkscape:path-effect="#path-effect585"
+       inkscape:original-d="m 45.898198,121.76975 c 39.191438,4.26313 78.381842,8.52592 117.573522,12.78861 7.68344,20.56869 15.36631,41.13629 23.04906,61.70404"
+       sodipodi:nodetypes="ccc" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#ddb310;stroke-width:1.5875;stroke-linejoin:round;stroke-opacity:1"
+       d="m 46.228692,79.819925 c 25.372372,3.995095 50.743935,7.990062 68.228528,27.309105 17.48459,19.31904 27.081,53.96033 36.67752,88.602"
+       id="path583-8"
+       inkscape:path-effect="#path-effect585-8"
+       inkscape:original-d="m 46.228692,79.819925 c 25.372338,3.995312 50.743901,7.990279 76.116228,11.985144 9.59706,34.642951 19.19348,69.284241 28.78982,103.925961"
+       sodipodi:nodetypes="ccc" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:14.1111px;font-family:Lora;-inkscape-font-specification:'Lora, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#4053d3;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.5875;stroke-linejoin:round;stroke-opacity:1"
+       x="60.606861"
+       y="137.89452"
+       id="text3999"><tspan
+         sodipodi:role="line"
+         id="tspan3997"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:14.1111px;font-family:Lora;-inkscape-font-specification:'Lora, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#4053d3;fill-opacity:1;stroke:none;stroke-width:1.5875"
+         x="60.606861"
+         y="137.89452">A</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:14.1111px;font-family:Lora;-inkscape-font-specification:'Lora, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#ddb310;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.5875;stroke-linejoin:round;stroke-opacity:1"
+       x="123.70679"
+       y="104.63316"
+       id="text3999-3"><tspan
+         sodipodi:role="line"
+         id="tspan3997-4"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:14.1111px;font-family:Lora;-inkscape-font-specification:'Lora, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ddb310;fill-opacity:1;stroke:none;stroke-width:1.5875"
+         x="123.70679"
+         y="104.63316">B</tspan></text>
+  </g>
+</svg>
