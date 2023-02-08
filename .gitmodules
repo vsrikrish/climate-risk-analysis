@@ -1,3 +1,6 @@
 [submodule "website/_hw/hw1"]
 	path = website/_hw/hw1
 	url = https://github.com/ClimateRiskAnalysis/hw1
+[submodule "website/_hw/hw2"]
+	path = website/_hw/hw2
+	url = https://github.com/ClimateRiskAnalysis/hw2.git
