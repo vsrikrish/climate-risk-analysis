@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="/climate-risk-analysis/libs/katex/katex.min.css">
+     
+   
+    <link rel="stylesheet" href="/climate-risk-analysis/libs/highlight/github.min.css">
+   
+    <script src="/climate-risk-analysis/libs/clipboard.min.js"></script>
+  
+  <link rel="stylesheet" href="/climate-risk-analysis/css/franklin.css">
+<link rel="stylesheet" href="/climate-risk-analysis/css/poole_hyde.css">
+<link rel="stylesheet" href="/climate-risk-analysis/css/custom.css">
+<!-- style adjustments -->
+<style>
+  html {font-size: 17px;}
+  .franklin-content {position: relative; padding-left: 8%; padding-right: 5%; line-height: 1.35em;}
+  @media (min-width: 940px) {
+    .franklin-content {width: 100%; margin-left: auto; margin-right: auto;}
+  }
+  @media (max-width: 768px) {
+    .franklin-content {padding-left: 6%; padding-right: 6%;}
+  }
+</style>
+
+   <title>Homework 2</title>  
+</head>
+<body>
+<div class="sidebar">
+  <div class="container">
+    <div class="sidebar-about">
+      <a href="https://cornell.edu"><img src="/climate-risk-analysis/assets/cornell_logo_simple_white.svg" style="width: 300px; height: auto; display: inline"></a>
+      <div style="opacity: 0.8; font-weight: bold; margin-bottom: 0.5em">BEE 6940</div>
+      <h1><a href="/climate-risk-analysis/">Climate Risk Analysis</a></h1>
+      <p class="lead">Spring 2023</p>
+    </div>
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item " href="/climate-risk-analysis/">Welcome</a>
+      <a class="sidebar-nav-item " href="/climate-risk-analysis/syllabus/">Syllabus</a>
+      <a class="sidebar-nav-item " href="/climate-risk-analysis/schedule/">Class Schedule</a>
+      <a class="sidebar-nav-item " href="/climate-risk-analysis/assignments/">Assignments and Projects</a>
+      <a class="sidebar-nav-item " href="/climate-risk-analysis/software/">Computational Tools</a>
+      <a class="sidebar-nav-item " href="/climate-risk-analysis/examples/">Julia Examples</a>
+      <a class="sidebar-nav-item " href="/climate-risk-analysis/resources/">Resources</a>
+
+    </nav>
+  </div>
+</div>
+<div class="content container">
+
+<!-- Content appended here -->
+<div class="franklin-content"><div class="banner"><h1 id="title_topic"><a href="#title_topic" class="header-anchor">Homework 2: Basic Sea-Level Rise Model</a></h1></div>
+Here is <a href="https://github.com/ClimateRiskAnalysis/hw2/">the repository for this problem set</a>. </p>
+<p><strong>If you are enrolled in the class, make sure you use the GitHub Classroom link from the Ed Discussion Board rather than downloading directly</strong>.</p>
+<p><div class="franklin-toc"><ol><li><a href="#overview">Overview</a><ol><li><a href="#instructions">Instructions</a></li></ol></li><li><a href="#problems_total_100_points">Problems &#40;Total: 100 Points&#41;</a><ol><li><a href="#problem_1_60_points">Problem 1 &#40;60 points&#41;</a></li><li><a href="#problem_2_40_points">Problem 2 &#40;40 points&#41;</a></li></ol></li></ol></div><h2 id="overview"><a href="#overview" class="header-anchor">Overview</a></h2>
+<h3 id="instructions"><a href="#instructions" class="header-anchor">Instructions</a></h3>
+<ul>
+<li><p>Problem 1 asks you to use <code>Optimize.optim&#40;&#41;</code> to calibrate a semi-empirical sea-level rise model to temperature and sea-level data.</p>
+</li>
+<li><p>Problem 2 asks you to use SNEASY, a Simple Nonlinear EArth SYstem model, to propagate climate-system uncertainty through to sea-level rise.</p>
+</li>
+</ul>
+<h2 id="problems_total_100_points"><a href="#problems_total_100_points" class="header-anchor">Problems &#40;Total: 100 Points&#41;</a></h2>
+<h3 id="problem_1_60_points"><a href="#problem_1_60_points" class="header-anchor">Problem 1 &#40;60 points&#41;</a></h3>
+<p>In this problem, we will work with the semi-empirical sea-level model from <a href="https://doi.org/10.1073/pnas.0907765106">Rahmstorf &#40;2007&#41;</a>. This model links global mean temperature <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">T(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span></span></span></span> to global mean sea-level <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>H</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">H(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span></span></span></span> through the equation:</p>
+<span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mfrac><mrow><mi>d</mi><mi>H</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mrow><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mo>=</mo><mi>α</mi><mo stretchy="false">(</mo><mi>T</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>−</mo><msub><mi>T</mi><mn>0</mn></msub><mo stretchy="false">)</mo><mo separator="true">,</mo></mrow><annotation encoding="application/x-tex">\frac{dH(t)}{dt} = \alpha (T(t) - T_0),</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.113em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="mord mathnormal">t</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mpunct">,</span></span></span></span></span>
+<p>where <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">T_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> is the temperature &#40;in <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow></mrow><mo>∘</mo></msup><mi>C</mi></mrow><annotation encoding="application/x-tex">^\circ C</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span></span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.674115em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∘</span></span></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span></span></span></span>&#41; where sea-level is in equilibrium &#40;<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>H</mi><mi mathvariant="normal">/</mi><mi>d</mi><mi>t</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">dH/dt = 0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mord">/</span><span class="mord mathnormal">d</span><span class="mord mathnormal">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span>&#41;, and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span></span></span></span> is the sea-level rise sensitivity to temperature. Discretizing this equation using the Euler method and using an annual timestep &#40;<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>δ</mi><mi>t</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\delta t = 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.03785em;">δ</span><span class="mord mathnormal">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>&#41;, we get</p>
+<span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>H</mi><mo stretchy="false">(</mo><mi>t</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mo>=</mo><mi>H</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>+</mo><mi>α</mi><mo stretchy="false">(</mo><mi>T</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>−</mo><msub><mi>T</mi><mn>0</mn></msub><mo stretchy="false">)</mo><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">H(t+1) = H(t) + \alpha (T(t) - T_0).</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.08125em;">H</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0037em;">α</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mord">.</span></span></span></span></span>
+<p>Our goal in this problem is to load temperature and sea-level datasets and <em>calibrate</em> the model by finding parameter values which are consistent with historical observations. We will select parameters which minimize the root-mean-square-error &#40;RMSE&#41; of the data-model residuals. The following function can be used to compute the RMSE.</p>
+<pre><code class="julia hljs"><span class="hljs-keyword">using</span> Statistics
+
+rmse(y, ŷ) = sqrt(mean((y - ŷ).^<span class="hljs-number">2</span>))</code></pre><pre><code class="plaintext hljs">rmse (generic function with 1 method)</code></pre>
+<h4 id="problem_11_15_points"><a href="#problem_11_15_points" class="header-anchor">Problem 1.1 &#40;15 points&#41;</a></h4>
+<p>Load the sea-level and temperature datasets into <code>DataFrame</code>s. The sea-level dataset is provided in <code>data/CSIRO_Recons_gmsl_yr_2015.csv</code>, and the temperature dataset is provided in <code>data/HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv</code>. You&#39;ll need to correct the years in the sea-level rise data to remove the half-year, and then align the two data sets on the common period 1880 &ndash; 2013. Plot each of the resulting data sets after this &quot;cleaning&quot; process on different axes.</p>
+<h4 id="problem_12_30_points"><a href="#problem_12_30_points" class="header-anchor">Problem 1.2 &#40;30 points&#41;</a></h4>
+<p>Write a function for the above model, and find the parameter values which minimize the RMSE using <code>Optim.optimize&#40;&#41;</code> &#40;here is <a href="https://julianlsolvers.github.io/Optim.jl/v0.9.3/user/minimization/">documentation on how to use <code>Optim.optimize&#40;&#41;</code> to minimize a function</a>. This will involve writing a function which takes in a vector of parameter values and the data, simulates the model, and computes the RMSE. <code>Optim.optimize&#40;&#41;</code> maps a parameter vector to a function, and since you&#39;ll be passing auxiliary data to your function, you may want to use anonymous function to wrap your simulation function, as in</p>
+<pre><code class="julia hljs">optimize(p -&gt; f(p, aux), ...)</code></pre>
+<h4 id="problem_13_15_points"><a href="#problem_13_15_points" class="header-anchor">Problem 1.3 &#40;15 points&#41;</a></h4>
+<p>Plot the sea-level data as points, and overlay a line with the model hindcast. How well do you think the model fits the data? Are there any key trends or features that you notice?</p>
+<h3 id="problem_2_40_points"><a href="#problem_2_40_points" class="header-anchor">Problem 2 &#40;40 points&#41;</a></h3>
+<p>Your goal in this problem is to see how scenario and parametric uncertainty in climate models propagates through the simple semi-empirical sea-level model from Problem 1. You&#39;ll be using SNEASY, and we have provided the same set of functions in <code>src/sneasy_model_functions.jl</code> that you used in Lab 3.</p>
+<h4 id="problem_21_10_points"><a href="#problem_21_10_points" class="header-anchor">Problem 2.1 &#40;10 points&#41;</a></h4>
+<p>Use 1000 samples from the parameter set for MimiSNEASY &#40;found in <code>params/parameters_subsample_sneasybrick.csv</code>&#41; to compute and plot 95&#37; uncertainty intervals for global mean temperatures from 1880 &ndash; 2100 for RCPs 2.6, 4.5, 6.0, and 8.5.</p>
+<h4 id="problem_22_10_points"><a href="#problem_22_10_points" class="header-anchor">Problem 2.2 &#40;10 points&#41;</a></h4>
+<p>Run your calibrated model from Problem 1 on the ensemble of temperatures for each RCP from Problem 2.1. Plot the 95&#37; uncertainty intervals and the median trajectory from 1880 &amp; ndash;.</p>
+<h4 id="problem_23_10_points"><a href="#problem_23_10_points" class="header-anchor">Problem 2.3 &#40;10 points&#41;</a></h4>
+<p>Use <a href="https://docs.juliaplots.org/latest/api/#Plots.density&#33;-Tuple"><code>Plots.density&#40;&#41;</code></a> to plot the distribution of global mean sea levels in 2100 for each RCP &#40;put these density plots on the same axes for easier comparison&#41;.</p>
+<h4 id="problem_24_10_points"><a href="#problem_24_10_points" class="header-anchor">Problem 2.4 &#40;10 points&#41;</a></h4>
+<p>What do you notice about the contributions of parametric and scenario uncertainty to the variability in sea levels over the rest of the century? Are there any interesting trends?</p>
+
+<div class="page-foot">
+  <div class="copyright">
+    <a href="https://github.com/vsrikrish/climate-risk-analysis/"><b><img class="github-logo" src="https://unpkg.com/ionicons@5.1.2/dist/svg/logo-github.svg"></img> repository for this site.</b></a></br>
+
+    Last modified: February 08, 2023. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+  </div>
+</div>
+</div><!-- CONTENT ENDS HERE -->
+    </div>  <!-- div: content container -->
+    
+        
+
+
+
+    
+    
+        
+
+
+        <!-- http://tutsplus.github.io/clipboard/ -->
+
+<script>
+    (function(){
+    
+        // Get the elements.
+        // - the 'pre' element.
+        // - the 'div' with the 'paste-content' id.
+    
+        var pre = document.getElementsByTagName('pre');
+    
+        // Add a copy button in the 'pre' element.
+        // which only has the className of 'language-'.
+    
+        for (var i = 0; i < pre.length; i++) {
+            var isLanguage = pre[i].children[0].className.indexOf('language-');
+    
+            if ( isLanguage === 0 ) {
+                var button           = document.createElement('button');
+                        button.className = 'copy-button';
+                        button.textContent = 'Copy';
+    
+                        pre[i].appendChild(button);
+            }
+        };
+    
+        // Run Clipboard
+    
+        var copyCode = new Clipboard('.copy-button', {
+            target: function(trigger) {
+                return trigger.previousElementSibling;
+        }
+        });
+    
+        // On success:
+        // - Change the "Copy" text to "Copied".
+        // - Swap it to "Copy" in 2s.
+        // - Lead user to the "contenteditable" area with Velocity scroll.
+    
+        copyCode.on('success', function(event) {
+            event.clearSelection();
+            event.trigger.textContent = 'Copied';
+            window.setTimeout(function() {
+                event.trigger.textContent = 'Copy';
+            }, 2000);
+    
+        });
+    
+        // On error (Safari):
+        // - Change the  "Press Ctrl+C to copy"
+        // - Swap it to "Copy" in 2s.
+    
+        copyCode.on('error', function(event) {
+            event.trigger.textContent = 'Press "Ctrl + C" to copy';
+            window.setTimeout(function() {
+                event.trigger.textContent = 'Copy';
+            }, 5000);
+        });
+    
+    })();
+</script>
+    
+    
+  </body>
+</html>
