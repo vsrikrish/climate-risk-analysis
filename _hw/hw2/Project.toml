@@ -1,0 +1,8 @@
+[deps]
+CSVFiles = "5d742f6a-9f54-50ce-8119-2520741973ca"
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+Mimi = "e4e893b0-ee5e-52ea-8111-44b3bdec128c"
+MimiSNEASY = "3f1801d0-c5f8-11e9-1568-bf13fd643260"
+Optim = "429524aa-4258-5aef-a3af-852621145aeb"
+Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
+StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
