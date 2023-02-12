@@ -167,6 +167,8 @@ li::marker {color: #DF1E12;}
     font-size: 0.6em;
     color: #222222;
     font-style: italic;
+    line-height: 1.5em;
+    display: inline-block;
 }
 
 blockquote .cite {
