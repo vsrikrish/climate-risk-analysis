@@ -178,6 +178,26 @@ blockquote .cite {
 
 }
 
+table {
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+thead {
+    padding-top: 1px;
+}
+
+th, td {
+    padding: 5px;
+    border: 2px solid;
+    font-size: 1em;
+}
+
+tr:nth-child(even){
+    background-color: #f7f7f7;
+}
+
 @page {
     size: 1210px 681px;
     margin: 0;
