@@ -18,4 +18,4 @@ Please make sure that you have updated (with a `git pull`) your local version of
 | 1 | Class Overview | {{lecture_badges 01}}  | {{lab_badges 01}} |  | |
 | 2 | Risk and Uncertainty | {{lecture_badges 02}} | {{lab_badges 02}} | [Simpson et al (2021)](https://www.sciencedirect.com/science/article/pii/S2590332221001792) | |
 | 3 | Intro to Climate Risk Management | {{lecture_badges 03}} | {{lab_badges 03}} | [Morgan & Keith (2008)](https://link-springer-com.proxy.library.cornell.edu/article/10.1007/s10584-008-9458-1) | |
-
+| 4 | Overview of Coastal Flood Risk | {{lecture_badges 04}} |  | [Van Dantzig (1956)](https://www-jstor-org.proxy.library.cornell.edu/stable/1911632?origin=crossref) | |

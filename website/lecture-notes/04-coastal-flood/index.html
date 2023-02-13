@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Coastal Flood Risk</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+    <link rel="stylesheet" href="../stylesheets/katex.min.css">
+
+
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+.title[Coastal Flood Risk Management Problems]
+<hr>
+.left-column[.course[BEE 6940] .subtitle[Lecture 4]] .date[February 13, 2023]
+ 
+---
+name: section-header
+layout: true
+class: center, middle
+
+{{content}}
+<hr>
+
+---
+layout: false
+name: toc
+class: left
+
+# Table of Contents
+<hr>
+
+1. [Coastal Flood Risk Overview](#overview)
+2. [Sea Level Rise](#slr)
+3. [Extreme Sea Levels (Storm Surge)](#surge)
+4. [Exposure, Vulnerability, and Response](#exposure)
+5. [Coastal Flood Risk Management](#management)
+6. [Upcoming Schedule](#schedule)
+
+???
+This is an overview of the topics we'll cover in today's lecture. The italics around the last topic reflect that it's an "optional" topic that we may get to if time allows.
+
+---
+name: overview
+template: section-header
+
+# Coastal Flood Risk Overview
+
+---
+class: left
+
+# Coastal Flood Risk
+<hr>
+
+Coastal flooding: this is our motivating problem in this course.
+
+Let's think about this through our hazard-exposure-vulnerability-response risk model.
+
+---
+class: left
+
+# How Are Local High Water Levels Measured?
+<hr>
+
+.left-column[
+Tide gauge data comes in many "flavors", based on local tidal and diurnal cycles. 
+
+**Mean Highest High Water (MHHW)** is the typical "extreme" sea level datum.]
+
+.right-column[.center[![:img Tidal Ranges, 95%](https://noaanhc.files.wordpress.com/2016/02/tidalrange.jpg)]
+.center[.cite[Source: [Inside the Eye Blog, National Hurricane Center, 01-29-2016](https://noaanhc.files.wordpress.com/2016/02/tide_plot.jpg)]]
+]
+
+---
+class: left
+
+# Contributors to Extreme Sea Levels
+<hr>
+
+.center[![:img Physical Contributors to Coastal Flood Hazards, 80%](https://cleantechnica.com/files/2022/08/NOAA-REPORT.png)]
+.center[.cite[Source: [NOAA 2022 Sea Level Rise Technical Report](https://oceanservice.noaa.gov/hazards/sealevelrise/sealevelrise-tech-report-sections.html)]]
+
+---
+template: section-header
+name: slr
+
+# Sea Level Rise
+
+---
+class: left
+
+# Contributors to Global Mean SLR
+<hr>
+
+.center[![:img Contributors to Sea-Level Rise, 70%](figures/sea-processes.png)]
+.center[.cite[Source: [Milne et al (2009)](https://www.nature.com/articles/ngeo544)]]
+
+---
+class: left
+
+# Local Sea Levels Have Been Increasing
+<hr>
+
+.left-column[
+.center[![:img Local Sea Level Trends, 78%](figures/slr-local-trends.png)]
+]
+
+.right-column[
+Figure is from a 2009 paper, but these trends have only accelerated since then.
+
+Why is the Baltic stagnant?
+
+.bottom[.left[.cite[Source: [Milne et al (2009)](https://www.nature.com/articles/ngeo544)]]]
+]
+
+---
+class: left
+
+# Spatial SLR Impact of Ice Sheet Melt
+<hr>
+
+Ice sheet impact on SLR depends on gravitational effect of the ice.
+.center[![Ice sheet melt contribution to SLR](figures/ice-sheet-gravity.png)]
+
+---
+class: left
+
+# Incomplete Accounting of Past SLR
+<hr>
+
+.left-column[
+We can't actually account for the entirety of observed SLR.
+
+.bottom[.right[.cite[Source: [IPCC AR6 Working Group 1, Chapter 9 (2021)](https://www.ipcc.ch/report/ar6/wg1/)]]]
+]
+
+.right-column[
+.center[![Observed Changes in SLR Components](figures/slr-budget.png)]
+]
+
+---
+class: left
+
+# Other Contributors to Relative Sea Level Rise
+<hr>
+
+- Glacial Isostatic Adjustment (GIA)
+- Subsidence
+
+--
+
+These effects can be very large depending on the location.
+
+For example, Norfolk (VA)'s relative SLR is primarily driven by subsidence due to aquifier depletion.
+
+---
+class: left
+
+# IPCC Projections of Future SLR
+<hr>
+
+Projections of future SLR to and past 2100 depend strongly on the associated level of future warming.
+
+.center[![:img Future SLR Projections, 95%](figures/slr-projections.png)]
+.center[.cite[Source: [IPCC AR6 Working Group 1, Technical Summary (2021)](https://www.ipcc.ch/report/ar6/wg1/)]]
+
+
+---
+class: left
+
+# Sea Level Rise After Peak Warming
+<hr>
+
+.left-column[
+Due to ocean heat uptake and circulation and cumulative warming of ice sheets, sea levels will continue to rise after warming ceases.
+
+.bottom[.right[.cite[Source: [IPCC AR6 Working Group 1, Technical Summary (2021)](https://www.ipcc.ch/report/ar6/wg1/)]]
+]]
+
+.right-column[
+.center[![:img Future SLR Projections, 85%](figures/slr-committed.png)]
+]
+
+---
+class: left
+
+# Sensitivity of Future SL to Emissions Pathway
+<hr>
+
+.left-column[
+When we are likely to hit a certain level of GMSL is strongly dependent on the emissions trajectory, but there is considerable uncertainty.
+
+.bottom[.right[.cite[Source: [IPCC AR6 Working Group 1, Technical Summary (2021)](https://www.ipcc.ch/report/ar6/wg1/)]]
+]]
+
+.right-column[
+.center[![:img Future SLR Projections, 65%](figures/slr_thresholds.png)]
+]
+
+---
+class: left
+
+# Additional Uncertain Processes
+<hr>
+
+These projections may underestimate some additional processes or uncertainties &mdash; remember, we can't fully explain recent SLR by adding up our estimates of contributions from individual processes!
+
+---
+class: left
+
+# Unstable Ice Sheet Melting Dynamics
+<hr>
+
+.center[![:img Ice Sheet Dynamics, 60%](figures/ice-sheet-melting.png)]
+.center[.cite[Source: [IPCC AR6 Working Group 1, Technical Summary (2021)](https://www.ipcc.ch/report/ar6/wg1/)]]
+
+---
+class: left
+
+# Ice Sheet Dynamics Can Accelerate SLR
+<hr>
+
+.center[![:img SLR Distributions With and Without Antarctic Fast Dynamics, 55%](figures/fd_slr_impacts.png)]
+.center[.cite[Source: [Wong, Bakker & Keller (2017)](https://dx.doi.org/10.1007/s10584-017-2039-4)]]
+
+---
+class: left
+
+# Key Drivers of Future SLR Variability
+<hr>
+
+.center[![:img Sensitivity Analysis for SLR, 65%](figures/slr_sensitivity.png)]
+.center[.cite[Source: [Hough & Wong (2022)](https://doi.org/10.5194/ascmo-8-117-2022)]]
+
+
+
+---
+template: section-header
+
+# Storm Surge
+
+---
+class: left
+
+# Extreme Sea Levels
+<hr>
+
+Extreme sea levels are a combination of tidal extremes and (often) storm surge, or "storm tides".
+
+--
+
+Storm surge is the result of winds pushing water against the shore. Physical modeling of surges is complex &mdash; topography, storm intensity, size of cyclone, angle of approach, continental shelf slope, all matter! 
+
+However, we can (and will!) model storm tides using extreme value statistics.
+
+---
+class: left
+
+# Key Question: Are Storm Surges Stationary?
+<hr>
+
+Common practice is to assume *stationarity* in future storm surge levels.
+
+**However**:
+  - SLR means more water to surge against the coast;
+  - Considerable uncertainty about impact of climate change on tropical cyclone intensity.
+
+---
+class: left
+
+# Some Evidence Tropical Cyclone Intensity Is Increasing
+<hr>
+
+.left-column[
+.center[![:img Distribution of Tropical Cyclone Intensities, 90%](figures/tc_intensity.jpg)]
+]
+
+.right-column[
+An increase is consistent with the energetic model from [Emanuel (1986)](https://journals.ametsoc.org/view/journals/atsc/43/6/1520-0469_1986_043_0585_aasitf_2_0_co_2.xml), which models TC energetics as a Carnot engine.
+
+.left[.cite[Source: [Knutson et al (2015)](https://doi.org/10.1175/JCLI-D-15-0129.1)]]
+]
+
+---
+class: left
+
+# Potential Covariates for Storm Surge Intensity Changes
+<hr>
+
+Actually very difficult (as we will discuss later) to decide between:
+
+- Temperature (global mean temperature or sea-surface)
+- Climate indices (NAO, ENSO)
+- Sea level anomalies
+- Stationary!
+
+---
+class: left
+
+# Difficult to Identify Climate Change Influence On Storm Surge
+<hr>
+
+.center[![:img Decomposition of Surge Influences, 75%](figures/surge_anthropogenic.png)]
+.center[.cite[Source: [Calafat et al (2022)](https://www.nature.com/articles/s41586-022-04426-5)]]
+
+
+---
+template: section-header
+name: exposure
+
+# Exposure, Vulnerability, & Response
+
+---
+class: left
+
+# Impacts from Coastal Flooding
+<hr>
+
+.center[![:img Impacts on People and the Environment from Coastal Flooding, 72%](figures/slr_risks.png)]
+.center[.cite[Source: [IPCC AR6 WG2 Cross-Chapter Paper 2, Cities and Settlements By The Sea (2022)](https://www.ipcc.ch/report/ar6/wg2/)]]
+
+---
+class: left
+
+# Local Dynamics Impacting Exposure and Vulnerability
+<hr>
+
+Characterizing exposure and vulnerability is highly local and reflective of many socioeconomic, infrastructure, and topographical factors:
+- drainage and permeability;
+- location of critical infrastructure;
+- housing stock & location;
+- economic and social inequities.
+
+---
+class: left
+
+# Local Dynamics Impacting Exposure and Vulnerability
+<hr>
+
+As a result, it's hard to speak in general terms about potential impacts and their trends.
+
+But:
+
+- Migration and urbanization are key drivers;
+- Coastal amenities seem to (presently) outweigh perceptions of risk in population patterns and housing markets.
+
+---
+class: left
+
+# Human-System Responses
+<hr>
+
+Responses are also hard to fully characterize, but some relevant factors:
+- Levee effect (back to White (1945));
+- Transportation networks and evacuation;
+- Increasing discussion of retreat from high-risk coastal cities.
+
+---
+template: section-header
+
+# Flood Risk Management
+
+---
+class: left
+
+# Coastal Flood Risk Management As a Decision Problem
+<hr>
+
+Some common objectives:
+
+- Net costs/benefits;
+- Reliability (minimizing flood probability)
+- Expected loss of life.
+
+These all raise additional questions about equity and ethics!
+
+---
+class: left
+
+# Many Different Coastal Flood Risk Management Levers
+<hr>
+
+
+.center[![:img Coastal Flood Risk Management Levers, 100%](https://media.defense.gov/2015/Jan/26/2001007580/-1/-1/0/150123-A-YW639-007.JPG)]
+.center[.cite[Source: [Layers of Protection, US Army Corps of Engineers](https://www.usace.army.mil/Media/Images/igphoto/2001007580/)]]
+
+
+---
+class: left
+
+# Time Preference of Money
+<hr>
+
+Would you rather have $\$100$ today or $\$1000$ ten years from now?
+
+--
+
+Many economic reasons to value money/costs/benefits today more than in the future:
+
+- Inflation;
+- Technological innovation;
+- Compounding value of alternative investments.
+
+---
+class: left
+
+# Discount Rates
+<hr>
+
+These preferences are captured with the *discount rate*. Let $I$ be the investment level, $r$ the interest rate, then the return $R(t)$ is
+$$R(t) = I(1 + r)^t \Rightarrow I = R(t) \times d(t),$$
+and where the **discount factor** $d(t)$ is:
+$$d(t) = \frac{1}{(1+r)^t}.$$
+
+In this case, we interpret $r$ as the **discount rate**.
+
+---
+class: left
+
+# Impact of Discount Rates
+<hr>
+
+The choice of discount rate plays a major role in any cost-benefit analysis. Consider an initial investment of $\$1000$:
+
+| Years | 1% | 4% | 7% |
+|:---:|----:|----:|----:|
+| 1 | 990.05 | 960.79 | 932.39 |
+| 10 | 904.84 | 670.32 | 496.59 |
+| 50 | 606.53 | 135.34 | 30.20 |
+| 100 | 367.88 | 18.32 | 0.91 |
+| 200 | 135.34 | 0.34 | 0.00 |
+
+---
+class: left
+
+# Relevant Considerations
+<hr>
+
+So, to set up the decision problem, need to decide:
+- SLR model/included processes;
+- How to model storm surge (*e.g.* stationary or not);
+- How to treat changes in exposure/vulnerability;
+- If endogenous responses will be considered;
+- Key objective(s);
+- Levers which will be included;
+- Discount rates for future costs and/or impacts.
+
+---
+class: left
+
+# What Will We Focus On?
+<hr>
+
+Going forward, in this class we will focus more on uncertainty quantification for the flood hazard:
+
+- Calibrating SLR models and capturing uncertainties;
+- Model selection and hypothesis testing for storm surge stationarity.
+
+The main reason for this is that these are the most universal considerations given the local character and difficulties of the human-system elements of risk. But many of the techniques we discuss can be brought to bear on these components.
+
+---
+template: section-header
+name: schedule
+
+# Upcoming Schedule
+
+
+---
+class: left
+
+# Upcoming Schedule
+<hr>
+
+**Wednesday**: Discuss Van Dantzig (1956) and lab on sensitivity analysis for the Van Dantzig coastal flood risk management problem.
+
+**Next Monday**: The bootstrap and sea-level rise models.
+
+    </textarea>
+
+
+    <script src="../javascript/remark.min.js" type="text/javascript"></script>
+    <script defer src="../javascript/katex.min.js"></script>
+    <script defer src="../javascript/auto-render.min.js"></script>
+    <script type="text/javascript" src="../javascript/call-javascript.js"></script>
+
+  </body>
+</html>
