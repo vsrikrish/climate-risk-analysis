@@ -22,7 +22,17 @@
 | Homework 2 | Feb 23, 2023 | {{hw_badges 2}} |
 
 ## Final Project
-
 ### Instructions
+
+* [Project Guidelines](/assignments/project/)
+
+### Schedule
+
+| Component | Due Date |
+|------------|----------|
+| Proposal | Mar 02, 2023 | 
+| Research Plan | Apr 13, 2023 | 
+| Poster | May 8, 2023
+| Presentation | May 8, 2023
 
 ### Resources
