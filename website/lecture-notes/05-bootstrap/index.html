@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>The Bootstrap</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+    <link rel="stylesheet" href="../stylesheets/katex.min.css">
+
+
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+.title[Model Calibration and The Bootstrap]
+<hr>
+.left-column[.course[BEE 6940] .subtitle[Lecture 5]] .date[February 20, 2023]
+ 
+---
+name: section-header
+layout: true
+class: center, middle
+
+{{content}}
+<hr>
+
+---
+layout: false
+name: toc
+class: left
+
+# Table of Contents
+<hr>
+
+1. [Uncertainty Quantification and Model Calibration](#overview)
+1. [Frequentist Statistics and Sampling Distributions](#frequentist)
+3. [The Non-Parametric Bootstrap](#np-boot)
+4. [The Parametric Bootstrap](#p-boot)
+5. [Key Takeaways](#takeaways)
+6. [Upcoming Schedule](#schedule)
+
+???
+This is an overview of the topics we'll cover in today's lecture. The italics around the last topic reflect that it's an "optional" topic that we may get to if time allows.
+
+---
+name: overview
+template: section-header
+
+# Uncertainty Quantification and Model Calibration
+
+---
+class: left
+
+# What is "Uncertainty Quantification"?
+<hr>
+
+Uncertainty quantification (UQ) is...
+
+> the full specification of likelihoods as well as distributional forms necessary to infer the joint probabilistic response across all modeled factors of interest...
+>
+> .cite[&mdash; Cooke, *Experts in Uncertainty: Opinion and Subjective Probability in Science* (1991)]
+
+---
+class: left
+
+# UQ vs. Uncertainty Characterization
+<hr>
+
+By contrast, **uncertainty characterization** involves mapping how alternative representations of the stressors and form and function of modeled systems influence outcomes of interest.
+
+--
+
+In short:
+- UQ emphasizes probabilistic inference and projection,
+- UC explores impact of alternative hypotheses and representations.
+
+---
+class: left
+
+# UQ vs. Sensitivity Analysis
+<hr>
+
+**Sensitivity analysis** involves analyzing how uncertainty in the output is influenced by different sources of uncertainty in the input(s).
+
+--
+
+In short:
+- UQ looks at the probabilistic representation of input(s) and output uncertainty;
+- SA looks at the impact of variability in input(s) on outputs (for a number of purposes).
+
+---
+class: left
+
+# When is UQ Appropriate?
+<hr>
+
+- Can specify a probability model to generate and/or draw inferences about data;
+- Have sufficient data to constrain model adequately.
+- Often need a model which is computationally inexpensive.
+
+---
+class: left
+
+# Model Calibration
+<hr>
+
+A common UQ task is **model calibration**:
+
+> the selection of model parameters and structures to maximize
+the fidelity of the system model to observational data given model and computational constraints as calibration.
+>
+> .cite[&mdash; Oreskes et al (1994)]
+
+We can calibrate *statistical* models or numerical *simulation* models.
+
+---
+class: left
+
+# Calibrating Simulation Models
+<hr>
+
+Establishing some notation:
+
+Let $F(\mathbf{x}; \mathbf{\theta})$ be the simulation model:
+- $\mathbf{x}$ are the "control variables";
+- $\mathbf{\theta}$ are the "calibration variables".
+
+---
+class: left
+
+# Data-Model Discrepancy
+<hr>
+
+The other important consideration is **data-model discrepancy**.
+
+If $\mathbf{y}$ are the "observations,"" we can model these as:
+$$\mathbf{y} = z(\mathbf{x}) + \mathbf{\varepsilon},$$
+where
+- $z(\mathbf{x})$ is the "true" system state at control variable $\mathbf{x}$;
+- $\mathbf{\varepsilon}$ are observation errors.
+
+---
+class: left
+
+# Data-Model Discrepancy
+<hr>
+
+Then the *discrepancy* $\zeta$ between the simulation and the modeled system is:
+$$\zeta(\mathbf{x}; \mathbf{\theta}) = z(\mathbf{x}) - F(\mathbf{x}; \mathbf{\theta}).$$
+
+--
+
+This implies that the "observations" can be written as
+
+$$\mathbf{y} =  F(\mathbf{x}; \mathbf{\theta}) + \zeta(\mathbf{x}; \mathbf{\theta}) + \mathbf{\varepsilon}.$$
+
+---
+class: left
+
+# Model Calibration and Discrepancy
+<hr>
+
+Model calibration then involves specifying a probability model for the data, which can include:
+- Distributions/likelihoods for the calibration parameters;
+- A probability model for the discrepancy and observation errors.
+
+---
+class: left
+
+# What Happens If We Neglect Discrepancy?
+<hr>
+
+Neglecting discrepancy can result in biased inferences and, as a result, projections, as we will see over the next few weeks.
+
+---
+template: section-header
+name: frequentist
+
+# Review of Frequentist Statistics and Sampling Distributions
+
+---
+class: left
+
+# Frequentist vs. Bayesian UQ
+<hr>
+
+Recall:
+- Frequentist statistics assumes that parameters of a given probability model have a "fixed" value corresponding to those statistics.
+--
+
+- Bayesian statistics assigns probabilities to parameters as part of the probability model based on the degree of belief about their consistency with the data (which is also random).
+
+---
+class: left
+
+# Sampling Distributions
+<hr>
+
+A central concept in frequentist statistics (and to a lesser degree in Bayesian statistics) is the **sampling distribution** of a statistic, which captures the uncertainty associated with random samples.
+
+---
+class: left
+
+# Sampling Distributions
+<hr>
+
+.center[![:img Sampling Distribution, 65%](figures/true-sampling.png)]
+
+---
+class: left
+
+# Frequentist UQ
+<hr>
+
+Most frequentist UQ questions are centered around the sampling distribution, as it captures uncertainty from variations in the sample.
+
+--
+
+**But what if we only have access to one sample?**
+
+In laboratory settings, can run multiple experiments, but this is not the case for the real world.
+
+---
+class: left
+
+# "Classical" Approaches
+<hr>
+
+Classical statistical approaches involve relying on asymptotics or a special case distribution: 
+
+Assume an approximation to the sampling distribution and analyitcally derive test statistics, confidence intervals, etc.
+
+---
+class: left
+
+# The Bootstrap Principle
+<hr>
+.left-column[
+
+What if we do not want to make these assumptions? [Efron (1979)](https://doi.org/10.1214/aos/1176344552) suggested combining estimation with simulation: the **bootstrap**.
+
+The key idea: use the data to define a data-generating mechanism.
+]
+
+.right-column[
+.center[![:img Baron von Munchhausen Pulling Himself By His Hair, 50%](https://upload.wikimedia.org/wikipedia/commons/3/3b/Muenchhausen_Herrfurth_7_500x789.jpg)]
+.center[.cite[Source: [Wikipedia](https://en.wikipedia.org/wiki/M%C3%BCnchhausen_trilemma)]]]
+
+---
+class: left
+
+# Monte Carlo vs Bootstrapping
+<hr>
+
+**Monte Carlo**: If we have a *generative* probability model, simulate new samples from the model and estimate the sampling distribution.
+
+**Bootstrap**: assumes the existing data is representative of the "true" population, and can simulate based on properties of the data itself.
+
+---
+class: left
+
+# Why Does The Bootstrap Work?
+<hr>
+
+Efron's key insight: due to the Central Limit Theorem, the **differences** between estimates drawn from the sampling distribution and the true value converge to a normal distribution.
+
+- Use the bootstrap to approximate the sampling distribution through re-sampling and re-estimation.
+- Can draw asymptotic quantities (bias estimates, confidence intervals, etc) from the differences between the sample estimate and the bootstrap estimates.
+
+---
+class: left
+
+# What Can We Do With The Bootstrap Sampling Distribution?
+<hr>
+
+Let $t_0$ the "true" value of a statistic, $\hat{t}$ the estimate of the statistic from the sample, and $(\tilde{t}_i)$ the bootstrap estimates.
+
+- Estimate Variance: $\text{Var}[\hat{t}] \approx \text{Var}[\tilde{t}]$
+- Bias Correction: $\mathbb{E}[\hat{t}] - t_0 \approx \mathbb{E}[\tilde{t}] - \hat{t}$
+- Compute *basic* $\alpha$-confidence intervals:
+
+$$\left(\hat{t} - (Q\_{\tilde{t}}(1-\alpha/2) - \hat{t}), \hat{t} - (Q\_{\tilde{t}}(\alpha/2) - \hat{t})\right)$$
+
+
+---
+template: section-header
+name: np-boot
+
+# The Non-Parametric Bootstrap
+
+---
+class: left
+
+# The Non-Parametric Bootstrap
+<hr>
+
+The non-parametric bootstrap is the most "naive" approach to the bootstrap: **resample-then-estimate**.
+
+---
+class: left
+
+# Non-Parametric Bootstrap Scheme
+<hr>
+
+.center[![:img Sampling Distribution, 65%](figures/npboot-sampling.png)]
+
+---
+class: left
+
+# Simple Example: Is A Coin Fair?
+<hr>
+
+Suppose we have observed twenty flips with a coin, and want to know if it is weighted.
+
+T, H, T, T, T, T, T, H, H, H, H, T, T, H, T, H, H, T, T, H
+
+Based on this sample, the frequency of heads is 45%.
+
+---
+class: left
+
+# Simple Example: Is A Coin Fair?
+<hr>
+
+.left-column[
+If we generate 1000 samples:
+
+.center[![Bootstrap Estimate of Heads Frequencies, 120%](figures/coin-bootstrap-small.svg)]
+]
+
+.right-column[
+The 95% basic confidence interval is $(0.25, 0.65)$.
+
+However, if we wanted to use this sample to bias-correct, we'd get an estimated bias of about 0, when the "true" bias is $0.6 - 0.45 = 0.15$.
+]
+
+---
+class: left
+
+# Simple Example: Is A Coin Fair?
+<hr>
+
+What if we redo this with fifty realizations?
+
+.center[![Bootstrap Estimate of Heads Frequencies, 120%](figures/coin-bootstrap-large.svg)]
+
+---
+class: left
+
+# Simple Example: Is A Coin Fair?
+<hr>
+
+This illustrates the centrality of the assumption that the sample is representative of the population, given the lack of any parametric structure.
+
+---
+class: left
+
+# Bootstrapping with Structured Data
+<hr>
+
+The naive non-parametric bootstrap that we just saw doesn't work if data has structure, e.g. spatial or temporal dependence.
+
+.left-column[
+![:img Sea-Level Data from CSIRO, 90%](figures/slr-plot.svg)
+]
+
+.right-column[
+![:img Resampled Sea-Level Data, 90%](figures/slr-resample.svg)
+]
+
+---
+class: left
+
+# Bootstrapping with Structured Data
+<hr>
+
+For some structures (such as correlations), can transform the data to an uncorrelated sample, then resample and re-transform back.
+
+For time series data, need to be more clever.
+
+---
+template: section-header
+name: p-boot
+
+# Parametric Bootstrap
+
+---
+class: left
+
+# The Parametric Bootstrap
+<hr>
+
+The parametric bootstrap is more interesting (and powerful) than the non-parametric bootstrap.
+
+- **Non-Parametric Bootstrap**: Resample directly from the data.
+- **Parametric Bootstrap**: Fit a model to the original data and simulate new samples, then calculate bootstrap estimates.
+
+This lets us use additional information, such as a simulation or statistical model.
+
+---
+class: left
+
+# Parametric Bootstrap Scheme
+<hr>
+
+.center[![:img Sampling Distribution, 65%](figures/pboot-sampling.png)]
+
+---
+class: left
+
+# Parametric Bootstrap For Time Series
+<hr>
+
+A simple approach to using the parametric bootstrap for time-series data: 
+
+1. Specify and fit a trend model.
+2. Calculate the residuals from the trend.
+3. Resample from the residuals to generate new time-series.
+4. Refit trend model to capture uncertainty.
+
+--
+
+This approach can be used for model calibration to capture uncertainty in parameter estimates.
+
+---
+class: left
+
+# Parametric Bootstrap and SLR Data
+<hr>
+
+Using the discrepancy notation, this is:
+$$\mathbf{y} =  F(\mathbf{x}; \mathbf{\theta}) + \zeta(\mathbf{x}) + \cancel{\mathbf{\varepsilon}}.$$
+
+where:
+- $F$ is the trend model (we'll use a quadratic);
+- $\zeta$ is the data-generating model for residuals.
+- We do not explicitly consider observation errors $\varepsilon$, as these are part of the residual process.
+
+---
+class: left
+
+# Parametric Bootstrap and SLR Data
+<hr>
+
+.left-column[Let's start by fitting a quadratic function $$a(t-t_0)^2 + b(t-t_0) + c$$ to the data.]
+
+.right-column[.center[![Quadratic fit to SLR data](figures/slr-fit.svg)]]
+
+---
+class: left
+
+# Analyzing Residuals
+<hr>
+
+Now, let's analyze the residuals to see what probability model might be appropriate.
+
+
+.left-column[
+![:img Sea Level Model Residuals, 90%](figures/slr-residuals.svg)
+]
+
+.right-column[
+![:img Residual Partial Autocorrelation, 90%](figures/slr-pacf.svg)
+]
+
+---
+class: left
+
+# Parametric Bootstrap and SLR Data
+<hr>
+
+We can then fit an autoregressive model to the residuals and use that to generate new realizations.
+
+.left-column[
+![:img Bootstrap Realizations, 90%](figures/slr-boot.svg)
+]
+
+.right-column[
+![:img Bootstrap Prediction Intervals, 90%](figures/slr-boot-ci.svg)
+]
+
+---
+class: left
+
+# Parametric Bootstrap and SLR Data
+<hr>
+
+Finally, we refit the trend model to each realization, which yields sampling distributions for each parameter.
+
+.center[![Bootstrap sampling distribution for the SLR model](figures/slr-boot-hist.svg)]
+
+---
+class: left
+
+# Parametric Bootstrap and SLR Data
+<hr>
+
+The 95% confidence intervals for each value:
+
+| Variable | Sample Estimate | Bootstrap Confidence Interval |
+| :------: | --------------: | :----------------------------: |
+| $a$ | $6 \times 10^{-3}$ | $(3 \times 10^{-3}, 9 \times 10^{-3})$ |
+| $b$ | $0.7$ | $(0.5, 2.3)$ |
+| $c$ | $-157$ | $(-57, -198)$ |
+| $t_0$ | $1876$ | $(1859, 2066)$ |
+
+
+---
+# Parametric Bootstrap and SLR Data
+<hr>
+
+We can also look for correlations across parameters with a pairs or corner plot:
+
+.center[![Bootstrap sampling distribution for the SLR model](figures/slr-boot-corner.svg)]
+
+---
+class: left
+
+# Sources of Error for the Bootstrap
+<hr>
+
+The bootstrap has three potential sources of error:
+1. **Sampling error**: error from using finitely many replications
+2. **Statistical error**: error in the bootstrap sampling distribution approximation
+3. **Specification error** (parametric): Error in the data-generating model
+
+---
+template: section-header
+name: takeaways
+
+# Key Takeaways
+
+---
+class: left
+
+# Key Takeaways: Calibration
+<hr>
+
+- Model calibration is an important UQ task.
+- **Goal**: identify model structures and parameters which are consistent with the data and our prior beliefs (in a Bayesian setting);
+- Important to capture the model discrepancy in an appropriate fashion!
+
+---
+class: left
+
+# Key Takeaways: The Bootstrap
+<hr>
+
+- The bootstrap is a powerful method to combine simulation and estimation.
+- Several sources of error: of particular concern are statistical error and specification error (but this is always a concern).
+- There are more sophisticated versions of the bootstrap for different data structures, e.g. the *(moving) block bootstrap* for time series data.
+- The parametric bootstrap provides a method for UQ through the sampling distribution approximation.
+
+---
+template: section-header
+name: schedule
+
+# Upcoming Schedule
+
+
+---
+class: left
+
+# Upcoming Schedule
+<hr>
+
+**Wednesday**: Discuss Ezer & Corlett (2012) and lab on using the bootstrap for sea-level data.
+
+**Next Monday**: Introduction to Bayesian statistics and computation.
+
+    </textarea>
+
+
+    <script src="../javascript/remark.min.js" type="text/javascript"></script>
+    <script defer src="../javascript/katex.min.js"></script>
+    <script defer src="../javascript/auto-render.min.js"></script>
+    <script type="text/javascript" src="../javascript/call-javascript.js"></script>
+
+  </body>
+</html>
