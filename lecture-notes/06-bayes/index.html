@@ -206,17 +206,37 @@ class: left
 
 "Modern" version (Laplace (1774), *Mémoire sur la probabilité des causes par les événements*):
 
-$$\color{blue}{p(\theta | y)} \color{black}= \frac{\color{black}p(y | \theta)}{\color{purple}p(y)}\color{red}{p(\theta)}\color{black},$$
-
-- $\color{blue}p(\theta | y)$ are *posterior* probabilities
-- $\color{red}p(\theta)$ are *prior* probabilities;
-- $\color{black}p(y | \theta)$ is the *likelihood*;
-- $\color{purple}p(y) = \int p(y | \theta) p(\theta) d\theta$ is a normalizing constant.
+$$p(\theta | y) = \frac{p(y | \theta)}{p(y)} p(\theta)$$
 
 ---
 class: left
 
 # Bayes' Rule
+<hr>
+
+"Modern" version (Laplace (1774), *Mémoire sur la probabilité des causes par les événements*):
+
+$$\underbrace\_{\text{posterior}} = \frac{\overbrace{p(y | \theta)}^{\text{likelihood}}}{\underbrace{p(y)}\_\text{normalization}} \overbrace{p(\theta)}^\text{prior}$$
+
+---
+class: left
+
+# On The Normalizing Constant
+<hr>
+
+The normalizing constant (also called the **marginal likelihood**) is the integral
+$$p(y) = \int_\Theta p(y | \theta) p(\theta) d\theta.$$
+
+Since this *generally* doesn't depend on $\theta$, it can often be ignored, as the relative probabilities don't change. 
+
+--
+
+One big exception: model selection (will discuss later...)
+
+---
+class: left
+
+# Bayes' Rule (Ignoring Normalizing Constants)
 <hr>
 
 The version of Bayes' rule which matters the most for 95% (approximate) of Bayesian statistics:
@@ -225,9 +245,6 @@ $$p(\theta | y) \propto p(y | \theta) \times p(\theta)$$
 
 > "The posterior is the prior times the likelihood..."
 
---
-
-The normalizing constant (called the **marginal likelihood**) matters for some things (model selection), but mostly vanishes as a constant.
 
 ---
 class: left
@@ -237,79 +254,101 @@ class: left
 
 This means that a Bayesian model specification requires two key components:
 
-1. Prior distributions over the parameters, $p(\theta)$
-      - Can be independent or joint
-2. Probability model for the data given the parameters (the *likelihood*), $p(y | \theta)$
+1. Probability model for the data given the parameters (the *likelihood*), $p(y | \theta)$t
+2. Prior distributions over the parameters, $p(\theta)$
+  - Can be independent or joint
+
+--
 
 **Bayesian updating**: Using the likelihood to "update" the prior probabilities of the parameters.
 
-
 ---
 class: left
 
-# Simple Example of Bayesian Updating
+# A Coin Flipping Example
 <hr>
 
-**Problem**: Estimate the mean of normally-distributed data with known variance
-$$y_i \sim \text{Normal}(\theta, 2).$$
+We would like to understand if a coin-flipping game is fair. We've observed the following sequence of flips:
 
-This model defines the likelihood:
-$$p(\mathbf{y} | \theta) = \prod_i \frac{1}{\sqrt{4\pi}} e^{-(y_i - \theta)^2/4}$$
-
----
-class: left
-
-# Simple Example of Bayesian Updating
-<hr>
-
-We also need a prior. Suppose that we suspect the mean is near 0, and is more likely to be positive, but we can't rule out any particular values.
-
-What might we choose?
+```
+H, H, H, T, H, H, H, H, H
+```
 
 --
 
-.left-column[One example: $$\theta \sim \text{Normal(1, 4)}$$]
-.right-column[.center[![:img Plot of N(1,4) prior, 20%](figures/normal-prior.svg)]]
+8/9 are heads, which might seem suspicious, but randomness can result in outliers like this.
 
 ---
 class: left
 
-# Simple Example of Bayesian Updating
+# Coin Flipping Likelihood
 <hr>
 
-Then the prior density is:
-$$p(\theta) = \frac{1}{\sqrt{8\pi}}e^{(\theta - 1)^2 / 8}$$
+The data-generating process here is straightforward: we can represent a coin flip with a heads-probability of $\theta$ as a sample from a Binomial distribution,
 
---
-
-Using Bayes' Rule (ignoring constants):
-
-$$p(\theta | \mathbf{y}) \propto e^{-(\theta - 1)^2 / 8} \prod_{i=1}^n e^{-(y\_i - \theta)^2 / 4}$$ 
+$$y \sim \text{Binomial}(\theta).$$
 
 ---
 class: left
 
-# Simple Example of Bayesian Updating
+# Coin Flipping Probability Mass
 <hr>
 
-After doing some algebra and completing the square:
+Let's compare what the **probability mass functions** of these distributions look like for $\theta = 0.5$ and $\theta = 0.9$.
 
-$$\theta | \mathbf{y} \sim \text{Normal}\left(\frac{1 + 2 \sum_{i=1}^n y_i}{2n+1}, \frac{4}{2n+1}\right)$$
+.center[![:img Binomial PMF, 50%](figures/binomial-pmf.svg)]
 
---
+---
+class: left
 
-- Bayesian updating acts as an *information filter*
-  - the posterior mean is a weighted combination of the data and the prior mean
+# Likelihood Function
+<hr>
+
+.left-column[The PMF told us what the probability of a given dataset was given a fixed parameter $\theta$. But we can view this same function from a different perspective: given the number of successes, how *likely* is a given parameter? ]
+
+.center[![:img Binomial Likelihood, 50%](figures/binomial-lik.svg)]
+
+---
+class: left
+
+# Prior Distribution
+<hr>
+
+For frequentist approaches, we could stop there and maximize the likelihood, and we'd get a maximum likelihood estimate of $\theta \approx 0.88$. 
+
+But suppose that we spoke to a friend who knows something about coins, and she tells us that it is extremely difficult to make a passable weighted coin which comes up heads more than 75% of the time. Since we have a relatively small amount of data, this seems like valuable information to include, and we can do this through our prior.
+
+---
+class: left
+
+# Prior Distribution
+<hr>
+
+.left-column[Since $\theta$ is bounded between 0 and 1, we'll settle on a Beta distribution for our prior, specifically $\text{Beta}(4,4)$, which covers a reasonable spread of possibilities while maintaining symmetry.]
+
+.center[![:img Binomial Likelihood, 50%](figures/binomial-pri.svg)]
+
+---
+class: left
+
+# Posterior Distribution
+<hr>
+
+Combining using Bayes' rule gives us a **maximum *a posteriori* (MAP)** estimate of $\theta \approx 0.74$.
+
+
+.center[![:img Binomial Likelihood, 50%](figures/binomial-post.svg)]
+
+
+---
+
+# Bayesian Updating As An Information Filter
+<hr>
+
+- The posterior is a "compromise" between the prior and the data.
+- The posterior mean is a weighted combination of the data and the prior mean
 - The weights depend on the prior and the likelihood variances
 - More data makes the posterior more confident (lower variance)
-
----
-class: left
-
-# Simple Example of Bayesian Updating
-<hr>
-
-.center[![:img Bayesian updating Results, 70%](figures/normal-update.svg)]
 
 ---
 class: left
@@ -332,6 +371,28 @@ Bayesian **credible intervals** are straightforward to interpret: $\theta$ is in
 In other words, choose $I$ such that $$p(\theta \in I | \mathbf{y}) = \alpha.$$
 
 This is not usually a unique choice, but the "equal-tailed interval" between the $(1-\alpha)/2$ and $(1+\alpha)/2$ quantiles is a common choice.
+
+---
+class: left
+
+# Credible Intervals: Coin Flipping Example
+<hr>
+
+.left-column[In the case of our coin flipping example, how much uncertainty is there? Let's say we want to capture the 95% credible interval, which is $(0.48, 0.89)$.
+
+]
+
+.center[![:img Coin Flipping Credible Interval, 50%](figures/binomial-ci.svg)]
+
+
+
+---
+# Credible Intervals: Coin Flipping Example
+<hr>
+
+But that was for a simple example where it was easy to compute the posterior for a large number of values.
+
+The easiest way to do this in general is through Monte Carlo: draw a lot of samples from the posterior and compute the empirical quantiles. We'll discuss later today/next week.
 
 ---
 class: left
