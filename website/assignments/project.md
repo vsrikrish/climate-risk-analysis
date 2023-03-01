@@ -29,7 +29,7 @@ After completing this project, students will be able to:
 
 ## Project Components
 
-### Proposal (10 points): Due March 2, 2023
+### Proposal (10 points): Due March 9, 2023
 
 You should submit a project proposal presenting the following:
 

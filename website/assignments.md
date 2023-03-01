@@ -30,7 +30,7 @@
 
 | Component | Due Date |
 |------------|----------|
-| Proposal | Mar 02, 2023 | 
+| Proposal | Mar 09, 2023 | 
 | Research Plan | Apr 13, 2023 | 
 | Poster | May 8, 2023
 | Presentation | May 8, 2023
