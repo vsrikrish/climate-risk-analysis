@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bayesian Uncertainty Quantification</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+    <link rel="stylesheet" href="../stylesheets/katex.min.css">
+
+
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+.title[Bayesian Statistics and Uncertainty Quantification]
+<hr>
+.left-column[.course[BEE 6940] .subtitle[Lecture 6]] .date[February 29, 2023]
+ 
+---
+name: section-header
+layout: true
+class: center, middle
+
+{{content}}
+<hr>
+
+---
+layout: false
+name: toc
+class: left
+
+# Table of Contents
+<hr>
+
+1. [Review of the Bootstrap](#review)
+1. [Introduction to Bayesian Statistics](#bayes)
+3. [The Non-Parametric Bootstrap](#np-boot)
+4. [The Parametric Bootstrap](#p-boot)
+5. [Key Takeaways](#takeaways)
+6. [Upcoming Schedule](#schedule)
+
+???
+This is an overview of the topics we'll cover in today's lecture. The italics around the last topic reflect that it's an "optional" topic that we may get to if time allows.
+
+---
+name: review
+template: section-header
+
+# Review of the Bootstrap
+
+---
+class: left
+
+# Last Class: Frequentist Statistics and Sampling Distributions
+<hr>
+
+**Frequentist UQ**: Capture the *sampling distribution* of relevant parameters.
+
+This takes into account uncertainty in the data sample and reflects the impact of inference.
+
+---
+class: left
+
+# Review: The Parametric Bootstrap
+<hr>
+
+.center[![:img Schematic for the parametric bootstrap, 65%](figures/pboot-sampling.png)]
+
+---
+class: left
+
+# Review: The Parametric Bootstrap
+<hr>
+
+**Key assumptions**:
+
+- Data is sufficiently representative of the population;
+- Model structure reasonably captures data-generating process and/or residuals
+
+---
+class: left
+
+# Sources of Bootstrap Error
+<hr>
+
+The bootstrap has three potential sources of error:
+1. **Sampling error**: error from using finitely many replications
+2. **Statistical error**: error in the bootstrap sampling distribution approximation
+3. **Specification error** (parametric): Error in the data-generating model
+
+---
+class: left
+
+# But What If We Don't Care About Frequency?
+<hr>
+
+For what might be called the "lab science paradigm," frequency properties are central to make inferences about relevant scientific laws.
+
+But for risk analysis, do we care about them?
+
+--
+
+**Perhaps not!** A more relevant perspective: how much should we believe in a given level of a future or present risk? This is the perspective of *Bayesian statistics*.
+
+---
+template: section-header
+name: bayes
+
+# Introduction to Bayesian Statistics
+
+---
+class: left
+
+# The Bayesian Perspective
+<hr>
+
+From the Bayesian perspective, probability is interpreted as the degree of belief in an outcome or proposition.
+
+--
+
+There are two different two types of random quantities:
+- Observable quantities, or data (also random for frequentists);
+- Unobservable quantities, or parameters.
+
+We can also speak of probabilities on model structures, rather than framing model selection as hypothesis-testing.
+
+---
+class: left
+
+# Conditional Probability Notation
+<hr>
+
+Then it makes sense to discuss the *probability* of
+- model parameters $\mathbf{\theta}$
+- unobserved data $\tilde{\mathbf{y}}$ 
+
+conditional on the observations $\mathbf{y}$, which we can denote:
+$$p(\mathbf{\theta} | \mathbf{y}) \text{ or } p(\tilde{\mathbf{y}} | \mathbf{y})$$
+
+---
+class: left
+
+# Conditioning on Observations
+<hr>
+
+This fundamental conditioning on observations $\mathbf{y}$ is a distinguishing feature of Bayesian inference.
+
+Compare: frequentist approaches are based on re-estimated over the distribution of possible $\mathbf{y}$ conditional on the "true" parameter value.
+
+---
+class: left
+
+# Bayesian Updating
+<hr>
+
+Bayesian probabilities are conditional on observations.
+
+This means that as make new observations, we can *update* them.
+
+We do this using **Bayes' Rule**.
+
+---
+class: left
+
+# Bayes' Rule
+<hr>
+
+Original version (Bayes (1763), *An Essay towards solving a Problem in the Doctrine of Chances*):
+
+$$P(A | B) = \frac{P(B | A) \times P(A)}{P(B)} \quad \text{if} \quad P(B) \neq 0.$$
+
+--
+
+- Standard but important result in conditional probability
+- As previously seen (hopefully remembered!) in Intro Stats
+      - Monty Hall Problem
+
+---
+class: left
+
+# Bayes' Rule
+<hr>
+
+.left-column[.center[![Trolley Hall Problem](figures/trolley_hall.jpg)]]
+.right-column[.center[.cite[Source: Unsure! Got it from Facebook, also seen on r/PhilosophyMemes]]]
+
+---
+class: left
+
+# Bayes' Rule
+<hr>
+
+Original version (Bayes (1763), *An Essay towards solving a Problem in the Doctrine of Chances*):
+
+$$P(A | B) = \frac{P(B | A) \times P(A)}{P(B)} \quad \text{if} \quad P(B) \neq 0.$$
+
+- Bayes used this to estimate the distribution of a probability $p$ of a binomial outcome (think success/failure).
+- Richard Price (actual writer of quite a bit of Bayes (1763); see [Stigler (2018)](10.1214/17-STS635)) "rebutted" Hume by  "demonstrating" we ought to believe the sun will continue to rise.
+
+
+---
+class: left
+
+# Bayes' Rule
+<hr>
+
+"Modern" version (Laplace (1774), *Mémoire sur la probabilité des causes par les événements*):
+
+$$\color{blue}{p(\theta | y)} \color{black}= \frac{\color{black}p(y | \theta)}{\color{purple}p(y)}\color{red}{p(\theta)}\color{black},$$
+
+- $\color{blue}p(\theta | y)$ are *posterior* probabilities
+- $\color{red}p(\theta)$ are *prior* probabilities;
+- $\color{black}p(y | \theta)$ is the *likelihood*;
+- $\color{purple}p(y) = \int p(y | \theta) p(\theta) d\theta$ is a normalizing constant.
+
+---
+class: left
+
+# Bayes' Rule
+<hr>
+
+The version of Bayes' rule which matters the most for 95% (approximate) of Bayesian statistics:
+
+$$p(\theta | y) \propto p(y | \theta) \times p(\theta)$$
+
+> "The posterior is the prior times the likelihood..."
+
+--
+
+The normalizing constant (called the **marginal likelihood**) matters for some things (model selection), but mostly vanishes as a constant.
+
+---
+class: left
+
+# Bayesian Model Components
+<hr>
+
+This means that a Bayesian model specification requires two key components:
+
+1. Prior distributions over the parameters, $p(\theta)$
+      - Can be independent or joint
+2. Probability model for the data given the parameters (the *likelihood*), $p(y | \theta)$
+
+**Bayesian updating**: Using the likelihood to "update" the prior probabilities of the parameters.
+
+---
+class: left
+
+# Simple Example of Bayesian Updating
+<hr>
+
+**Problem**: Estimate the mean of normally-distributed data with known variance
+$$y_i \sim \text{Normal}(\theta, 2).$$
+
+This model defines the likelihood:
+$$p(\mathbf{y} | \theta) = \prod_i \frac{1}{\sqrt{4\pi}} e^{-(y_i - \theta)^2/4}$$
+
+---
+class: left
+
+# Simple Example of Bayesian Updating
+<hr>
+
+We also need a prior. Suppose that we suspect the mean is near 0, and is more likely to be positive, but we can't rule out any particular values.
+
+What might we choose?
+
+--
+
+.left-column[One example: $$\theta \sim \text{Normal(1, 4)}$$]
+.right-column[.center[![:img Plot of N(1,4) prior, 20%](figures/normal-prior.svg)]]
+
+---
+class: left
+
+# Simple Example of Bayesian Updating
+<hr>
+
+Then the prior density is:
+$$p(\theta) = \frac{1}{\sqrt{8\pi}}e^{(\theta - 1)^2 / 8}$$
+
+--
+
+Using Bayes' Rule (ignoring constants):
+
+$$p(\theta | \mathbf{y}) \propto e^{-(\theta - 1)^2 / 8} \prod_{i=1}^n e^{-(y\_i - \theta)^2 / 4}$$ 
+
+---
+class: left
+
+# Simple Example of Bayesian Updating
+<hr>
+
+After doing some algebra and completing the square:
+
+$$\theta | \mathbf{y} \sim \text{Normal}\left(\frac{1 + 2 \sum_{i=1}^n y_i}{2n+1}, \frac{4}{2n+1}\right)$$
+
+--
+
+- Bayesian updating acts as an *information filter*
+  - the posterior mean is a weighted combination of the data and the prior mean
+- The weights depend on the prior and the likelihood variances
+- More data makes the posterior more confident (lower variance)
+
+---
+class: left
+
+# Simple Example of Bayesian Updating
+<hr>
+
+.center[![:img Bayesian updating Results, 70%](figures/normal-update.svg)]
+
+---
+class: left
+
+# Representing Uncertainty
+<hr>
+
+As with frequentist approaches, can reflect posterior inferences through a point estimate (mean, median, or some other *Bayes estimator*).
+
+But more often, we want to capture the degree of uncertainty associated with a particular value.
+
+---
+class: left
+
+# Credible Intervals
+<hr>
+
+Bayesian **credible intervals** are straightforward to interpret: $\theta$ is in $I$ with probability $\alpha$.
+
+In other words, choose $I$ such that $$p(\theta \in I | \mathbf{y}) = \alpha.$$
+
+This is not usually a unique choice, but the "equal-tailed interval" between the $(1-\alpha)/2$ and $(1+\alpha)/2$ quantiles is a common choice.
+
+---
+class: left
+
+# More Complex Models
+<hr>
+
+One advantage of the Bayesian framework is it can be extended to more complex problems:
+
+- Models with heteroskedastic residual structures:
+      $$\begin{align}
+      y(t) &= f(\mathbf{\theta}, t) + R(\mathbf{\phi}, t) \nonumber \\\\
+      R(\mathbf{\phi}, t) &= \zeta(\mathbf{\phi}, t) + \varepsilon_t \nonumber
+      \end{align}$$
+
+---
+class: left
+
+# More Complex Models
+<hr>
+
+One advantage of the Bayesian framework is it can be extended to more complex problems:
+
+- Hierarchical models:
+    $$\begin{align}
+    y_j | \theta_j, \phi &\sim P(y_j | \theta_j, \phi) \nonumber \\\\
+    \theta_j | \phi &\sim P(\theta_j | \phi) \nonumber \\\\
+    \phi &\sim P(\phi) \nonumber
+    \end{align}$$
+
+---
+class: left
+
+# Generative Modeling
+<hr>
+
+Bayesian models can also be used to generate new data $\tilde{y}$ through the *posterior predictive distribution*:
+$$p(\tilde{y} | \mathbf{y}) = \int_{\Theta} p(\tilde{y} | \theta) p(\theta | \mathbf{y}) d\theta$$
+
+This allows us to test the model through simulation (*e.g.* hindcasting) and generate probabilistic predictions.
+
+---
+class: left
+
+# Role of the Prior
+<hr>
+
+There are two views on how to select prior distributions:
+
+1. Priors as capturing by constraints/prior knowledge;
+
+--
+
+2. Priors as part of the data-generating process.
+
+
+---
+
+# On Uniform Priors
+<hr>
+
+What about uniform priors? 
+- Unbounded uniform priors: often chosen to reflect ignorance, but nonsensical for data-generation;
+- Bounded uniform priors: sudden transition from positive to zero probability is rarely justified.
+
+---
+class: left
+
+# Considerations When Selecting Priors
+<hr>
+
+- **Informativeness**: How much information does the prior encode?
+- **Structure**: Does the prior encode modeling features (*e.g.* symmetry)?
+- **Regularization**: Does the prior yield more "stable" inferences (*e.g.* penalizing extreme parameter values)?
+
+Also: what values are assigned zero prior probability? These values are ruled out from the posterior.
+
+---
+template: section-header
+name: computation
+
+# Bayesian Computation: A Preview
+
+---
+class: left
+
+# Goals of Bayesian Computation
+<hr>
+
+1. Sampling from the *posterior* distribution
+$$p(\theta | \mathbf{y})$$
+
+2. Sampling from the *posterior predictive* distribution
+$$p(\tilde{y} | \mathbf{y})$$
+by generating data.
+
+---
+class: left
+
+# Bayesian Computation and Monte Carlo
+<hr>
+
+In other words, Bayesian computation involves Monte Carlo simulation from the posterior (predictive) distribution.
+
+These samples can then be analyzed to identify estimators, credible intervals, etc.
+
+---
+class: left
+
+# Sampling from the Posterior
+<hr>
+
+Trivial for extremely simple problems: low-dimensional and with "conjugate" priors (which make the posterior a closed-form distribution).
+
+What to do when problems are more complex and/or we don't want to rely on priors for computational convenience?
+
+---
+class: left
+
+# A First Algorithm: Rejection Sampling
+<hr>
+
+.left-column[Idea: 
+
+1. Generate proposed samples from another distribution $g(\theta)$ which covers the target $p(\theta | \mathbf{y})$;
+2. Accept those proposals based on the ratio of the two distributions.]
+
+.right-column[
+.center[![Proposal Distribution for Rejection Sampling](figures/rejection-cover.svg)]
+]
+
+---
+class: left
+
+# Rejection Sampling Algorithm
+<hr>
+
+Suppose $p(\theta | \mathbf{y}) \leq M g(\theta)$ for some $1 < M < \infty$.
+
+1. Simulate $u \sim \text{Unif}(0, 1)$.
+2. Simulate a proposal $\hat{\theta} \sim g(\theta)$.
+3. If 
+  $$u < \frac{p(\hat{\theta} | \mathbf{y})}{Mg(\hat{\theta})},$$
+  accept $\hat{\theta}$. Otherwise reject.
+
+---
+class: left
+
+# Rejection Sampling Intuition
+<hr>
+
+.left-column[
+We want to keep more samples from the areas where $g(\theta) < p(\theta | \mathbf{y})$ and reject where $g$ is heavier (in this case, the tails).
+]
+.right-column[
+.center[![Proposal Distribution for Rejection Sampling](figures/rejection-cover.svg)]
+]
+
+---
+class: left
+
+# Rejection Sampling Intuition
+<hr>
+
+.left-column[
+In the bulk: $Mg(\theta)$ is closer to $p(\theta | \mathbf{y})$, so the acceptance ratio is higher.
+
+In the tails: $$Mg(\theta) \gg p(\theta | \mathbf{y}),$$ so the acceptance ratio is much lower.
+]
+.right-column[
+.center[![Proposal Distribution for Rejection Sampling](figures/rejection-cover.svg)]
+]
+
+---
+class: left
+
+# Rejection Sampling Considerations
+<hr>
+
+1. Probability of accepting a sample is $1/M$, so the "tighter" the proposal distribution coverage the more efficient the sampler.
+2. Need to be able to compute $M$.
+
+Finding a good proposal and computing $M$ may not be easy for complex posteriors!
+
+**How can we do better?**
+
+---
+template: section-header
+name: takeaways
+
+# Key Takeaways
+
+---
+class: left
+
+# Key Takeaways: Bayesian Statistics
+<hr>
+
+- Probability as degree of belief
+- Emphasis on explicit conditioning on the data
+- Bayes' Rule as the fundamental theorem of conditional probability
+- Bayesian updating as an information filter
+- Prior selection important: lots to consider!
+- Rejection sampling as a first Monte Carlo algorithm for sampling from "arbitrary" distributions.
+
+---
+template: section-header
+name: schedule
+
+# Upcoming Schedule
+
+
+---
+class: left
+
+# Upcoming Schedule
+<hr>
+
+**Next Monday**: Markov chains and Markov chain Monte Carlo
+
+    </textarea>
+
+
+    <script src="../javascript/remark.min.js" type="text/javascript"></script>
+    <script defer src="../javascript/katex.min.js"></script>
+    <script defer src="../javascript/auto-render.min.js"></script>
+    <script type="text/javascript" src="../javascript/call-javascript.js"></script>
+
+  </body>
+</html>
