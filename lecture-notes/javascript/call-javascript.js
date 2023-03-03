@@ -26,14 +26,3 @@ var slideshow = remark.create({
     highlightStyle: 'googlecode'
 });
 
-//Call KaTeX with auto-rendering, see https://katex.org/docs/autorender.html
-document.addEventListener("DOMContentLoaded", function () {
-    renderMathInElement(document.body, {
-        delimiters: [
-            {left: "$$",right: "$$",display: true},
-            {left: "$",right: "$",display: false},
-            {left: "\\[",right: "\\]", display: true},
-            {left: "\\(",right: "\\)",display: false}
-                    ]
-    });
-});
