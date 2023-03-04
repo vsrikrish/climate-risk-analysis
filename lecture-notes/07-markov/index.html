@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bayesian Computations and Markov Chains</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+    </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js">
+  </script>
+
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+.title[Bayesian Computation and Markov Chains]
+<hr>
+.left-column[.course[BEE 6940] .subtitle[Lecture 7]] .date[March 06, 2023]
+ 
+---
+name: section-header
+layout: true
+class: center, middle
+
+
+<hr>
+
+---
+layout: false
+name: toc
+class: left
+
+# Table of Contents
+<hr>
+
+1. [Review of the Bayesian Statistics](#review)
+2. [Intro to Bayesian Computing](#computing)
+3. [Markov Chains](#markov-chains)
+4. [Markov Chain Monte Carlo](#mcmc)
+5. [Key Takeaways](#takeaways)
+6. [Upcoming Schedule](#schedule)
+
+???
+This is an overview of the topics we'll cover in today's lecture. The italics around the last topic reflect that it's an "optional" topic that we may get to if time allows.
+
+---
+name: review
+template: section-header
+
+# Review of the Bayesian Statistics
+
+---
+class: left
+
+# Last Class: Bayes' Theorem and Bayesian Statistics
+<hr>
+
+$$\underbrace\_{\text{posterior}} = \frac{\overbrace{p(y | \theta)}^{\text{likelihood}}}{\underbrace{p(y)}\_\text{normalization}} \overbrace{p(\theta)}^\text{prior}$$
+
+---
+class: left
+
+# Key Takeaways
+<hr>
+
+- No distinction between parameters and unobserved data in Bayesian framework;
+- Key emphasis on conditioning on data;
+- Likelihood is given by the probability model for the data-generating process;
+- Posterior as "compromise" between prior and likelihood;
+- Prior can be influential in posterior inferences.
+
+---
+template: section-header
+
+# Bayesian Computation
+
+---
+class: left
+
+# Goals of Bayesian Computation
+<hr>
+
+1. Sampling from the *posterior* distribution
+$$p(\theta | \mathbf{y})$$
+
+2. Sampling from the *posterior predictive* distribution
+$$p(\tilde{y} | \mathbf{y})$$
+by generating data.
+
+---
+class: left
+
+# Bayesian Computation and Monte Carlo
+<hr>
+
+In other words, Bayesian computation involves Monte Carlo simulation from the posterior (predictive) distribution.
+
+These samples can then be analyzed to identify estimators, credible intervals, etc.
+
+---
+class: left
+
+# Sampling from the Posterior
+<hr>
+
+Trivial for extremely simple problems: low-dimensional and with "conjugate" priors (which make the posterior a closed-form distribution).
+
+What to do when problems are more complex and/or we don't want to rely on priors for computational convenience?
+
+---
+class: left
+
+# A First Algorithm: Rejection Sampling
+<hr>
+
+.left-column[Idea: 
+
+1. Generate proposed samples from another distribution $g(\theta)$ which covers the target $p(\theta | \mathbf{y})$;
+2. Accept those proposals based on the ratio of the two distributions.]
+
+.right-column[
+.center[![Proposal Distribution for Rejection Sampling](figures/rejection-cover.svg)]
+]
+
+---
+class: left
+
+# Rejection Sampling Algorithm
+<hr>
+
+Suppose $p(\theta | \mathbf{y}) \leq M g(\theta)$ for some $1 < M < \infty$.
+
+1. Simulate $u \sim \text{Unif}(0, 1)$.
+2. Simulate a proposal $\hat{\theta} \sim g(\theta)$.
+3. If 
+  $$u < \frac{p(\hat{\theta} | \mathbf{y})}{Mg(\hat{\theta})},$$
+  accept $\hat{\theta}$. Otherwise reject.
+
+---
+class: left
+
+# Rejection Sampling Intuition
+<hr>
+
+.left-column[
+We want to keep more samples from the areas where $g(\theta) < p(\theta | \mathbf{y})$ and reject where $g$ is heavier (in this case, the tails).
+]
+.right-column[
+.center[![Proposal Distribution for Rejection Sampling](figures/rejection-cover.svg)]
+]
+
+---
+class: left
+
+# Rejection Sampling Intuition
+<hr>
+
+.left-column[
+In the bulk: $Mg(\theta)$ is closer to $p(\theta | \mathbf{y})$, so the acceptance ratio is higher.
+
+In the tails: $$Mg(\theta) \gg p(\theta | \mathbf{y}),$$ so the acceptance ratio is much lower.
+]
+.right-column[
+.center[![Proposal Distribution for Rejection Sampling](figures/rejection-cover.svg)]
+]
+
+---
+class: left
+
+# Rejection Sampling Considerations
+<hr>
+
+1. Probability of accepting a sample is $1/M$, so the "tighter" the proposal distribution coverage the more efficient the sampler.
+2. Need to be able to compute $M$.
+
+Finding a good proposal and computing $M$ may not be easy (or possible) for complex posteriors!
+
+**How can we do better?**
+
+---
+class: left
+
+# Idea of Better Approach
+<hr>
+
+The fundamental problem with rejection sampling is that we don't know the properties of the posterior. So we don't know that we have the appropriate coverage. But...
+
+What if we could construct an proposal/acceptance/rejection scheme that necessarily converged to the target distribution, even without *a priori* knowledge of its properties?
+
+Idea: Develop a stochastic process based on **Markov chains**.
+
+---
+template: section-header
+name: markov-chains
+
+# Markov Chains
+
+---
+
+# What is a Markov Chain?
+<hr>
+
+.left-column[Consider a stochastic process $\\{X\_t\\}\_{t \in \mathcal{T}}$, where 
+- $X\_t \in \mathcal{S}$ is the state at time $t$, and 
+- $\mathcal{T}$ is a time-index set (can be discrete or continuous)
+- $\mathbb{P}(s\_i \to s\_j) = p\_{ij}$. 
+
+]
+
+.right-column[.center[![:img Markov State Space, 55%](figures/markov-state.png)]]
+
+---
+# What is a Markov Chain?
+<hr>
+
+
+This stochastic process is a **Markov chain** if it satisfies the **Markovian (or memoryless) property**:
+$$
+\mathbb{P}(X\_{T+1} = s\_i | X\_1=x\_1, \ldots, X\_T=x\_T) = \mathbb{P}(X\_{T+1} = s\_i| X\_T=x\_T)
+$$
+
+In other words: the probability of being in any given state $x\_i$ at time $T+1$ only depends on the prior state $X\_T$, not the previous history.
+
+---
+# Example: "Drunkard's Walk"
+<hr>
+
+.center[![:img Random Walk, 80%](figures/random_walk.png)]
+
+Consider a process where we can "stumble" to the left or right with equal probability.
+
+The *unconditional* probability $\mathbb{P}(X\_T = s\_i)$ can be modeled by a sum of coin flips from the initial state $X\_0$, but the *conditional* probability $\mathbb{P}(X\_T = s\_i | X\_{T-1} = x\_{T-1})$ only depends on the current node, not how we got there.
+
+---
+# Weather Example
+<hr>
+
+Let's look at a more interesting example. Suppose the weather can be foggy, sunny, or rainy.
+
+Based on past experience, we know that:
+1. There are never two sunny days in a row;
+2. Even chance of two foggy or two rainy days in a row;
+3. A sunny day occurs 1/4 of the time after a foggy or rainy day.
+
+---
+# Aside: Higher-Order Markov Chains
+<hr>
+
+Suppose that today's weather depends on the prior *two* days. 
+
+1. Can we write this as a Markov chain?
+
+--
+2. What are the states?
+
+
+---
+# Weather Example: Transition Matrix
+<hr>
+
+We can summarize these probabilities in a **transition matrix** $P$:
+$$
+P = 
+\begin{array}{cc} 
+\begin{array}{ccc}
+\phantom{i}\color{red}{F}\phantom{i} & \phantom{i}\color{red}{S}\phantom{i} & \phantom{i}\color{red}{R}\phantom{i}
+\end{array}
+\\\\
+\begin{pmatrix}
+      1/2 & 1/4 & 1/4 \\\\
+      1/2 & 0 & 1/2 \\\\
+      1/4 & 1/4 & 1/2
+      \end{pmatrix}
+&
+\begin{array}{ccc}
+\color{red}F  \\\\ \color{red}S  \\\\ \color{red}R
+\end{array}   
+\end{array}
+$$
+
+Rows are the current state, columns are the next step, so $\sum\_i p\_{ij} = 1$.
+
+---
+# Weather Example: State Probabilities
+<hr>
+
+Denote by $\lambda^t$ a probability distribution over the states at time $t$.
+
+Then $\lambda^t = \lambda^{t-1}P$:
+
+$$\begin{pmatrix}\lambda^t_F & \lambda^t_S & \lambda^t_R \end{pmatrix} =  
+\begin{pmatrix}\lambda^{t-1}_F & \lambda^{t-1}_S & \lambda^{t-1}_R \end{pmatrix} 
+      \begin{pmatrix}
+      1/2 & 1/4 & 1/4 \\\\
+      1/2 & 0 & 1/2 \\\\
+      1/4 & 1/4 & 1/2
+      \end{pmatrix}
+$$
+
+---
+# Multi-Transition Probabilities
+<hr>
+
+Notice that $$\lambda^{t+i} = \lambda^t P^i,$$ so multiple transition probabilities are $P$-exponentials. 
+
+$$P^3 =
+\begin{array}{cc} 
+\begin{array}{ccc}
+\phantom{iii}\color{red}{F}\phantom{ii} & \phantom{iii}\color{red}{S}\phantom{iii} & \phantom{ii}\color{red}{R}\phantom{iii}
+\end{array}
+\\\\
+\begin{pmatrix}
+      26/64 & 13/64 & 25/64 \\\\
+      26/64 & 12/64 & 26/64 \\\\
+      26/64 & 13/64 & 26/64
+      \end{pmatrix}
+&
+\begin{array}{ccc}
+\color{red}F  \\\\ \color{red}S  \\\\ \color{red}R
+\end{array}   
+\end{array}
+$$
+
+---
+# Long-Run Probabilities
+<hr>
+
+What happens if we let the system run for a while starting from an initial sunny day? 
+
+--
+
+.left-column[
+.center[![:img State probabilities for weather example, 100%](figures/weather-markov.svg)]
+]
+
+.right-column[
+Notice that the probabilities eventually stabilize.
+]
+
+---
+# Stationary Distributions
+<hr>
+
+This stabilization always occurs when the probability distribution is an eigenvector of $P$ with eigenvalue 1:
+
+$$\pi = \pi P.$$
+
+This is called an *invariant* or a *stationary* distribution.
+
+---
+# Stationary Distributions
+<hr>
+
+Does every Markov chain have a stationary distribution? 
+
+Not necessarily! The key is two properties:
+- Irreducible
+- Aperiodicity
+
+---
+# Irreducibility
+<hr>
+
+A Markov chain is **irreducible** if every state is accessible from every other state, *e.g.* for every pair of states $s\_i$ and $s\_j$ there is some $k > 0$ such that $P\_{ij}^k > 0.$
+
+Here is an example of a reducible Markov chain:
+
+.center[![:img Reducible Markov Chain, 40%](figures/markov-reducible.png)]
+
+
+---
+# Aperiodicity
+<hr>
+
+The period of a state $s\_i$ is the greatest common divisor $k$ of all $t$ such that $P^t\_{ii} > 0$. In other words, if a state $s_i$ has period $k$, all returns must occur after time steps which are multiples of $k$.
+
+.left-column[
+A Markov chain is **aperiodic** if all states have period 1.
+]
+
+.right-column[
+.center[![:img Periodic Markov Chain, 60%](figures/markov-periodic.png)]
+]
+
+---
+# Ergodic Markov Chains
+<hr>
+
+A Markov chain is **ergodic** if it is aperiodic and irreducible.
+
+Ergodic Markov chains have a  *limiting* distribution which is the limit of the time-evolution of the chain dynamics, *e.g.*
+$$\pi\_j = \lim\_{t \to \infty} \mathbb{P}(X\_t = s_j).$$
+
+**Key**: this limit is *independent* of the initial state probability.
+
+**Intuition**: Ergodicity means we can exchange thinking about *time-averages* and *ensemble-averages*.
+
+---
+# Limiting Distributions Are Stationary
+<hr>
+
+For an ergodic chain, the limiting distribution is the unique stationary distribution (we won't prove uniqueness):
+
+\begin{align}
+\pi\_j &= \lim\_{t \to \infty} \mathbb{P}(X\_t = s\_j | X\_0 = s\_i) \\\\
+&= \lim\_{t \to \infty} (P^{t+1})\_{ij} = \lim\_{t \to \infty} (P^tP)\_{ij} \\\\
+&= \lim\_{t \to \infty} \sum\_d (P^n)\_{id} P\_{dj} \\\\
+&= \sum\_d \pi\_d P\_{dj}
+\end{align}
+
+---
+# Transient Portion of the Chain
+<hr>
+
+.left-column[
+.center[![:img State probabilities for weather example, 100%](figures/weather-markov-transient.svg)]
+]
+
+.right-column[
+The portion of the chain prior to convergence to the stationary distribution is called the **transient** portion. 
+
+This will be important next week!
+]
+
+---
+class: left
+
+# Key Takeaways: Markov Chains
+<hr>
+
+- Markov chains are a very useful class of stochastic processes.
+- If a chain is ergodic, a stationary distribution exists.
+- The stationary distribution is the limit of the time-evolution of the ensemble of states.
+- Can split Markov chain dynamics into "transient" and stationary portion.
+- Our goal: construct a Markov chain whose stationary distribution is the posterior of our model (this is Markov chain Monte Carlo).
+- Today's notation focused on chains on discrete state spaces, but everything maps directly to continuous spaces.
+
+---
+template: section-header
+name: schedule
+
+# Upcoming Schedule
+
+
+---
+class: left
+
+# Upcoming Schedule
+<hr>
+
+**Wednesday**: Discussion of Oppenheimer et al (2008)
+
+**Next Monday**: Markov chain Monte Carlo
+
+    </textarea>
+
+
+    <script src="../javascript/remark.min.js" type="text/javascript"></script>
+    <script defer src="../javascript/auto-render.min.js"></script>
+    <script type="text/javascript" src="../javascript/call-javascript.js"></script>
+
+  </body>
+</html>

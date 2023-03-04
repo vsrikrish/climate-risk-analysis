@@ -11,6 +11,7 @@
 .left-column {
     width: 48%;
     float: left;
+    font-size: 1.1em;
 }
         
 .right-column {
@@ -19,6 +20,7 @@
     padding-top: 0em;
     margin-top: 0em;
     text-align: left;
+    font-size: 1.1em;
 }
 
 .right-column ~ p {clear: both;}
