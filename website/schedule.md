@@ -21,3 +21,4 @@ Please make sure that you have updated (with a `git pull`) your local version of
 | 4 | Overview of Coastal Flood Risk | {{lecture_badges 04}} | {{lab_badges 04}} | [Van Dantzig (1956)](https://www-jstor-org.proxy.library.cornell.edu/stable/1911632?origin=crossref) | |
 | 5 | Model Calibration and The Bootstrap | {{lecture_badges 05}} |  {{lab_badges 05}} |  | [Cosma Shalizi's bootstrap notes](https://www.stat.cmu.edu/~cshalizi/uADA/12/lectures/ch05.pdf) |
 | 6 | Bayesian Statistics | {{lecture_badges 06}} |  |  | [Bayesian Data Analysis](http://www.stat.columbia.edu/~gelman/book/) |
+| 7 | Bayesian Computation and Markov Chains | {{lecture_badges 07}} | | [Oppenheimer et al (2008)](https://link-springer-com.proxy.library.cornell.edu/article/10.1007/s10584-008-9405-1) |
