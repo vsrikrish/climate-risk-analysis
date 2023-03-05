@@ -45,7 +45,6 @@ class: left
 1. [Review of the Bayesian Statistics](#review)
 2. [Intro to Bayesian Computing](#computing)
 3. [Markov Chains](#markov-chains)
-4. [Markov Chain Monte Carlo](#mcmc)
 5. [Key Takeaways](#takeaways)
 6. [Upcoming Schedule](#schedule)
 
@@ -430,6 +429,101 @@ The portion of the chain prior to convergence to the stationary distribution is 
 
 This will be important next week!
 ]
+
+---
+# Detailed Balance
+<hr>
+
+The last important concept is **detailed balance**.
+
+Let $\\{X\_t\\}$ be a Markov chain and let $\pi$ be a probability distribution over the states. Then the chain is in detailed balance with respect to $\pi$ if
+$$\pi\_i P\_{ij} = \pi\_j P_{ji}.$$
+
+--
+Detailed balance implies **reversibility**: the chain's dynamics are the same when viewed forwards or backwards in time.
+
+---
+# Detailed Balance and Stationary Distributions
+<hr>
+
+Detailed balance is a sufficient but not necessary condition for the existence of a stationary distribution (namely $\pi$):
+$$\begin{align}
+(\pi P)\_i &= \sum\_j \pi\_j P\_{ji} \\\\
+&= \sum\_j \pi\_i P\_{ij} \\\\
+&= \pi\_i \sum\_j P\_{ij} = \pi\_i
+\end{align}$$
+
+---
+# Intuition About Detailed Balance
+<hr>
+
+What does detailed balance mean? Let's compare with the definition of a stationary distribution.
+
+- The existence of a stationary distribution is a *global* condition: the sum of all probability out of any given node has to equal the total incoming probability.
+--
+
+- Detailed balance is a stronger *local* condition: not just that the total probability in and out of all nodes, but that the flow of probability must be balanced across every transition.
+
+---
+# Detailed Balance Analogy
+<hr>
+
+
+A nice analogy (from [Miranda Holmes-Cerfon](https://personal.math.ubc.ca/~holmescerfon/)) is traffic flow.
+
+.left-column[
+Consider NYC and its surroundings: each borough/region can be thought of as a node, and population transitions occur across bridges/tunnels.
+]
+
+.right-column[
+.center[![New York City Graph](figures/detailed-balance-nyc.png)]]
+
+---
+# Detailed Balance Analogy
+<hr>
+
+.left-column[
+The stationary criterion means that the number of cars per unit time leaving each borough is the same as those entering, regardless of how they move.
+]
+
+.right-column[
+.center[![New York City Graph](figures/detailed-balance-nyc.png)]]
+
+---
+# Detailed Balance Analogy
+<hr>
+
+.left-column[
+Detailed balance means traffic must be balanced across each bridge or tunnel per unit time.
+
+]
+
+.right-column[
+.center[![New York City Graph](figures/detailed-balance-nyc.png)]]
+
+---
+# Idea of Sampling Algorithm
+<hr>
+
+The idea of our sampling algorithm (which we will discuss next time) is to construct an ergodic Markov chain from the detailed balance equation for the target distribution. 
+
+- Detailed balance implies that the target distribution is the stationary distribution.
+- Ergodicity implies that this distribution is unique and can be obtained as the limiting distribution of the chain's dynamics.
+
+---
+# Idea of Sampling Algorithm
+<hr>
+
+In other words: 
+- Generate an appropriate Markov chain, 
+- Run its dynamics long enough to converge to the stationary distribution,
+- Use the resulting ensemble of states as a Monte Carlo sample.
+
+---
+template: section-header
+name: takeaways
+
+# Key Takeaways
 
 ---
 class: left
