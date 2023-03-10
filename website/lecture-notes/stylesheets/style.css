@@ -100,12 +100,12 @@ ul ul {
 
 .remark-code {
     font-family: 'Julia Mono', monospace;
-    font-size: 1.4em;
+    font-size: 1em;
 }
 
 .remark-inline-code {
     font-family: 'Julia Mono';
-    font-size: 1em;
+    font-size: 0.9em;
     background-color: #eeeeee;
     color: #4B7B2B;
 }
@@ -152,7 +152,6 @@ ul ul {
 }
 
 /* Styling for code blocks */
-.remark-code,.remark-inline-code {font-family: 'Julia Mono';}
 
 .remark-slide-content img {
     max-width: 100%;
