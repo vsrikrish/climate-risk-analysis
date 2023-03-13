@@ -133,6 +133,53 @@ But the devil is in the details: performance and efficiency are highly dependent
 - Narrow proposal: More likely to accept proposals, may not "mix" efficiently.
 
 ---
+# M-H and Detailed Balance
+<hr>
+
+Why do M-H transitions satisfy detailed balance?
+
+Write detailed balance equation as:
+$$ \pi(x) k(x,y) = \pi(y) k(y,x),$$
+where $\pi(\cdot)$ is the stationary distribution and $k(x,y)$ is the *transition kernel* (not necessarily normalized) of moving from $x \to y$.
+
+---
+# M-H and Detailed Balance
+<hr>
+
+The transition kernel for M-H transitions can be written as:
+$$k(x,y) = q(y | x)\rho(x, y),$$
+where $q$ is the proposal distribution and $\rho$ is the M-H acceptance probability.
+
+---
+# M-H and Detailed Balance
+<hr>
+
+If the proposal is rejected, *e.g.* $x=y$, then detailed balance is satisfied trivially.
+
+Else, the left-hand side of the detailed balance equation becomes:
+$$
+\pi(x)k(x,y) = \pi(x) q(y | x) \rho(x,y).
+$$. 
+
+---
+# M-H and Detailed Balance
+<hr>
+
+Without loss of generality, suppose $\pi(y)q(x | y) < \pi(x)q(y | x),$ so $\rho(x,y) < 1$. Then
+$$
+\begin{align}
+\pi(y) k(x,y) &= \pi(x)q(y | x) \times \frac{\pi(y)}{\pi(x)}\frac{q(x | y)}{q(y | x)} \nonumber \\\\
+&= \pi(y)q(x | y) \nonumber \\\\
+&= \pi(y)k(y, x) \nonumber
+\end{align}
+$$
+since $\rho(y, x) = 1$.
+
+
+
+
+
+---
 template: section-header
 name: implementation
 
