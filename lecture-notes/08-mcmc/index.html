@@ -45,7 +45,7 @@ class: left
 1. [Review of Markov Chain Concepts](#review)
 2. [Metropolis-Hastings Algorithm](#metropolis)
 3. [Considerations for Implementation](#implementation)
-4. [Advanced MCMC](#advanced-mcmc)
+4. [Assessing Convergence](#convergence)
 5. [Key Takeaways](#takeaways)
 6. [Upcoming Schedule](#schedule)
 
@@ -133,6 +133,12 @@ But the devil is in the details: performance and efficiency are highly dependent
 - Narrow proposal: More likely to accept proposals, may not "mix" efficiently.
 
 ---
+template: section-header
+name: implementation
+
+# Considerations for Implementation
+
+---
 # Proposal Distributions
 <hr>
 
@@ -194,6 +200,12 @@ Two common measures of sampling efficiency:
 <hr>
 
 .center[![:img ESS For Various Proposals, 70%](figures/mcmc-ess.svg)]
+
+---
+template: section-header
+name: convergence
+
+# Assessing Convergence
 
 ---
 # Convergence to Stationary Distribution
@@ -274,10 +286,10 @@ This means multiple chains are more useful for diagnostics, but once they've all
 # Approaches for Increasing Efficiency
 <hr>
 
-- Hamiltonian Monte Carlo: proposed samples based on "energy function"
-      - Can be very efficient due to potential for anti-correlated samples; 
-      - Becoming the standard in probabilistic programming frameworks (Stan, `Turing.jl`, `pyMC3`)
-      - Requires gradient information: can be obtained through autodifferentiation, challenging for external, black-box models.
+- Hamiltonian Monte Carlo
+      - Idea: Use proposals which steer towards "typical set" without collapsing towards the mode (based on Hamiltonian vector field);
+      - Requires gradient information: can be obtained through autodifferentiation; challenging for external, black-box models;
+      - Can be very efficient due to potential for anti-correlated samples, but efficiency is also be sensitive to parameterization.
 
 ---
 class: left
