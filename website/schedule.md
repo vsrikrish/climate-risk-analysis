@@ -23,3 +23,4 @@ Please make sure that you have updated (with a `git pull`) your local version of
 | 6 | Bayesian Statistics | {{lecture_badges 06}} |  |  | [Bayesian Data Analysis](http://www.stat.columbia.edu/~gelman/book/) |
 | 7 | Bayesian Computation and Markov Chains | {{lecture_badges 07}} | | [Oppenheimer et al (2008)](https://link-springer-com.proxy.library.cornell.edu/article/10.1007/s10584-008-9405-1) |
 | 8 | Markov Chain Monte Carlo | {{lecture_badges 08}} | {{lab_badges 08}} | | 
+| 9 | Storm Surge and Extreme Values | {{lecture_badges 09}} | | |
