@@ -381,6 +381,27 @@ Similarly to the GEV distribution, the GPD distribution has three parameters:
 .center[![GP Distribution Types](figures/gpd-shape.svg)]
 ]
 
+
+---
+# Peaks Over Thresholds Example
+<hr>
+
+.left-column[Note that exceedances can occur in clusters due to the same meteorological forcing: this violates the assumption of independence.]
+
+.right-column[
+.center[![Peaks Over Thresholds from Tide Gauge Data](figures/gauge-peaks.svg)]
+]
+
+---
+# Peaks Over Thresholds Example
+<hr>
+
+.left-column[However, as [Arns et al (2015)](https://doi.org/10.1016/j.coastaleng.2013.07.003) note, there is no clear declustering time period to use: need to rely on physical understanding of events and "typical" durations.]
+
+.right-column[
+.center[![Peaks Over Thresholds from Tide Gauge Data](figures/gauge-peaks-decluster.svg)]
+]
+
 ---
 # GP Fit: Tide Gauge Data
 <hr>
@@ -388,8 +409,8 @@ Similarly to the GEV distribution, the GPD distribution has three parameters:
 .left-column[
 For a threshold of 0.5m for the weather contribution of our tide gauge data, the maximum-likelihood estimate is:
 - $\mu = 0$ (assumed);
-- $\sigma = 0.32$;
-- $\xi = -0.43$.
+- $\sigma = 0.35$;
+- $\xi = -0.41$.
 ]
 
 .right-column[
@@ -420,10 +441,20 @@ Selecting a threshold requires some careful thought (and hopefully is decision-r
 
 Peaks over Thresholds models are often paired with a **Poisson process**, which 
 models the number of times an event occurs using a Poisson distribution,
-$$n \sim \text{Poisson}(\lambda).$$
+$$n \sim \text{Poisson}(\lambda_u).$$
 
 Then, for each $i=1, \ldots, n$, sample
-$$X_i \sim \text{GeneralizedPareto}(\mu, \sigma, \xi).$$
+$$X_i \sim \text{GeneralizedPareto}(u, \sigma, \xi).$$
+
+---
+# Return Levels for PP-GP Processes
+<hr>
+
+Return levels and periods for these processes need to account for both the *rate* of exceedance $\lambda_u$ and the distribution of peaks over the threshold:
+
+$$\mathbb{P}(X \leq x) = 1 - \lambda_u\left[1 + \xi\left(\frac{x - u}{\sigma}\right)\right]^{-1/\xi},$$
+
+so a return level corresponding to return period $s$ is obtained by setting this equal to $1-1/s$ and solving for $x$.
 
 ---
 template: section-header
