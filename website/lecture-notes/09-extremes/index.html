@@ -277,7 +277,7 @@ For example, for our tide gauge data, the maximum-likelihood estimate is:
 ]
 
 .right-column[
-.center[![GEV fit for tide gauge data](figures/gev-fit.svg)]
+.center[![GEV fit for tide gauge data](figures/gev-fit-qq.svg)]
 ]
 
 ---
@@ -300,8 +300,7 @@ The **return period** of an extreme value is the inverse of the exceedance proba
 
 --
 
-A major challenge with return periods is that we often don't have enough data to constrain these values, but we can use fitted GEV distributions to estimate these periods by computing quantiles.
-
+A major challenge with return periods is that we often don't have enough data to constrain these values, but we can use fitted GEV distributions to estimate the $m$-year return period by computing the $1-1/m$ quantile.
 ---
 template: section-header
 name: peaks
@@ -414,7 +413,7 @@ For a threshold of 0.5m for the weather contribution of our tide gauge data, the
 ]
 
 .right-column[
-.center[![GP fit for tide gauge data](figures/gpd-fit.svg)]
+.center[![GP fit for tide gauge data](figures/gp-fit-qq.svg)]
 ]
 
 ---
