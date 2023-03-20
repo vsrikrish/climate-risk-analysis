@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Extreme Value Statistics</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+    </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js">
+  </script>
+
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+.title[Storm Tides and Extreme Value Statistics]
+<hr>
+.left-column[.course[BEE 6940] .subtitle[Lecture 9]] .date[March 20, 2023]
+ 
+---
+name: section-header
+layout: true
+class: center, middle
+
+
+<hr>
+
+---
+layout: false
+name: toc
+class: left
+
+# Table of Contents
+<hr>
+
+1. [Review of Coastal Flood Hazards](#review)
+2. [Storm Tides](#surge)
+3. [Extreme Value Models](#extremes)
+4. [Peaks Over Thresholds](#pot)
+5. [Key Takeaways](#takeaways)
+6. [Upcoming Schedule](#schedule)
+
+---
+name: review
+template: section-header
+
+# Review of Coastal Flood Hazards
+
+---
+class: left
+
+# How Are Local High Water Levels Measured?
+<hr>
+
+.left-column[
+Tide gauge data comes in many "flavors", based on local tidal and diurnal cycles. 
+
+**Mean Highest High Water (MHHW)** is the typical "extreme" sea level datum.]
+
+.right-column[.center[![:img Tidal Ranges, 95%](https://noaanhc.files.wordpress.com/2016/02/tidalrange.jpg)]
+.center[.cite[Source: [Inside the Eye Blog, National Hurricane Center, 01-29-2016](https://noaanhc.files.wordpress.com/2016/02/tide_plot.jpg)]]
+]
+
+---
+# Contributors to Extreme Sea Levels
+<hr>
+
+.center[![:img Physical Contributors to Coastal Flood Hazards, 80%](https://cleantechnica.com/files/2022/08/NOAA-REPORT.png)]
+.center[.cite[Source: [NOAA 2022 Sea Level Rise Technical Report](https://oceanservice.noaa.gov/hazards/sealevelrise/sealevelrise-tech-report-sections.html)]]
+
+---
+template: section-header
+name: surge
+
+# Storm Tides
+
+---
+# Storm Tides vs. Storm Surge
+<hr>
+
+.left-column[
+**Storm surge** is the rise in water level due solely to the winds from a storm.
+
+**Storm tides** are the total water level during a storm, including tides and the storm surge.
+]
+
+.right-column[
+.center[![Storm Tide Schematic](https://oceanservice.noaa.gov/facts/surge.jpg)]
+.center[.cite[Source: [NOAA Ocean Service](https://oceanservice.noaa.gov/facts/stormsurge-stormtide.html)]]
+]
+
+---
+# Contributors to Storm Surge
+<hr>
+
+
+.left-column[
+The specifics of a storm surge event will depend on:
+- Wind speed and angle (relative to shore)
+- Coastal terrain
+- Storm track and pressure
+]
+
+.right-column[
+.center[![Storm Tide Schematic](https://www.nhc.noaa.gov/surge/images/surgebulge_COMET.jpg)]
+.center[.cite[Source: [NOAA National Hurricane Center](https://www.nhc.noaa.gov/surge/)]]
+]
+
+---
+# Risk Analysis and Storm Tides
+<hr>
+
+This complexity means modeling storm surges often requires spatially-explicit physical models (or spatial emulators: more on this later).
+
+But often (and particularly for risk analysis), we care about the distribution of storm tide levels and the potential to overwhelm flood mitigation infrastructure. 
+
+---
+# Statistical Modeling of Storm Tides
+<hr>
+
+As a result, we want to use statistical models to understand how probable flood events might be.
+
+But, unlike the statistical applications we've seen so far, we aren't as interested in the "typical" or average occurrence, we care about the **extremes**.
+
+---
+template: section-header
+name: extremes
+
+# Extreme Value Statistics
+
+---
+# What Do We Mean By Extreme Values?
+<hr>
+
+
+**Extreme values** are those which occur far from the center of a probability distribution, and so are not well-represented by measures of central tendency.
+
+Extreme values are of critical importance for risk analysis. Relatively small changes in underlying distributions can result in substantially-large changes in extremes.
+
+---
+# Example of Extreme Value Changes
+<hr>
+
+.left-column[
+![Tail Changes From Shifted Distribution](figures/extreme-shift.svg)
+]
+
+.right-column[
+![Survival Plot Changes From Shifted Distribution](figures/extreme-exceedprob.svg)
+]
+
+---
+# Two Common Questions About Extremes
+<hr>
+
+1. What is the distribution of "block" extremes, *e.g.* annual maxima?
+
+--
+2. What is the distribution of extremes which exceed a certain value?
+
+---
+# Two Common Questions About Extremes
+<hr>
+
+1. **What is the distribution of "block" extremes, *e.g.* annual maxima?**
+2. What is the distribution of extremes which exceed a certain value?
+
+---
+# Example: Monthly Tide Gauge Maxima
+<hr>
+
+.center[![:img Monthly Tide Gauge Data, 65%](figures/gauge-data.svg)]
+
+---
+
+# Example: Monthly Tide Gauge Maxima
+<hr>
+
+.center[![:img Monthly Block Maxima from Tide Gauge Data, 65%](figures/gauge-maxima.svg)]
+
+---
+# Block Extremes (Maxima)
+<hr>
+
+A different way of framing this question:
+
+Given independent and identically-distributed random variables $X\_1, X\_2, \ldots, X\_{mk}$, what can we say about the distribution of maxima of "blocks" of size $m$:
+
+$$\tilde{X}\_i = \max\_{(i-1)m < j \leq im} X_j,$$
+
+for $i = 1, 2, \ldots, k$?
+
+---
+# Analogy: Central Limit Theorem
+<hr>
+
+Recall that the **Central Limit Theorem** tells us:
+
+If we have independent and identically-distributed variables $X_1, X_2, \ldots$ from some population with mean $\mu$ and standard deviation $\sigma$, the sample mean $\bar{X}$ has the approximate distribution
+
+$$\bar{X} \sim \text{Normal}(\mu, \sigma/\sqrt{n}).$$
+
+---
+# Extreme Value Theorem
+<hr>
+
+The **Extreme Value Theorem** (*the stats one, not calculus*!) is the equivalent for block maxima.
+
+If the limiting distribution exists, it can only by given as a **Generalized Extreme Value (GEV)** distribution:
+
+$$H(y) = \exp\left\\{-\left[1 + \xi\left(\frac{y-\mu}{\sigma}\right)\right]^{-1/\xi}\right\\},$$
+defined for $y$ such that $1 + \xi(y-\mu)/\sigma > 0$.
+
+---
+# Generalized Extreme Value Distributions
+<hr>
+
+GEV distributions have three parameters:
+- location $\mu$;
+- scale $\sigma > 0$;
+- shape $\xi$.
+
+---
+# Generalized Extreme Value Distributions
+<hr>
+
+.left-column[
+The shape parameter $\xi$ is particularly influential, as the GEV distribution can take on three shapes depending on its sign.
+]
+
+.right-column[
+.center[![GEV Distribution Types](figures/gev-shape.svg)]
+]
+
+---
+# GEV Types
+<hr>
+
+.left-column[
+- $\xi > 0$: Frechet (*heavy-tailed*)
+- $\xi = 0$: Gumbel (*light-tailed*)
+- $\xi < 0$: Weibull (*bounded*)
+]
+
+.right-column[
+.center[![GEV Distribution Types](figures/gev-shape.svg)]
+]
+
+---
+# GEV Types
+<hr>
+
+- $\xi < 0$ implies the extremes are *bounded* (the Weibull distribution comes up in the context of temperature and wind speed extremes).
+
+- $\xi > 0$ implies that the tails are *heavy*, and there is no expectation. Common for streamflow, storm surge, precipitation.
+
+- The Gumbel distribution ($\xi = 0$) is common for extremes from normal distributions, doesn't occur often in real-world data.
+
+---
+# GEV Fit: Tide Gauge Data
+<hr>
+
+.left-column[
+For example, for our tide gauge data, the maximum-likelihood estimate is:
+- $\mu = 0.45$;
+- $\sigma = 0.13$;
+- $\xi = 0.21$.
+]
+
+.right-column[
+.center[![GEV fit for tide gauge data](figures/gev-fit.svg)]
+]
+
+---
+# Be Careful About the Shape Parameter!
+<hr>
+
+.left-column[If $\xi > 0$, risk projections are **extremely** sensitive to its value, as larger values will yield disproportionately larger tail samples.
+]
+
+.right-column[
+.center[![House flood risk sensitivity](figures/zarekarizi-sensitivity.png)]
+.center[.cite[Source: [Zarekarizi et al (2020)](https://doi.org/10.1038/s41467-020-19188-9)]]
+]
+
+---
+# Return Periods
+<hr>
+
+The **return period** of an extreme value is the inverse of the exceedance probability, *e.g.* a value with an annual exceedance probability of 1% (0.99 quantile) has a 100-year return period ("100-year storm").
+
+--
+
+A major challenge with return periods is that we often don't have enough data to constrain these values, but we can use fitted GEV distributions to estimate these periods by computing quantiles.
+
+---
+template: section-header
+name: peaks
+
+# Peaks Over Thresholds
+
+---
+# Two Common Questions About Extremes
+<hr>
+
+1. What is the distribution of "block" extremes, *e.g.* annual maxima?
+2. **What is the distribution of extremes which exceed a certain value?**
+
+---
+# Drawbacks of Block Maxima
+<hr>
+
+The block-maxima approach has two potential drawbacks:
+
+1. Uses a limited amount of data;
+2. Doesn't capture the potential for multiple exceedances within a block.
+
+---
+
+# Example: Monthly Tide Gauge Maxima
+<hr>
+
+.center[![:img Monthly Block Maxima from Tide Gauge Data, 65%](figures/gauge-maxima.svg)]
+
+---
+# Peaks Over Thresholds
+<hr>
+
+An alternative approach is to model the distribution of events where a random variable $X\_1, X\_2, \ldots$ exceeds a sufficiently high threshold $u$.
+
+Consider the **conditional excess distribution function**
+
+$$F_u(y) = \mathbb{P}(X > u + y | X > u),$$
+which is the cumulative distribution of values by which $X$ exceeds $u$ (given that the exceedance has occurred).
+
+---
+# Peaks Over Thresholds Example
+<hr>
+
+.center[![:img Peaks Over Thresholds from Tide Gauge Data, 65%](figures/gauge-peaks.svg)]
+
+
+---
+# Peaks Over Thresholds
+<hr>
+
+It turns out that, for a large number of underlying distributions of $X$ (including most of the typical ones, such as normal and log-normal), $F_u(y)$ is well-approximated by a **Generalized Pareto Distribution (GPD)**:
+
+$$F\_u(y) \to G(y) = 1 - \left[1 + \xi\left(\frac{y-\mu}{\sigma}\right)^{-1/\xi}\right],$$
+defined for $y$ such that $1 + \xi(y-\mu)/\sigma > 0$.
+
+---
+# Generalized Pareto Distributions
+<hr>
+
+Similarly to the GEV distribution, the GPD distribution has three parameters:
+- location $\mu$;
+- scale $\sigma > 0$;
+- shape $\xi$.
+
+---
+# Generalized Pareto Distributions Types
+<hr>
+
+.left-column[
+- $\xi > 0$: *heavy-tailed*
+- $\xi = 0$: *light-tailed*
+- $\xi < 0$: *bounded*
+]
+
+.right-column[
+.center[![GP Distribution Types](figures/gpd-shape.svg)]
+]
+
+---
+# GP Fit: Tide Gauge Data
+<hr>
+
+.left-column[
+For a threshold of 0.5m for the weather contribution of our tide gauge data, the maximum-likelihood estimate is:
+- $\mu = 0$ (assumed);
+- $\sigma = 0.32$;
+- $\xi = -0.43$.
+]
+
+.right-column[
+.center[![GP fit for tide gauge data](figures/gpd-fit.svg)]
+]
+
+---
+# GP Fit Depends on the Threshold!
+<hr>
+
+Note that the GP fit is for the *amount by which the distribution exceeds the threshold* (usually $\sigma$ changes).
+
+So a new threshold means a new fit is required.
+
+---
+# Selecting a Threshold
+<hr>
+
+Selecting a threshold requires some careful thought (and hopefully is decision-relevant!).
+
+**Too high**: Not many exceedances, estimator won't be great.
+
+**Too low**: Too many exceedances, distribution will be poorly approximated by a GP.
+
+---
+# Poisson-GP Processes
+<hr>
+
+Peaks over Thresholds models are often paired with a **Poisson process**, which 
+models the number of times an event occurs using a Poisson distribution,
+$$n \sim \text{Poisson}(\lambda).$$
+
+Then, for each $i=1, \ldots, n$, sample
+$$X_i \sim \text{GeneralizedPareto}(\mu, \sigma, \xi).$$
+
+---
+template: section-header
+name: takeaways
+
+# Key Takeaways
+
+---
+# Key Takeaways
+<hr>
+
+- Risk analysis is often concerned with extremes (*e.g.* occurrence of storm tides).
+- Extreme values can be modeled as block maxima or peaks-over-thresholds.
+- Block maxima: Generalized Extreme Value distributions.
+- Peaks-Over-Thresholds: Generalized Pareto distributions (plus maybe Poisson processes).
+- Statistical models are highly sensitive to details: shape parameters $\xi$, thresholds $u$, etc.
+- **Models assume independent variables.** 
+
+---
+# What We Haven't Discussed
+<hr>
+
+- What happens if these extremes change? This is typically how climate change impacts systems. This is the world of **nonstationarity**, which we will discuss later.
+
+--
+
+- Multivariate extremes are difficult: what does this even mean?
+  - Often require **copulas** to "glue" distributions together. We might discuss this if we have time. 
+
+---
+template: section-header
+name: schedule
+
+# Upcoming Schedule
+
+
+
+---
+class: left
+
+# Upcoming Schedule
+<hr>
+
+**Wednesday**: Lab on extreme value distributions.
+
+**Next Monday**: Nonstationarity and hypothesis testing.
+
+    </textarea>
+
+
+    <script src="../javascript/remark.min.js" type="text/javascript"></script>
+    <script defer src="../javascript/auto-render.min.js"></script>
+    <script type="text/javascript" src="../javascript/call-javascript.js"></script>
+
+  </body>
+</html>
