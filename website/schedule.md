@@ -24,4 +24,4 @@ Please make sure that you have updated (with a `git pull`) your local version of
 | 7 | Bayesian Computation and Markov Chains | {{lecture_badges 07}} | | [Oppenheimer et al (2008)](https://link-springer-com.proxy.library.cornell.edu/article/10.1007/s10584-008-9405-1) |
 | 8 | Markov Chain Monte Carlo | {{lecture_badges 08}} | {{lab_badges 08}} | | 
 | 9 | Storm Surge and Extreme Values | {{lecture_badges 09}} | {{lab_badges 09}} | |
-| 10 | Nonstationarity and Hypothesis Testing | {{lecture_badges 10}} | | [Read and Vogel (2015)](https://agupubs-onlinelibrary-wiley-com.proxy.library.cornell.edu/doi/full/10.1002/2015WR017089) | |
+| 10 | Nonstationarity | {{lecture_badges 10}} | | [Read and Vogel (2015)](https://agupubs-onlinelibrary-wiley-com.proxy.library.cornell.edu/doi/full/10.1002/2015WR017089) | |
