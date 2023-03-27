@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Nonstationarity</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+    </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js">
+  </script>
+
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+.title[Modeling Nonstationarity]
+<hr>
+.left-column[.course[BEE 6940] .subtitle[Lecture 10]] .date[March 27, 2023]
+ 
+---
+name: section-header
+layout: true
+class: center, middle
+
+
+<hr>
+
+---
+layout: false
+name: toc
+class: left
+
+# Table of Contents
+<hr>
+
+1. [Review of Extreme Value Models](#review)
+2. [Nonstationary Extremes](#nonstationarity)
+3. [Choice of Models](#model-choice)
+4. [Key Takeaways](#takeaways)
+5. [Upcoming Schedule](#schedule)
+
+---
+name: review
+template: section-header
+
+# Review of Extreme Value Models
+
+---
+class: left
+
+# Two Common Approaches to Modeling Extremes
+<hr>
+
+.left-column[
+**Block Maxima**:
+
+- Find maxima for independent blocks from time series;
+- Can be inefficient use of data.
+]
+
+.right-column[
+**Peaks Over Thresholds**:
+
+- Set threshold and model level of exceedance *conditional on exceedance*;
+- Choices of threshold and declustering length.
+]
+
+---
+# Block Maxima: Generalized Extreme Value Distributions
+<hr>
+
+GEV distributions have three parameters:
+- location $\mu$;
+- scale $\sigma > 0$;
+- shape $\xi$.
+
+---
+# Generalized Extreme Value Distributions
+<hr>
+
+.left-column[
+The shape parameter $\xi$ is particularly influential, as the GEV distribution can take on three shapes depending on its sign.
+]
+
+.right-column[
+.center[![GEV Distribution Types](figures/gev-shape.svg)]
+]
+
+---
+# GEV Types
+<hr>
+
+.left-column[
+- $\xi > 0$: Frechet (*heavy-tailed*)
+- $\xi = 0$: Gumbel (*light-tailed*)
+- $\xi < 0$: Weibull (*bounded*)
+]
+
+.right-column[
+.center[![GEV Distribution Types](figures/gev-shape.svg)]
+]
+
+---
+
+# Peaks Over Thresholds: Generalized Pareto Distributions
+<hr>
+
+Similarly to the GEV distribution, the GPD distribution has three parameters:
+- location $\mu$;
+- scale $\sigma > 0$;
+- shape $\xi$.
+
+---
+# Generalized Pareto Distributions Types
+<hr>
+
+.left-column[
+- $\xi > 0$: *heavy-tailed*
+- $\xi = 0$: *light-tailed*
+- $\xi < 0$: *bounded*
+]
+
+.right-column[
+.center[![GP Distribution Types](figures/gpd-shape.svg)]
+]
+
+---
+# Poisson-GP Processes
+<hr>
+
+GPD model exceedances over threshold.
+
+Often pair with Poisson processes to model the number of exceedances in a unit period.
+
+---
+# GEV vs. PP-GP
+<hr>
+
+**GEV Model**: For each time period, what is the largest event?
+
+**PP-GP**: For each time period, how many exceedances of threshold, and how large is each one?
+
+---
+# Return Levels
+<hr>
+
+$m$-period return level: How large is the expected event which occurs with this frequency?
+
+Alternative explanation: Exceedance probability of $1-1/m$.
+
+---
+template: section-header
+name: surge
+
+# Nonstationarity
+
+---
+# Climate Change and Nonstationarity
+<hr>
+
+However, these models assume *no long-term trend* in the data, so no change in the distribution of annual extremes.
+
+This situation is called **stationary**: the underlying probability distribution does not change over time.
+
+---
+# Climate Change and Nonstationarity
+<hr>
+
+But climate change risks are fundamentally about dynamic distributions!
+
+- Storm tracks/intensities
+- Frequencies of extremes (heat waves, droughts, atmospheric rivers, etc.)
+- Correlations between extreme events
+
+--
+
+This means that we need to consider **nonstationarity**: the statistical model has a dependence on time (explicitly or implicitly).
+
+---
+# Testing for Nonstationarity
+<hr>
+
+Commonly used: **Mann-Kendall Test**.
+
+$$S = \sum\_{i=1}^{n-1} \sum\_{j=i+1}^n \text{sgn}(y\_i - y\_j),$$
+
+Null hypothesis (zero trend): 
+
+$$S \sim \text{Normal}\left(0, \frac{2(2n+5)}{9n(n-1)}\right)$$
+
+---
+# Problem with Mann-Kendall
+<hr>
+
+However:
+
+- Mann-Kendall only suggests the presence of a trend, not its magnitude;
+- Doesn't work if the trend is oscillating.
+
+---
+# Alternative: Model Selection
+<hr>
+
+We can also fit stationary and non-stationary models and see how they perform, and select accordingly.
+
+Will discuss fitting today, selection after break.
+
+---
+# Modeling Nonstationarity
+<hr>
+
+Typically assume one (or more parameters) depend on another variable which can vary in time.
+
+For example, could model block maxima as $\text{GEV}(\mu(t), \sigma, \xi)$, or frequency of occurrence as $\text{Poisson}(\lambda(t))$.
+
+Often these are linear or generalized linear models:
+
+$$\mu(t) = h(\sum_{i=0}^n \beta_i t^i).$$
+
+---
+# Modeling Nonstationarity
+<hr>
+
+- While any parameters can be treated as nonstationary, making models too complex can make them difficult to constrain given limited extremes data.
+
+- Shape parameters are difficult to constrain normally, so are often best left constant.
+
+---
+# Nonstationary Return Levels
+<hr>
+
+Since we have a different model for each time $t$, we get different return levels for different times.
+
+Contrast this with the stationary condition, in which we can just speak of "return levels".
+
+---
+# Tide Gauge Example
+<hr>
+
+Let's look at the San Francisco tide gauge data.
+
+.left-column[
+What are the implications of:
+- Nonstationary GEV?
+- Nonstationary Poisson rate?
+- Nonstationary GPD?]
+
+.right-column[
+.center[![Detrended San Francisco tide gauge data](figures/gauge-detrend.png)]
+]
+
+---
+# Nonstationary BLock Maxima Model
+<hr>
+
+Let's fit a GEV with a linear trend in time: $\mu(t) = \beta_0 + \beta_1 t$, where $t$ is in years.
+
+---
+# Nonstationary Block Maxima Model Fit
+<hr>
+
+.center[
+![:img Nonstationary GEV MCMC Results, 60%](figures/gev-ns-chain.png)
+]
+
+---
+# Stationary Block Maxima Model Fit
+<hr>
+
+.center[
+![:img Stationary GEV MCMC Results, 90%](figures/gev-st-chain.png)
+]
+
+---
+template: section-header
+name: model-choice
+
+# Choice of Models
+
+---
+# Possible Covariates
+<hr>
+
+The candidate set of covariates is going to depend on the application.
+
+For example, for storm surge, changes could be related to:
+
+- sea-surface temperatures
+- climate indices (North Atlantic Oscillation, Southern Oscillation)
+- local mean sea level
+- global mean temperature (as a broad proxy)
+- time (general trend)
+
+---
+# Space of Possible Models Is Difficult to Constrain
+<hr>
+
+.center[
+![:img Histogram of covariate choice across stations, 70%](figures/surge-covariates.png)<br>
+.cite[[Wong et al (2022)](https://doi.org/10.3389/fclim.2022.796479)]
+]
+
+---
+# Space of Possible Models Is Difficult to Constrain
+<hr>
+
+.center[
+![:img Map of covariate choice across stations, 85%](figures/surge-covariates-spatial.png)
+<br>
+.cite[[Wong et al (2022)](https://doi.org/10.3389/fclim.2022.796479)]
+]
+
+---
+template: section-header
+name: takeaways
+
+# Key Takeaways
+
+---
+# Key Takeaways
+<hr>
+
+- **Nonstationarity**: Dynamic changes in the probability distribution
+- Can be particularly hard to model/constrain with extremes due to limited data.
+- Wise to avoid changing shape parameters.
+- Nonstationary models can have very different return levels, so there are real implications for risk management.
+- One possible path: adaptive decisions based on learning.
+
+---
+template: section-header
+name: schedule
+
+# Upcoming Schedule
+
+
+
+---
+class: left
+
+# Upcoming Schedule
+<hr>
+
+**Wednesday**: Discussion of Read & Vogel (2015).
+
+**Monday after break**: Model selection
+
+    </textarea>
+
+
+    <script src="../javascript/remark.min.js" type="text/javascript"></script>
+    <script defer src="../javascript/auto-render.min.js"></script>
+    <script type="text/javascript" src="../javascript/call-javascript.js"></script>
+
+  </body>
+</html>
