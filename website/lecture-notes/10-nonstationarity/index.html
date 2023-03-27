@@ -198,12 +198,112 @@ Null hypothesis (zero trend):
 $$S \sim \text{Normal}\left(0, \frac{2(2n+5)}{9n(n-1)}\right)$$
 
 ---
-# Problem with Mann-Kendall
+# Aside: Null-Hypothesis Significance Tests
+<hr>
+
+Mann-Kendall fits into the framework of **null-hypothesis significance tests (NHST)**.
+
+This aligns with falsificationist scientific paradigm. The test is whether to reject a *null* hypothesis in favor of the existence of a relationship.
+
+- *Null hypothesis*: Typically that the proposed relationship does not exist.
+- *Alternative hypothesis*: The relationship does exist.
+
+---
+# Aside: Null-Hypothesis Significance Tests
+<hr>
+
+For example:
+- Null: No effect in a regression model (coefficient is zero)
+- Alternative: Effect is non-zero
+
+Or:
+- Null: No trend over time
+- Alternative: Trend exists
+
+---
+# Statistical Significance
+<hr>
+
+The "significance" in NHST is based on the frequentist notion of sampling distributions.
+
+**Goal**: try to identify whether the pattern in your data is strong enough that it likely did not emerge due to sampling chance.
+
+This involves balancing *Type I* (false positive) and *Type II* (false negative) error rates. 
+
+---
+# Type I and Type II Errors
+<hr>
+
+<table>
+  <tr>
+    <td></td>
+    <td></td>
+    <td colspan="2">Null Hypothesis Is</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td>True</td>
+    <td>False </td>
+  </tr>
+  <tr>
+    <td rowspan="2">Decision About Null Hypothesis</td>
+    <td>Don't reject</td>
+    <td>True negative (probability $1-\alpha$)</td>
+    <td>Type II error (false negative, probability $\beta$)</td>
+  </tr>
+  <tr>
+    <td>Reject</td>
+    <td>Type I Error (false positive, probability $\alpha$)</td>
+    <td>True positive (probability $1-\beta$)</td>
+  </tr>
+</table>
+
+The **significance level** $\alpha$ is the probability of rejecting the null hypothesis **assuming that it is true** (Type I errror).
+
+
+---
+# p-values
+<hr>
+
+The **p-value** captures the probability of observing results **at least as extreme as observed** under the null hypothesis.
+
+Therefore, if a p-value is small (below $\alpha$), it can mean:
+
+1. The null hypothesis is not true for that data;
+2. The null hypothesis *is* true and the data is an outlying sample.
+
+**Notice**: the $p$-value is itself a random variable; it is contingent on the sample. 
+
+---
+# p-values
+<hr>
+
+What a p-value is **not**:
+
+- Probability that the null hypothesis is true (this is meaningless in the frequentist paradigm);
+- Probability that the effect was produced by chance alone (a p-value is conditional on the assumption that the null hypothesis is true)
+- An indication of the effect size
+
+These misunderstandings are behind the replication crisis...
+
+---
+# Mann-Kendall Test
+<hr>
+
+$$S = \sum\_{i=1}^{n-1} \sum\_{j=i+1}^n \text{sgn}(y\_i - y\_j),$$
+
+Null hypothesis (zero trend): 
+
+$$S \sim \text{Normal}\left(0, \frac{2(2n+5)}{9n(n-1)}\right)$$
+
+---
+# "Problems" with Mann-Kendall
 <hr>
 
 However:
 
-- Mann-Kendall only suggests the presence of a trend, not its magnitude;
+- Mann-Kendall only suggests the presence of a trend, not its magnitude (general problem with statistical significance tests: what is the effect size?);
 - Doesn't work if the trend is oscillating.
 
 ---
