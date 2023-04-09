@@ -25,3 +25,4 @@ Please make sure that you have updated (with a `git pull`) your local version of
 | 8 | Markov Chain Monte Carlo | {{lecture_badges 08}} | {{lab_badges 08}} | | 
 | 9 | Storm Surge and Extreme Values | {{lecture_badges 09}} | {{lab_badges 09}} | |
 | 10 | Nonstationarity | {{lecture_badges 10}} | | [Read and Vogel (2015)](https://agupubs-onlinelibrary-wiley-com.proxy.library.cornell.edu/doi/full/10.1002/2015WR017089) | |
+| 11 | Model Assessment | {{lecture_bages 11}} | | [Oreskes et al (1994)](https://www-science-org.proxy.library.cornell.edu/doi/10.1126/science.263.5147.641) | |
