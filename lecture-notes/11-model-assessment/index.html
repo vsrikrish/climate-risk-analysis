@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Model Assessment</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+    </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js">
+  </script>
+
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+.title[Model Assessment]
+<hr>
+.left-column[.course[BEE 6940] .subtitle[Lecture 11]] .date[April 10, 2023]
+ 
+---
+name: section-header
+layout: true
+class: center, middle
+
+
+<hr>
+
+---
+layout: false
+name: toc
+class: left
+
+# Table of Contents
+<hr>
+
+1. [Motivation: Nonstationarity](#review)
+2. [Model Assessment through Simulation](#predictive)
+3. [Graphical Model Checks](#graphics)
+4. [Human Perception and Graphics](#perception)
+5. [Key Takeaways](#takeaways)
+6. [Upcoming Schedule](#schedule)
+
+---
+name: review
+template: section-header
+
+# Motivation: Nonstationarity
+
+---
+class: left
+
+# Is Our Model Appropriate?
+<hr>
+
+As we've discussed, there are many choices involved in modeling data, *e.g.*:
+- Statistical/process model;
+- Nonstationarity;
+- Residuals;
+- Prior distributions
+
+---
+# Is Our Model Appropriate?
+<hr>
+
+This means that are a large number of models under consideration.
+
+In general, we are in an **$\mathcal{M}$-open setting**: no model is the "true" data-generating model, so we want to pick a model which performs well enough for the intended purpose.
+
+The contrast to this is **$\mathcal{M}$-closed**, in which one of the models under consideration is the "true" data-generating model, and we would like to recover it.
+
+---
+# Motivation: Nonstationarity
+<hr>
+
+Let's think about this from the perspective of whether a dataset is nonstationarity.
+
+**Option 1**: Treat this as a formal hypothesis test:
+
+- $H_0$ (null): data is stationary (no trend);
+- $H_1$ (alternative): data is stationary (trend).
+
+Under classical assumptions, can derive Mann-Kendall test (see last class for a reminder) and see if the data is "likely" given the assumption of $H_0$.
+
+---
+# Motivation: Nonstationarity
+<hr>
+
+But:
+
+- This only is tractable in closed form because of classical assumptions (*e.g.* normality) which are unlikely to hold in practice.
+- Not very satisfying: we have this "zoo" of statistical tests which apply in highly specific contexts.
+
+--
+
+**What other approaches are there?**
+
+---
+# What Is Any Statistical Test Doing?
+<hr>
+
+If we think about what a test like Mann-Kendall is doing:
+
+1. Assume the null hypothesis $H_0$;
+2. *Obtain the sampling distribution of a test statistic $S$ which captures the property of interest under $H_0$*;
+3. Calculate the probability of $S$ more extreme than $\hat{S}$ (the $p$-value).
+
+---
+# Aside: $p$-values
+<hr>
+
+.center[![:img XKCD #1478, 30%](https://imgs.xkcd.com/comics/p_values_2x.png)]
+.center[.cite[Source: [XKCD](https://xkcd.com/1478/)]]
+
+---
+# What Is Any Statistical Test Doing?
+<hr>
+
+If we think about what a test like Mann-Kendall is doing:
+
+1. Assume the null hypothesis $H_0$;
+2. *Obtain the sampling distribution of a test statistic $S$ which captures the property of interest under $H_0$*;
+3. Calculate the probability of $S$ more extreme than $\hat{S}$ (the $p$-value).
+
+**None of this actually requires classical assumptions**!
+
+---
+template: section-header
+name: predictive
+
+# Model Assessment Through Simulation
+
+---
+# Simulation for Statistical Tests
+<hr>
+
+Instead, if we have a model which permits simulation (through Monte Carlo or the bootstrap):
+
+1. Calibrate models under different assumptions (*e.g.* stationarity vs. nonstationary based on different covariates);
+2. Simulate realizations from those models;
+3. Compute the distribution of the relevant statistic $S$ from these realizations;
+4. Assess which distribution is most consistent with the observed quantity.
+
+---
+# Advantages of Simulation for "Testing"
+<hr>
+
+- More structural freedom (don't need to write down the sampling distribution of $S$ in closed form);
+- Don't need to set up a dichotomous "null vs alternative" test;
+- Models can reflect more nuanced hypotheses about data generating processes.
+
+---
+# Model Assessment Criteria
+<hr>
+
+This raises the question: how do we assess models?
+
+--
+
+Generally, through **predictive performance**: how probable is some data (out-of-sample or the calibration dataset)?
+
+---
+# Variations on Predictive Distributions
+<hr>
+
+**Posterior Predictive Distribution**: Consider a new realization $y^{\text{rep}}$ simulated from 
+
+$$p(y^{\text{rep}} | y) = \int\_{\theta} p(y^{\text{rep}} | \theta) p(\theta | y) d\theta.$$
+
+--
+
+Samples from this distribution can be simulated by:
+
+$$p(\theta | y) \xrightarrow{\hat{\theta}} \mathcal{M}(\hat{\theta}) \rightarrow y^{\text{rep}}$$
+
+
+---
+# Variations on Predictive Distributions
+<hr>
+
+**Prior Predictive Distribution**: Sample $\theta \sim p(\theta)$ instead:
+
+$$p(y^{\text{rep}}) = \int\_{\theta} p(y^{\text{rep}} | \theta) p(\theta) d\theta.$$
+
+--
+
+When $y^\text{rep} = y$, this is the same as the *marginal likelihood* $p(y)$, which is the normalizing constant in the denominator of Bayes' Theorem.
+
+---
+
+# Why Consider These Distributions?
+<hr>
+
+Model evaluations are often considered using a point estimate $\hat{\theta}$. 
+
+Why is this potentially bad?
+
+---
+# Graphical Vs. Quantitative Predictive Checks
+<hr>
+
+"Predictive checks" can come in two flavors:
+
+1. Graphical checks: Visualizations of replicated data or test statistics vs. the original.
+2. Quantitative checks: $p$-values, information criteria/cross-validation.
+
+--
+
+We will focus on graphical checks today, and discuss IC/CV next week.
+
+---
+template: section-header
+name: graphics
+
+# Graphical Model Checks
+
+---
+# What Is A Graphical Model Check?
+<hr>
+
+**Goal**: Look for problems with replications which might reveal model inadequacy.
+
+Common examples:
+- A hindcasts or distributions of test statistics might show over- or under-confidence, or that the simulations don't capture key trends;
+- Residual plots (distributions, autocorrelations) might show that the discrepancy or error model was mis-specified.
+
+---
+# What Is A Graphical Model Check?
+<hr>
+
+Graphical checks are not a substitute for hypothesis-driven model development; they go hand-in-hand.
+
+For example, you might find that your data is less representative of the model simulations. Ask yourself if this makes sense due to internal variability, or if it might be the result of "mis-specification" and could be improved through modeling.
+
+---
+# Examples of Graphical Model Checks
+<hr>
+
+.left-column[Let's look at the sea-level rise data you've been working with.]
+
+.right-column[.center[![Sea Level Rise Data](figures/slr-data.svg)]]
+
+---
+# Examples of Graphical Model Checks
+<hr>
+
+.left-column[Let's use the Rahmstorf (2007) model with normally-distributed residuals to start:
+
+$$\begin{align}
+y_t &= H(t) + \varepsilon_t, \\\\
+H(t+1) &= H(t) + \alpha (T(t) - T_0) \\\\
+\varepsilon &\sim \text{Normal}(0, \sigma)
+\end{align}$$
+]
+
+.right-column[.center[![Sea Level Rise Data](figures/slr-model-fit.svg)]]
+
+---
+# This Is Good, Right?
+<hr>
+
+.left-column[The surprise index is ~3%, and ideally would be 5%, but that's generally pretty good. But...]
+
+.right-column[.center[![Sea Level Rise Data](figures/slr-model-fit.svg)]]
+
+---
+# Look at the Residuals...
+<hr>
+
+.left-column[**Residuals relative to the MAP:**
+
+.center[![Residual histogram](figures/slr-residuals-map.svg)]]
+
+.right-column[**Partial Autocorrelation Function:**
+
+.center[![Residual autocorrelation](figures/slr-residual-pacf-err.svg)]]
+
+---
+# Result of These Graphical Checks
+<hr>
+
+Based on these few checks, what might we conclude?
+
+--
+
+- Priors are possibly slightly restrictive, but this isn't crazy.
+- Might want to use a discrepancy structure which accounts for lag-1 autocorrelation.
+- Would need to see if the remaining residuals with that discrepancy were normally-distributed, or if some other distribution (*e.g.* with fat tails) might fit better.
+
+---
+# Other Checks
+<hr>
+
+What are some other test statistics we could check for this problem?
+
+---
+template: section-header
+name: perception
+
+# Human Perception and Graphics
+
+---
+# Human Memory Systems
+<hr>
+
+.center[![:img Overview of Memory Systems, 60%](figures/memory.png)]
+
+---
+# Preattentive "Popout"
+<hr>
+
+.center[![:img Preattentive Cues Illustration, 100%](figures/preattentive-search.png)]
+.center[.cite[Source: [Healy (2018)](https://socviz.co/index.html)]]
+
+
+---
+# Gestalt Rules
+<hr>
+
+.left-column[.center[![:img Overview of Memory Systems, 50%](figures/poisson-process.png)]]
+
+.right-column[Which of these two panels is more random?
+
+.left[.cite[Source: [Healy (2018)](https://socviz.co/index.html)]]
+]
+
+---
+# Gestalt Rules
+<hr>
+
+Humans are *really* good at finding structure, even if it doesn't exist (this is why you shouldn't just stare at data and draw conclusions!)
+
+We follow certain rules which allow us to draw inferences from incomplete or sparse visual information. These are called "gestalt rules".
+
+The details aren't critical (but are interesting!), but in general, we try to *group*, *classify*, and *connect*.
+
+---
+# Gestalt Rules
+<hr>
+
+.center[![:img Illustration of Gestalt Principles, 70%](figures/gestalt.png)]
+.center[.cite[Source: [Healy (2018)](https://socviz.co/index.html)]]
+
+
+---
+# Implications for Graphical Checks
+<hr>
+
+It's easy to draw misleading conclusions from graphics due to these effects.
+
+To help reduce this risk:
+
+- Look at and provide a variety of visualizations of uncertainty.
+- Connect points only when in-between values have meaning or the scatterplot is hard to follow due to the number of points.
+- Make key features "pop" with pre-attentive cues to avoid "searching" for meaning.
+
+---
+template: section-header
+name: takeaways
+
+# Key Takeaways
+
+---
+# Key Takeaways
+<hr>
+
+- Predictive performance is a common criterion for model evaluation.
+- Common statistical tests can be obtained as special cases of simulations from predictive distributions.
+- Can consider *prior* or *posterior* predictive distributions.
+- Graphical checks can be used to assess fit of replications to assumptions and/or data.
+- Be careful about biases and heuristics in perception and visualization to not mislead yourself or others.
+
+---
+template: section-header
+name: schedule
+
+# Upcoming Schedule
+
+
+
+---
+class: left
+
+# Upcoming Schedule
+<hr>
+
+**Wednesday**: Discussion of Oreskes et al (1994).
+
+**Next Monday**: Model Selection, Information Criteria, and Cross-Validation
+
+    </textarea>
+
+
+    <script src="../javascript/remark.min.js" type="text/javascript"></script>
+    <script defer src="../javascript/auto-render.min.js"></script>
+    <script type="text/javascript" src="../javascript/call-javascript.js"></script>
+
+  </body>
+</html>
