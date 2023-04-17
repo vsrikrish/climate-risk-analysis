@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Model Selection</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+    </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js">
+  </script>
+
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+.title[Model Selection]
+<hr>
+.left-column[.course[BEE 6940] .subtitle[Lecture 12]] .date[April 17, 2023]
+ 
+---
+name: section-header
+layout: true
+class: center, middle
+
+{{content}}
+<hr>
+
+---
+layout: false
+name: toc
+class: left
+
+# Table of Contents
+<hr>
+
+1. [Review: Model Assessment](#review)
+2. [Parsimony and Cross-Validation](#parsimony)
+3. [Kullback-Leibler Divergence](#information)
+5. [Information Criteria](#ic)
+5. [Key Takeaways](#takeaways)
+6. [Upcoming Schedule](#schedule)
+
+---
+name: review
+template: section-header
+
+# Review: Model Assessment
+
+---
+class: left
+
+# Is Our Model Appropriate?
+<hr>
+
+This means that are a large number of models under consideration.
+
+In general, we are in an **$\mathcal{M}$-open setting**: no model is the "true" data-generating model, so we want to pick a model which performs well enough for the intended purpose.
+
+The contrast to this is **$\mathcal{M}$-closed**, in which one of the models under consideration is the "true" data-generating model, and we would like to recover it.
+
+---
+# Model Assessment and Hypothesis Testing
+<hr>
+
+Evaluating the relative skill of different models can be thought of as a generalization of null hypothesis-testing.
+
+- Can embed more nuanced and specific hypotheses;
+- Compare proposed data-generating processes, instead of just comparing a "null" and an "alternative" under null assumptions.
+
+---
+# Model Assessment Criteria
+<hr>
+
+How do we assess models?
+
+Generally, through **predictive performance**: how probable is some data (out-of-sample or the calibration dataset)?
+
+---
+template: section-header
+name: parsimony
+
+# Parsimony and Model Selection
+
+---
+# What Is The Goal of Model Selection?
+<hr>
+
+**Key Idea**: Model selection consists of navigating the bias-variance tradeoff.
+
+Model error (*e.g.* RMSE) is a combination of *irreducible error*, *bias*, and *variance*.
+
+- Bias can come from under-dispersion (too little complexity) or neglected processes;
+- Variance can come from over-dispersion (too much complexity) or poor identifiability.
+
+
+---
+# Bias-Variance Tradeoff
+<hr>
+
+.left-column[
+If either of these is high, the model's predictive ability will be poor!
+]
+
+.right-column[
+.center[![Bias-Variance Tradeoff](figures/bias-variance-complexity.png)]]
+
+---
+# Model "Complexity" and Bias/Variance
+<hr>
+
+Model complexity is *not* necessarily the same as the number of parameters.
+
+Sometimes processes in the model can compensate for each other, which can help improve the representation of the dynamics and reduce error/uncertainty even when additional parameters are included.
+
+---
+# Occam's Razor
+<hr>
+
+Occam's Razor:
+
+> Entities are not to be multiplied without necessity.
+
+- Credited to William of Ockham
+- Appears much earlier in the works of Maimonides, Ptolemy, and Aristotle
+- First formulated as such by John Punch (1639)
+
+---
+# "Zebra" Principle
+<hr>
+
+More colloquially:
+
+> When you hear hoofbeats, think of horses, not zebras.
+>
+> .cite[&mdash; Theodore Woodward]
+
+---
+# Aside: What Error To Use?
+<hr>
+
+There are many metrics we can use to assess error.
+
+**Common Framework**: Specify a *loss function* which penalizes based on deviation between prediction (point or probabilistic) and the observation.
+- Zero-One loss
+- Logarithmic loss
+- Quadratic loss
+
+---
+# Aside: What Error To Use?
+<hr>
+
+Can also think of inference in terms of loss-minimization relative to "true" parameter values, *e.g.*: 
+- the posterior mode minimizes the zero-one loss.
+- the posterior median minimizes the linear loss
+- the posterior mean minimizes the quadratic loss.
+
+---
+# Point Estimate Error Functions
+<hr>
+
+For point estimates, measures associated with loss functions are called "scoring functions" (overview: [Gneiting (2011)](https://www.tandfonline.com/doi/abs/10.1198/jasa.2011.r10138)): 
+
+$$\bar{S} = \frac{1}{n} \sum_{i=1}^n S(x_i, y_i)$$
+
+For example, the squared scoring function results in the mean-squared error.
+
+---
+# Probabilistic Forecasts
+<hr>
+
+For probabilistic estimates, these are called "scoring rules" (overview: [Gneiting & Raftery (2007)](https://www.tandfonline.com/doi/abs/10.1198/016214506000001437)) and are based on the probability assigned to the observed event by the forecast:
+- Quadratic score
+- Logarithmic score 
+- Continuous Ranked Probability Score (CRPS)
+
+---
+# Log-Likelihood as Predictive Fit Measure
+<hr>
+
+The measure of predictive fit that we will use is the **log predictive density** or **log-likelihood** of a replicated data point/set, $p(y^{rep} | \theta)$. 
+
+For normally-distributed data, this is proportional to the mean-squared error.
+
+---
+# Log-Likelihood as Predictive Fit Measure
+<hr>
+
+Why use the log-likelihood density instead of the log-posterior? 
+- The likelihood captures the data-generating process; 
+- The posterior includes the prior, which is only relevant for parameter estimation.
+
+**Important**: This means that the prior is still relevant in predictive model assessment, and should be thought of as part of the model structure!
+
+---
+# Cross-Validation
+<hr>
+
+The "gold standard" way to test for predictive performance is **cross-validation**:
+
+1. Split data into training/testing sets;
+2. Calibrate model to training set;
+3. Check for predictive ability on testing set.
+
+---
+# Cross-Validation
+<hr>
+
+**Leave-One-Out Cross-Validation**: Drop one value, refit model on rest of data, check for prediction.
+
+This is related to the posterior predictive distribution
+$$p(y^{\text{rep}} | y) = \int\_{\theta} p(y^{\text{rep}} | \theta) p(\theta | y) d\theta.$$
+
+---
+# Cross-Validation
+<hr>
+
+**Leave-$k$-Out Cross-Validation**: Drop $k$ values, refit model on rest of data, check for prediction.
+
+As $k \to n$, this reduces to the prior predictive distribution
+$$p(y^{\text{rep}}) = \int\_{\theta} p(y^{\text{rep}} | \theta) p(\theta) d\theta,$$
+which is also the marginal likelihood of the model.
+
+---
+# Cross-Validation
+<hr>
+
+The problems:
+
+- This can be very computationally expensive!
+- We often don't have a lot of data for calibration, so holding some back can be a problem.
+- How to divide data with spatial or temporal structure? This can be addressed by partitioning the data more cleverly (*e.g.* leaving out future observations), but makes the data problem worse.
+
+---
+# Expected Out-Of-Sample Predictive Accuracy
+<hr>
+
+Instead, we will try to compute the *expected out-of-sample predictive accuracy*.
+
+The out-of-sample predictive fit of a new data point $\tilde{y}_i$ is
+
+$$\begin{align}
+\log p\_\text{post}(\tilde{y}\_i) &= \log \mathbb{E}\_\text{post}\left[p(\tilde{y}\_i | \theta)\right] \\\\
+&= \log \int p(\tilde{y\_i} | \theta) p\_\text{post}(\theta)\,d\theta.
+\end{align}$$
+
+---
+# Expected Out-Of-Sample Predictive Accuracy
+<hr>
+
+However, the out-of-sample data $\tilde{y}_i$ is itself unknown, so we need to compute the *expected out-of-sample log-predictive density*
+
+$$\begin{align}
+\text{elpd} &= \text{expected log-predictive density for } \tilde{y}\_i \\\\
+&= \mathbb{E}\_P \left[\log p\_\text{post}(\tilde{y}\_i)\right] \\\\
+&= \int \log\left(p\_\text{post}(\tilde{y}\_i)\right) P(\tilde{y}\_i)\,d\tilde{y}.
+\end{align}$$
+
+---
+# Expected Out-Of-Sample Predictive Accuracy
+<hr>
+
+But we don't know the "true" distribution of new data $P$!
+
+We need some measure of the error induced by using an approximating distribution $Q$ from some model.
+
+---
+template: section-header
+name: information
+
+# Kullback-Leibler Divergence
+
+---
+# Kullback-Leibler Divergence
+<hr>
+
+Suppose a distribution $P$ denotes "reality" and $Q$ is an approximating distribution.
+
+Kullback-Leibler divergence: 
+- Is a measure of the deviation between $P$ and $Q$;
+- Has a connection to information theory (average number of bits to re-encode samples from $P$ using a $Q$-code);
+- Can be interpreted as the "surprise" when using $Q$ as an approximation to $P$.
+
+---
+# Kullback-Leibler Divergence
+<hr>
+
+Formula for K-L Divergence:
+
+$$D_{KL}(P || Q) = \int p(x) \log\left(\frac{p(x)}{q(x)}\right)\,dx$$
+
+Note that $D_{KL}$ is a *divergence*, not a *distance*, as it is not symmetric.
+
+---
+# K-L Divergence and Scoring Functions
+<hr>
+
+$D_{KL}$ is the divergence resulting from the logarithmic scoring function.
+
+In other words, it is the natural measure of model error when using the log-predictive density.
+
+---
+# Computing K-L Divergence
+<hr>
+
+However, computing K-L divergence is fraught for model selection: we don't actually know the "true" data generating model.
+
+---
+template: section-header
+name: ic
+
+# Information Criteria
+
+---
+# Information Criteria Overview
+<hr>
+
+"Information criteria" refers to a category of estimators of prediction error.
+
+The idea: estimate predictive error without having access to the "true" model $P$.
+
+---
+# Information Criteria Overview
+<hr>
+
+There is a common framework for all of these:
+
+If we compute the expected log-predictive density for the existing data $p(y | \theta)$, this will be too good of a fit and will overestimate the predictive skill for new data.
+
+We can adjust for that bias by correcting for the *effective number of parameters*, which can be thought of as the expected degrees of freedom in a model contributing to overfitting.
+
+---
+# Akaike Information Criterion
+<hr>
+
+The "first" information criterion that most people see is the Akaike Information Criterion (AIC).
+
+This uses a point estimate (the maximum-likelihood estimate $\hat{\theta}_\text{MLE}$) to compute the log-predictive density for the data, corrected by the number of parameters $k$:
+
+$$\widehat{\text{elpd}}\_\text{AIC} = \log p(y | \hat{\theta}\_\text{MLE}) - k.$$
+
+---
+# Akaike Information Criterion
+<hr>
+
+The AIC is defined as $-2\widehat{\text{elpd}}\_\text{AIC}$ (for "historical" reasons; this is called the deviance scale).
+
+Due to this convention, lower AICs are better (they correspond to a higher predictive skill).
+
+---
+# Akaike Information Criterion
+<hr>
+
+In the case of a normal model with independent and identically-distributed data and uniform priors, $k$ is the "correct" bias term so that $\widehat{\text{elpd}}\_\text{AIC}$ converges to the K-L divergence (there are corrections when the sample size is sufficiently small).
+
+However, with more informative priors and/or hierarchical models, the bias correction $k$ is no longer appropriate, as there is less "freedom" associated with each parameter.
+
+---
+# AIC: Example with SLR data
+<hr>
+
+.left-column[
+Consider two SLR models:
+- Quadratic
+- Rahmstorf
+
+We can think of these as alternative hypotheses about the influence of warming on SLR.]
+
+.right-column[
+.center[![MLE Fits to SLR Data](figures/slr-mle-fit.svg)]]
+
+---
+# AIC: Example with SLR data
+<hr>
+
+These both have four parameters (including the error variance), so $k=4$, and the difference is in the log-likelihood of the MLE estimate.
+
+- Quadratic AIC: 895
+- Rahmstorf AIC: 864
+
+---
+# AIC: Example with SLR data
+<hr>
+
+The actual values here don't matter; what's important when comparing models within a set $\mathcal{M}$ are the differences 
+$$\Delta\_i = \text{AIC}\_i - \text{AIC}\_\text{min}.$$
+
+Some basic rules of thumb (from [Burnham & Anderson (2004)](https://doi.org/10.1177/0049124104268644)):
+- $\Delta_i < 2$ means the model has "strong" support across $\mathcal{M}$;
+- $4 < \Delta_i < 7$ suggests "less" support;
+- $\Delta_i > 10$ suggests "weak" or "no" support.
+
+---
+# AIC: Example with SLR data
+<hr>
+
+.left-column[So in this case, the quadratic model has weak support relative to the Rahmstorf model, which might be interpreted as supporting the hypothesis that SLR increases are related to temperature increases.]
+
+.right-column[
+.center[![MLE Fits to SLR Data](figures/slr-mle-fit.svg)]]
+
+---
+# AIC and Model Averaging
+<hr>
+
+$\exp(-\Delta_i/2)$ can be thought of as a measure of the likelihood of the model given the data $y$. The ratio $$\exp(-\Delta_i/2) / \exp(-\Delta_j/2)$$ can approximate the relative evidence for  $M_i$ versus $M_j$.
+
+---
+# AIC and Model Averaging
+<hr>
+
+This gives rise to the idea of *Akaike weights*:
+$$w\_i = \frac{\exp(-\Delta\_i/2)}{\sum\_{m=1}^M \exp(-\Delta\_m/2)}.$$
+
+Model projections can then be weighted based on $w_i$, which can be interpreted as the probability that $M_i$ is the K-L minimizing model in $\mathcal{M}$.
+
+---
+# Aside: Model Averaging vs. Selection
+<hr>
+
+Model averaging can sometimes be beneficial vs. model selection, as model selection can introduce bias from the selection process (this is particularly acute for stepwise selection due to path-dependence).
+
+---
+# Deviance Information Criterion
+<hr>
+
+The Deviance Information Criterion (DIC) is a more Bayesian generalization of AIC which uses the posterior mean 
+$$\hat{\theta}_\text{Bayes} = \mathbb{E}\left[\theta | y\right]$$
+and a bias correction derived from the data.
+
+---
+# Deviance Information Criterion
+<hr>
+
+$$\widehat{\text{elpd}}\_\text{DIC} = \log p(y | \hat{\theta}\_\text{Bayes}) - k\_{\text{DIC}},$$
+
+where
+$$k\_\text{DIC} = 2\left(\log p(y | \hat{\theta}\_\text{Bayes}) - \mathbb{E}\_\text{post}\left[\log p(y | \theta)\right]\right).$$
+
+Then, as with AIC, $$\text{DIC} = -2\widehat{\text{elpd}}\_\text{DIC}.$$
+
+---
+# DIC: Effective Number of Parameters
+<hr>
+
+**What is the meaning of $k\_\text{DIC}$?**
+
+- The difference between the average log-likelihood (across parameters) and the log-likelihood at a parameter average measures "degrees of freedom".
+
+- Note that $k\_\text{DIC}$ can be negative if the posterior mean is far from the posterior mode: this suggests that the model is poorly constrained and may do better on new data than the existing data.
+
+---
+# AIC vs. DIC
+<hr>
+
+AIC and DIC often give similar results, but don't have to. For example, for the SLR example, with relatively uninformative priors, $$\Delta_\text{DIC} \approx 4,$$ which based on the AIC scale suggests limited (but stronger) evidence for the quadratic model.
+
+The key difference is the impact of priors on parameter estimation and model degrees of freedom.
+
+---
+# Convergence of AIC and DIC
+<hr>
+
+Both AIC and DIC converge to the K-L divergence.
+
+Also valuable: they both also converge to expected leave-one-out cross-validation.
+
+---
+# "Bayesian" "Information" Criterion
+<hr>
+
+$$\text{BIC} = -2\log p(y | \hat{\theta}\_\text{MLE}) + k\log n.$$
+
+BIC:
+- Is not Bayesian (it relies on the MLE);
+- Has no relationship to information theory (unlike AIC/DIC);
+- Approximates the *prior* predictive likelihood and leave-$k$-out cross-validation (hence the extra penalization for additional parameters).
+
+---
+# "Bayesian" "Information" Criterion
+<hr>
+
+This is why it's odd when model selection consists of examining both AIC and BIC: these are different quantities with different purposes!
+
+---
+# Other Metrics
+<hr>
+
+- Watanabe-Akaike Information Criterion (WAIC) is a *fully* Bayesian generalization of AIC, but doesn't work for structured data.
+- There are approximations to Leave-One-Out Cross-Validation which use *importance sampling*, and these can be extended to time series (see [Vehtari et al (2015)](https://doi.org/10.48550/arXiv.1507.02646) and [Bürkner et al (2020)](https://doi.org/10.1080/00949655.2020.1783262)).
+
+---
+template: section-header
+name: takeaways
+
+# Key Takeaways
+
+---
+# Key Takeaways
+<hr>
+
+- Model selection is a balance between bias (underfitting) and variance (overfitting).
+- For predictive assessment, leave-one-out cross-validation is an ideal, but hard to implement in practice (particularly for time series).
+- AIC and DIC can be used to approximate K-L divergence and leave-one-out cross-validation.
+- BIC is an entirely different measure, approximating the prior predictive distribution.
+
+---
+template: section-header
+name: schedule
+
+# Upcoming Schedule
+
+
+
+---
+class: left
+
+# Upcoming Schedule
+<hr>
+
+**Wednesday**: Discussion of Höge et al (2019).
+
+**Next Monday**: Emulation of Complex Models
+
+    </textarea>
+
+
+    <script src="../javascript/remark.min.js" type="text/javascript"></script>
+    <script defer src="../javascript/auto-render.min.js"></script>
+    <script type="text/javascript" src="../javascript/call-javascript.js"></script>
+
+  </body>
+</html>

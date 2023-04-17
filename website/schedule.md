@@ -26,7 +26,7 @@ Please make sure that you have updated (with a `git pull`) your local version of
 | 9 | Storm Surge and Extreme Values | {{lecture_badges 09}} | {{lab_badges 09}} | |
 | 10 | Nonstationarity | {{lecture_badges 10}} | | [Read and Vogel (2015)](https://agupubs-onlinelibrary-wiley-com.proxy.library.cornell.edu/doi/full/10.1002/2015WR017089) | |
 | 11 | Model Assessment | {{lecture_badges 11}} | | [Oreskes et al (1994)](https://www-science-org.proxy.library.cornell.edu/doi/10.1126/science.263.5147.641) | |
-| 12 | Model Selection | | | [Höge et al (2019)](https://doi.org/10.1016/j.jhydrol.2019.01.072) | |
+| 12 | Model Selection | {{lecture_badges 12}} | | [Höge et al (2019)](https://doi.org/10.1016/j.jhydrol.2019.01.072) | |
 | 13 | Emulation | | | [Helgeson et al (2021)](https://www-cambridge-org.proxy.library.cornell.edu/core/journals/philosophy-of-science/article/why-simpler-computer-simulation-models-can-be-epistemically-better-for-informing-decisions/765F7923BE9416E7FC800E4F1F7A3E34) | |
 | 14 | Integrating Vulnerability, Exposure, and Response | | | | |
 | 15 | Project Presentations | | | | |
