@@ -440,10 +440,10 @@ and a bias correction derived from the data.
 # Deviance Information Criterion
 <hr>
 
-$$\widehat{\text{elpd}}\_\text{DIC} = \log p(y | \hat{\theta}\_\text{Bayes}) - k\_{\text{DIC}},$$
+$$\widehat{\text{elpd}}\_\text{DIC} = \log p(y | \hat{\theta}\_\text{Bayes}) - p\_{\text{DIC}},$$
 
 where
-$$k\_\text{DIC} = 2\left(\log p(y | \hat{\theta}\_\text{Bayes}) - \mathbb{E}\_\text{post}\left[\log p(y | \theta)\right]\right).$$
+$$p\_\text{DIC} = 2\left(\log p(y | \hat{\theta}\_\text{Bayes}) - \mathbb{E}\_\text{post}\left[\log p(y | \theta)\right]\right).$$
 
 Then, as with AIC, $$\text{DIC} = -2\widehat{\text{elpd}}\_\text{DIC}.$$
 
@@ -451,11 +451,11 @@ Then, as with AIC, $$\text{DIC} = -2\widehat{\text{elpd}}\_\text{DIC}.$$
 # DIC: Effective Number of Parameters
 <hr>
 
-**What is the meaning of $k\_\text{DIC}$?**
+**What is the meaning of $p\_\text{DIC}$?**
 
 - The difference between the average log-likelihood (across parameters) and the log-likelihood at a parameter average measures "degrees of freedom".
-
-- Note that $k\_\text{DIC}$ can be negative if the posterior mean is far from the posterior mode: this suggests that the model is poorly constrained and may do better on new data than the existing data.
+- Note that $p\_\text{DIC}$ can be negative if the posterior mean is far from the posterior mode: this suggests that the model is poorly constrained and may do better on new data than the existing data.
+- The DIC adjustment assumes independence of residuals for fixed $\theta$.
 
 ---
 # AIC vs. DIC
@@ -474,6 +474,58 @@ Both AIC and DIC converge to the K-L divergence.
 Also valuable: they both also converge to expected leave-one-out cross-validation.
 
 ---
+# Watanabe-Akaike Information Criterion (WAIC)
+<hr>
+
+WAIC is a *fully* Bayesian generalization of AIC.
+
+
+$$\widehat{\text{elpd}}\_\text{WAIC} = \sum\_{i=1}^n \log \int p(y\_i | \theta) p\_\text{post}(\theta)\,d\theta - p\_{\text{WAIC}},$$
+
+where
+$$p\_\text{WAIC} = \sum\_{i=1}^n \text{Var}\_\text{post}\left(\log p(y\_i | \theta)\right).$$
+
+---
+# Watanabe-Akaike Information Criterion (WAIC)
+<hr>
+
+$p_\text{WAIC}$ is an estimate of the number of "unconstrained" parameters in the model.
+
+- A parameter counts as 1 if its estimate is "independent" of the prior;
+- A parameter counts as 0 if it is fully constrained by the prior.
+- A parameter gives a partial value if both the data and prior are informative.
+
+---
+# Watanabe-Akaike Information Criterion (WAIC)
+<hr>
+
+- WAIC can be viewed as an approximation to leave-one-out CV, and averages over the entire posterior, vs. AIC and DIC which use point estimates.
+- But it doesn't work well with highly structured data; no real alternative to more clever uses of Bayesian cross-validation.
+
+---
+# Bayesian LOO-CV
+<hr>
+
+By default, Bayesian LOO-CV is extremely expensive:
+
+$$\text{loo-cv} = \sum\_{i=1}^n \log p\_{\text{post}(-i)}(y_i),$$
+
+which requires refitting the model without $y_i$ for every data point.
+
+Can think of the "number of effective parameters" as the difference between the log-predictive density of the data set minus the LOO-CV estimate.
+
+---
+# Bayesian LOO-CV: More Advanced Methods
+<hr>
+
+There are approximations to Leave-One-Out Cross-Validation which use *importance sampling* to avoid this, and these can be extended to time series. 
+
+See 
+- [Vehtari et al (2015)](https://doi.org/10.48550/arXiv.1507.02646) on "Pareto-smoothed "
+- [Bürkner et al (2020)](https://doi.org/10.1080/00949655.2020.1783262) on time-series "leave-future-out CV".
+
+
+---
 # "Bayesian" "Information" Criterion
 <hr>
 
@@ -482,20 +534,17 @@ $$\text{BIC} = -2\log p(y | \hat{\theta}\_\text{MLE}) + k\log n.$$
 BIC:
 - Is not Bayesian (it relies on the MLE);
 - Has no relationship to information theory (unlike AIC/DIC);
-- Approximates the *prior* predictive likelihood and leave-$k$-out cross-validation (hence the extra penalization for additional parameters).
+- Assumes $\mathcal{M}$-closed (e.g. that the true model is under consideration);
 
 ---
 # "Bayesian" "Information" Criterion
 <hr>
 
-This is why it's odd when model selection consists of examining both AIC and BIC: these are different quantities with different purposes!
+BIC approximates the *prior* log-predictive likelihood and leave-$k$-out cross-validation (hence the extra penalization for additional parameters).
 
----
-# Other Metrics
-<hr>
+Differences between BIC values can therefore be interpreted as Bayes factors, which are ratios of marginalized likelihoods (see [Kass & Raftery (1995)](https://doi.org/10.1080/01621459.1995.10476572) for more on Bayes factors).
 
-- Watanabe-Akaike Information Criterion (WAIC) is a *fully* Bayesian generalization of AIC, but doesn't work for structured data.
-- There are approximations to Leave-One-Out Cross-Validation which use *importance sampling*, and these can be extended to time series (see [Vehtari et al (2015)](https://doi.org/10.48550/arXiv.1507.02646) and [Bürkner et al (2020)](https://doi.org/10.1080/00949655.2020.1783262)).
+**This is why it's odd when model selection consists of examining both AIC and BIC: these are different quantities with different purposes!**
 
 ---
 template: section-header
@@ -513,12 +562,20 @@ name: takeaways
 - BIC is an entirely different measure, approximating the prior predictive distribution.
 
 ---
+# Key Consideration
+<hr>
+
+**Model selection can result in significant biases when separated from hypothesis-driven model development.**
+
+- There's no free lunch: better off thinking about the scientific or engineering problem you want to solve and use domain knowledge/checks rather than throwing a large number of possible models into the machinery.
+- Regularizing priors reduce potential for overfitting.
+- Model averaging ([Hoeting et al (1999)](https://doi.org/10.1214/ss/1009212519)) and stacking ([Yao et al (2018)](10.1214/17-BA1091)) can combine multiple models as an alternative to selection.
+
+---
 template: section-header
 name: schedule
 
 # Upcoming Schedule
-
-
 
 ---
 class: left
