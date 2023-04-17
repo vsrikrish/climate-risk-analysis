@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Markov Chain Monte Carlo</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    };
+    </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js">
+  </script>
+
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+.title[Markov Chain Monte Carlo]
+<hr>
+.left-column[.course[BEE 6940] .subtitle[Lecture 8]] .date[March 13, 2023]
+ 
+---
+name: section-header
+layout: true
+class: center, middle
+
+
+<hr>
+
+---
+layout: false
+name: toc
+class: left
+
+# Table of Contents
+<hr>
+
+1. [Review of Markov Chain Concepts](#review)
+2. [Metropolis-Hastings Algorithm](#metropolis)
+3. [Considerations for Implementation](#implementation)
+4. [Assessing Convergence](#convergence)
+5. [Key Takeaways](#takeaways)
+6. [Upcoming Schedule](#schedule)
+
+???
+This is an overview of the topics we'll cover in today's lecture. The italics around the last topic reflect that it's an "optional" topic that we may get to if time allows.
+
+---
+name: review
+template: section-header
+
+# Review of Markov Chains
+
+---
+class: left
+
+# Markov Chains
+<hr>
+
+A Markov chain is a stochastic process based on memoryless probabilistic transitions between states.
+
+**Key properties**:
+- Detailed Balance (reversibility) &rArr; Existence of stationary distribution
+- Ergodicity (irreducible and aperiodic) &rArr; Stationary distribution is unique and can be obtained as a limiting distribution.
+
+---
+# Idea of Sampling Algorithm
+<hr>
+
+If we construct an ergodic Markov chain with the appropriate transition probabilities for detailed balance to hold with respect to the target distribution, we can use the chain realizations as samples from the target distribution.
+
+- No need for closed-form representation of the posterior
+- Can use these samples as normal (with some caveats) for means, quantiles, simulations, etc.
+
+This category of sampling algorithms is called **Markov chain Monte Carlo (MCMC)**.
+
+---
+# Convergence to the Target Distribution
+<hr>
+
+Given a Markov chain $\\{X\_t\\}\_{t=1, \ldots, T}$ returned from this procedure, sampling from distribution $\pi$:
+- $\mathbb{P}(X\_t = y) \to \pi(y)$ as $t \to \infty$
+- This means the chain can be considered a *dependent* sample approximately distributed from $\pi$.
+- The first values (the *transient portion*) of the chain are highly dependent on the initial value.
+
+---
+template: section-header
+name: metropolis
+
+# The Metropolis-Hastings Algorithm
+
+---
+# Metropolis-Hastings Algorithm
+<hr>
+
+The **Metropolis-Hastings** algorithm is the foundational MCMC algorithm (and was named [one of the top ten algorithms of the 20th century](https://www.computer.org/csdl/magazine/cs/2000/01/c1022/13rRUxBJhBm)).
+
+It builds a Markov chain based on transitions by accepting/rejecting proposals for new samples from a *conditional proposal distribution* $q(y | x)$ and accepting or rejecting those proposals.
+
+---
+# Metropolis-Hastings Algorithm
+<hr>
+
+Given $X_t = x_t$:
+1. Generate $Y_t \sim q(y | x_t)$;
+2. Set $X\_{t+1} = Y\_t$ with probability $\rho(x\_t, Y\_t)$,
+where
+$$
+\rho(x, y) = \min \left\\{\frac{\pi(y)}{\pi(x)}\frac{q(x | y)}{q(y | x)}, 1\right\\},
+$$
+else set $X_{t+1} = x_t$.
+
+---
+# Metropolis-Hastings Algorithm
+<hr>
+
+That almost seems too simple!
+
+But the devil is in the details: performance and efficiency are highly dependent on the choice of $q$.
+
+--
+
+**Key**: There is a tradeoff between exploration and acceptance.
+
+- Wide proposal: Can make bigger jumps, may be more likely to reject proposals.
+- Narrow proposal: More likely to accept proposals, may not "mix" efficiently.
+
+---
+# M-H and Detailed Balance
+<hr>
+
+Why do M-H transitions satisfy detailed balance?
+
+Write detailed balance equation as:
+$$ \pi(x) k(x,y) = \pi(y) k(y,x),$$
+where $\pi(\cdot)$ is the stationary distribution and $k(x,y)$ is the *transition kernel* (not necessarily normalized) of moving from $x \to y$.
+
+---
+# M-H and Detailed Balance
+<hr>
+
+The transition kernel for M-H transitions can be written as:
+$$k(x,y) = q(y | x)\rho(x, y),$$
+where $q$ is the proposal distribution and $\rho$ is the M-H acceptance probability.
+
+---
+# M-H and Detailed Balance
+<hr>
+
+If the proposal is rejected, *e.g.* $x=y$, then detailed balance is satisfied trivially.
+
+Else, the left-hand side of the detailed balance equation becomes:
+$$
+\pi(x)k(x,y) = \pi(x) q(y | x) \rho(x,y).
+$$. 
+
+---
+# M-H and Detailed Balance
+<hr>
+
+Without loss of generality, suppose $\pi(y)q(x | y) < \pi(x)q(y | x),$ so $\rho(x,y) < 1$. Then
+$$
+\begin{align}
+\pi(y) k(x,y) &= \pi(x)q(y | x) \times \frac{\pi(y)}{\pi(x)}\frac{q(x | y)}{q(y | x)} \nonumber \\\\
+&= \pi(y)q(x | y) \nonumber \\\\
+&= \pi(y)k(y, x) \nonumber
+\end{align}
+$$
+since $\rho(y, x) = 1$.
+
+
+
+
+
+---
+template: section-header
+name: implementation
+
+# Considerations for Implementation
+
+---
+# Proposal Distributions
+<hr>
+
+The original Metropolis et al (1953) algorithm focused on symmetric distributions ($q(y | x) = q(x | y)$), which are a convenient choice as then the acceptance probability reduces to $$\rho =  \min \left\\{\frac{\pi(y)}{\pi(x)}, 1\right\\}.$$
+
+
+---
+# Proposal Distributions
+<hr>
+
+For example, a common choice is a normal density $y \sim \text{Normal}(x_t, \sigma^2)$ centered around the current point.
+
+This turns the "exploration" part of the M-H algorithm into a random walk.
+
+---
+# Proposal Distributions: Example
+<hr>
+
+.center[![:img Example of M-H Proposals, 65%](figures/mh-example.svg)]
+
+---
+# Proposal Distributions: Example
+<hr>
+
+.left-column[
+.center[![Example of M-H Proposals](figures/mh-example-narrow.svg)]
+]
+.right-column[
+.center[![Example of M-H Proposals](figures/mh-example-wide.svg)]
+]
+
+
+---
+# Sampling Efficiency
+<hr>
+
+Two common measures of sampling efficiency:
+- **Acceptance Rate**: Rate at which proposals are accepted
+  - "Optimally" 30-45% (depending on number of parameters)
+- **Effective Sample Size (ESS)**: Accounts for autocorrelation $\rho_t$ across samples
+  
+  $$N\_\text{eff} = \frac{N}{1+2\sum_{t=1}^\infty \rho_t}$$
+
+---
+# Sampling Efficiency Example
+<hr>
+
+.center[![:img MCMC Sampling For Various Proposals, 90%](figures/mcmc-trace.svg)]
+
+---
+# Autocorrelation Of Chains
+<hr>
+
+.center[![:img Autocorrelation Plots for Chains, 90%](figures/mh-acplot.svg)]
+
+
+---
+# ESS By Proposal Variance
+<hr>
+
+.center[![:img ESS For Various Proposals, 70%](figures/mcmc-ess.svg)]
+
+---
+template: section-header
+name: convergence
+
+# Assessing Convergence
+
+---
+# Convergence to Stationary Distribution
+<hr>
+
+Since the samples are a Markov chain, there is a *transient* portion prior to convergence to the stationary distribution.
+
+What to do about these samples?
+
+--
+
+- Discard as *burn-in*;
+- Just run the chain longer.
+
+---
+# How to Identify Convergence?
+<hr>
+
+This is probably the most challenging part of MCMC, other than tuning the proposal distribution.
+
+**Short answer**: There is no guarantee! Judgement based on an accumulation of evidence from various heuristics.
+
+The good news &mdash; getting the precise "right" end of the transient chain doesn't matter. If a few transient iterations of the transient portion, the effect will be washed out with a large enough post-convergence chain.
+
+
+---
+# Heuristics for Convergence
+<hr>
+
+- Compare distribution (histogram/kernel density plot) after half of the chain to full chain.
+
+.left-column[
+.center[![Half vs Full Sampled Densities After 2000 Iterations](figures/mh-densitycheck-2000.svg)]]
+
+.left-column[
+.center[![Half vs Full Sampled Densities After 10000 Iterations](figures/mh-densitycheck-10000.svg)]]
+
+---
+
+# Heuristics for Convergence
+<hr>
+
+- Gelman-Rubin criterion [(Gelman & Rubin (1992))](https://doi.org/10.1214/ss/1177011136):
+      - Run multiple chains from "overdispersed" starting points
+      - Compare intra-chain and inter-chain variances
+      - Summarized as $\hat{R}$ statistic: closer to 1 implies better convergence.
+
+- Can also check distributions across multiple chains vs. the half-chain check. This is the default in `Turing.jl` with multiple chains (will see in lab).
+
+---
+# Aside: Multiple Chains
+<hr>
+
+Unless a specific scheme is used, multiple chains are not a solution for issues of convergence, as each individual chain needs to converge and have burn-in discarded/watered-down. 
+
+This means multiple chains are more useful for diagnostics, but once they've all been run long enough, can mix samples freely.
+
+---
+# Heuristics for Convergence
+<hr>
+
+- If you're more interested in the mean estimate, can also look at the its stability by iteration or the *Monte Carlo standard error*.
+
+- Look at traceplots; do you see sudden "jumps"?
+
+- **When in doubt, run the chain longer.**
+
+---
+# Approaches for Increasing Efficiency
+<hr>
+
+- Adaptive M-H (*e.g.* [Vihola (2012)](https://doi.org/10.1007/s11222-011-9269-5
+)): adjusts proposal density to hit target acceptance rate
+      - Need to be cautious about detailed balance
+      - Typical strategy is to adapt for a portion of the initial chain (part of the burn-in), then run longer with that proposal.
+
+---
+# Approaches for Increasing Efficiency
+<hr>
+
+- Hamiltonian Monte Carlo
+      - Idea: Use proposals which steer towards "typical set" without collapsing towards the mode (based on Hamiltonian vector field);
+      - Requires gradient information: can be obtained through autodifferentiation; challenging for external, black-box models;
+      - Can be very efficient due to potential for anti-correlated samples, but efficiency is also be sensitive to parameterization.
+
+---
+class: left
+
+# Key Takeaways: MCMC
+<hr>
+
+- Construct ergodic and reversible Markov chains with posterior as stationary distribution.
+- Metropolis-Hastings: conceptually simple algorithm, but implementation plays a major role.
+- Must rely on "accumulation of evidence" from heuristics for determination about convergence to stationary distribution.
+- Transient portion of chain: Meh. Some people worry about this too much. Discard or run the chain longer.
+- Parallelizing solves few problems, but running multiple chains can be useful for diagnostics.
+
+
+---
+template: section-header
+name: schedule
+
+# Upcoming Schedule
+
+
+
+---
+class: left
+
+# Upcoming Schedule
+<hr>
+
+**Wednesday**: Lab on using `Turing.jl` for probabilistic programming and MCMC
+
+**Next Monday**: Storm surge and modeling extreme values
+
+    </textarea>
+
+
+    <script src="../javascript/remark.min.js" type="text/javascript"></script>
+    <script defer src="../javascript/auto-render.min.js"></script>
+    <script type="text/javascript" src="../javascript/call-javascript.js"></script>
+
+  </body>
+</html>
