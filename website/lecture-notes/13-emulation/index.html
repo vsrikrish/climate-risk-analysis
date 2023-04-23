@@ -369,7 +369,97 @@ template: section-header
 # Approximating Complex Models
 <hr>
 
-**Challenge**: How do we simplify complex models to 
+**Challenge**: How do we simplify complex models to keep key dynamics but reduce computational expense?
+
+Approximate (or **emulate**) the model response surface.
+
+--
+
+1. Evaluate original model at an ensemble of points (design of experiment)
+2. Calibrate emulator against those points.
+3. Use emulator for UQ with MCMC or other methods.
+
+---
+# Emulation of a 1-D Toy Model
+<hr>
+
+.center[![Example of Emulation for a Toy Model](figures/toy-model.png)]
+.center[.cite[Source: [Haran et al (2017)](https://doi.org/10.1080/09332480.2017.1406758)]]
+
+---
+# Emulating Higher Dimensional Output
+<hr>
+
+.center[![Example of Emulation for an Ice Sheet](figures/emulator-ice-sheet.png)]
+.center[.cite[Source: [Haran et al (2017)](https://doi.org/10.1080/09332480.2017.1406758)]]
+
+
+---
+# Common Emulation Methods
+<hr>
+
+- Gaussian Processes
+- Polynomial Chaos Expansion
+- Machine Learning
+
+---
+# Experimental Design
+<hr>
+
+Many of these methods (Gaussian processes in particular) only work for a few dimensions.
+
+Need to: 
+1. Select key parameters with a sensitivity analysis.
+2. Use an appropriate sampling of points (*e.g.* Latin Hypercube or low-discrepancy) for emulator training.
+3. Select an appropriate metric for approximation.
+
+---
+# Is Emulation Always The Right Choice?
+<hr>
+
+.center[![:img Calibration vs. Emulation, 55%](figures/calibration-emulation.png)]
+.center[.cite[Source: [Lee et al (2020)](https://doi.org/10.1214/19-AOAS1305)]]
+
+---
+# Is Emulation Always The Right Choice?
+<hr>
+
+This error can have large knock-on effects for risk analysis:
+
+.center[![:img Calibration vs. Emulation, 60%](figures/calibration-ice-sheet.png)]
+.center[.cite[Source: [Lee et al (2020)](https://doi.org/10.1214/19-AOAS1305)]]
+
+---
+name: emulation-takeaways
+template: section-header
+
+# Emulation: Key Takeaways
+
+---
+# Emulation Takeaways
+<hr>
+
+- Model simplicity can be valuable.
+- Tradeoff between computational expense and fidelity of approximation.
+- Emulation is a common approach.
+- Emulator methods have different pros and cons which can make them more or less important.
+- Emulator error can strongly influence resulting risk estimates.
+
+---
+name: schedule
+template: section-header
+
+# Upcoming Schedule
+
+---
+# Upcoming Schedule
+<hr>
+
+**Wednesday**: Discussion of Helgeson et al (2022).
+
+**Monday**: Modeling exposure, vulnerability, and response.
+
+
 
     </textarea>
 
