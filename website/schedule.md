@@ -28,5 +28,5 @@ Please make sure that you have updated (with a `git pull`) your local version of
 | 11 | Model Assessment | {{lecture_badges 11}} | | [Oreskes et al (1994)](https://www-science-org.proxy.library.cornell.edu/doi/10.1126/science.263.5147.641) | |
 | 12 | Model Selection | {{lecture_badges 12}} | | [Höge et al (2019)](https://doi.org/10.1016/j.jhydrol.2019.01.072) | |
 | 13 | Emulation | {{lecture_badges 13}} | | [Helgeson et al (2021)](https://www-cambridge-org.proxy.library.cornell.edu/core/journals/philosophy-of-science/article/why-simpler-computer-simulation-models-can-be-epistemically-better-for-informing-decisions/765F7923BE9416E7FC800E4F1F7A3E34) | |
-| 14 | Integrating Vulnerability, Exposure, and Response | | | | |
+| 14 | Integrating Vulnerability, Exposure, and Response | {{lecture_badges 14}} | | | |
 | 15 | Project Presentations | | | | |
