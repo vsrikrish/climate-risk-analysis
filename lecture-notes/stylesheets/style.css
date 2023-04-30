@@ -39,8 +39,12 @@
 .split-40 .column:last-of-type {width: 60%;}
 .split-50 .column:first-of-type {width: 50%;}
 .split-50 .column:last-of-type {width: 50%;}
-.split-60 .column:first-of-type {width 60%;}
-.split-60 .column:last-of-type {width 60%;}
+.split-60 .column:first-of-type {width: 60%;}
+.split-60 .column:last-of-type {width: 60%;}
+.split-70 .column:first-of-type {width: 70%;}
+.split-70 .column:last-of-type {width: 30%;}
+.split-80 .column:first-of-type {width: 80%;}
+.split-80 .column:last-of-type {width: 20%;}
 
 /* Styling for paragraphs, lists, and divs (thus display equations) */
 .remark-slide-content p,div {font-size: 1.1em;}
